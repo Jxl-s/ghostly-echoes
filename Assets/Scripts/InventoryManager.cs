@@ -29,6 +29,10 @@ public class InventoryManager : MonoBehaviour
     }
 
     public void listItems() {
+
+        foreach (Transform item in ItemContent) {
+            Destroy(item.gameObject);
+        }
         foreach(var item in Items) {
             GameObject obj = Instantiate(InventoryItem, ItemContent);
             var itemName = obj.transform.Find("Name").GetComponent<Text>();
