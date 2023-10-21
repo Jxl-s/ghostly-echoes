@@ -5,6 +5,9 @@ TagManager:
   serializedVersion: 2
   tags:
   - PostProcessing
+  - flashlight_light
+  - batteryText
+  - flashlight
   layers:
   - Default
   - TransparentFX
