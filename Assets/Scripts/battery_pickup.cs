@@ -12,11 +12,19 @@ public class battery_pickup : MonoBehaviour
     }
 
     void Pickup() {
-        if(flashlight.battery + 20 < 100){
-            flashlight.battery += 20;
-            flashlight.SetBatteryText();
-            Destroy(gameObject);
+        if(flashlight.battery + 20 > 100 && flashlight.battery < 100){
+            flashlight.battery = 100;
         }
+        else if (flashlight.battery < 100)
+        {
+            flashlight.battery += 20;
+        }
+        else
+        {
+            return;
+        }
+        flashlight.SetBatteryText();
+        Destroy(gameObject);
     }
     public void OnMouseDown() {
         Pickup();

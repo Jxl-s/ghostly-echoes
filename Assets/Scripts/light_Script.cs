@@ -10,6 +10,7 @@ public class light_Script : MonoBehaviour
     public int battery = 100;
     public float maxLightIntensity = 20;
     public float maxLightRange = 10;
+    public float drainSpeed = 1f;
     public bool isOn = false;
     public GameObject spotLight;
     public Light light;
@@ -22,7 +23,7 @@ public class light_Script : MonoBehaviour
         batteryText = GameObject.FindGameObjectWithTag("batteryText").GetComponent<Text>();
         spotLight = GameObject.FindGameObjectWithTag("flashlight_light");
         light = spotLight.GetComponent<Light>();
-        InvokeRepeating("DecrementBattery", 1.0f, 0.2f);
+        InvokeRepeating("DecrementBattery", 1.0f, drainSpeed);
         light.intensity = maxLightIntensity;
         light.range = maxLightRange;
         toggleFlashlight(isOn);
