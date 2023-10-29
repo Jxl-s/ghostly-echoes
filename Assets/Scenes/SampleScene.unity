@@ -3454,6 +3454,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Items: []
+  flashlight: {fileID: 0}
 --- !u!114 &279355894
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3493,6 +3494,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e4226969f707389448feced47e097f26, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  flashlight: {fileID: 2040366708}
 --- !u!1 &374449626
 GameObject:
   m_ObjectHideFlags: 0
@@ -15505,7 +15507,7 @@ Mesh:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: pb_Mesh31882
+  m_Name: pb_Mesh23018
   serializedVersion: 10
   m_SubMeshes:
   - serializedVersion: 2
@@ -17607,7 +17609,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e4ae480d960abd543a3eaa4ecdf2f6a6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  item: {fileID: 11400000, guid: e816220796ab6264ba89109ebbf30730, type: 2}
 --- !u!114 &1912706695
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -18067,6 +18068,17 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 3832491112998621339, guid: d2963d26ee97ae943a511428e033efff, type: 3}
   m_PrefabInstance: {fileID: 3832491113927825128}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &2040366708 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 3832491112998621340, guid: d2963d26ee97ae943a511428e033efff, type: 3}
+  m_PrefabInstance: {fileID: 3832491113927825128}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 06deeed22d560b545a422fb6dd7e4ddb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &2053211476
 GameObject:
   m_ObjectHideFlags: 0

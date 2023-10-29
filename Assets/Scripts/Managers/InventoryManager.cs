@@ -8,6 +8,7 @@ public class InventoryManager : MonoBehaviour
 {
     public static InventoryManager Instance;
     public List<ItemData> Items = new List<ItemData>();
+    public light_Script flashlight;
 
     void Awake()
     {

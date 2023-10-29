@@ -5,6 +5,7 @@ using UnityEngine;
 public class ItemManager : MonoBehaviour
 {
     public static ItemManager Instance;
+    public light_Script flashlight;
 
     void Awake()
     {
@@ -33,6 +34,11 @@ public class ItemManager : MonoBehaviour
 
     private void UseBattery()
     {
-        Debug.Log("using battery now...");
+        if(flashlight.battery + 20 > 100 && flashlight.battery < 100){
+            flashlight.battery = 100;
+        } else if (flashlight.battery < 100) {
+            flashlight.battery += 20;
+        }    
+            flashlight.SetBatteryText();
     }
 }
