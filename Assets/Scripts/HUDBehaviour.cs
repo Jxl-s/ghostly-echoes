@@ -112,4 +112,12 @@ public class HUDBehaviour : MonoBehaviour
         tooltipLabel.text = selectedItem.description;
         useItemButton.gameObject.SetActive(true);
     }
+
+    public void OnUseItem()
+    {
+        if (selectedItem == null) return;
+
+        InventoryManager.Instance.RemoveItem(selectedItem);
+        ItemManager.Instance.UseItem(selectedItem.itemName);
+    }
 }
