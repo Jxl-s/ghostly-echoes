@@ -18,6 +18,9 @@ public class CharacterMovement : MonoBehaviour
  
     private void Start()
     {
+        Cursor.visible = false;
+        Cursor.lockState = CursorLockMode.Locked;
+
         controller = GetComponent<CharacterController>();
     }
 
