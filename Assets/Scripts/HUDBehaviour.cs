@@ -72,27 +72,58 @@ public class HUDBehaviour : MonoBehaviour
 
     public void UpdateInventory(List<ItemData> list)
     {
-        foreach (Transform transform in inventoryContainer)
-        {
-            if (transform.gameObject.name == "TEMPLATE") continue;
-            Destroy(transform.gameObject);
-        }
+        // For new items, create a new button.
+        // For existing ones, just change the displayed amount.
+        // For the ones that aren't here anymore or are 0, delete
 
-        // Get the template object
-        GameObject template = inventoryContainer.Find("TEMPLATE").gameObject;
         foreach (ItemData itemData in list)
         {
-            // Clone the template
+            bool found = false;
+            foreach (Transform transform in inventoryContainer)
+            {
+                if (transform.gameObject.name == itemData.itemName)
+                {
+                    // Update the amount
+                    transform.Find("Amount").GetComponent<TextMeshProUGUI>().text = itemData.value.ToString();
+                    found = true;
+                    break;
+                }
+            }
+
+            if (found) continue;
+
+            // If the item is not in the inventory, add it
+            GameObject template = inventoryContainer.Find("TEMPLATE").gameObject;
             GameObject clone = Instantiate(template, inventoryContainer);
 
-            // Set the name, amount
             clone.gameObject.name = itemData.itemName;
             clone.transform.Find("Name").GetComponent<TextMeshProUGUI>().text = itemData.itemName;
             clone.transform.Find("Amount").GetComponent<TextMeshProUGUI>().text = itemData.value.ToString();
             clone.SetActive(true);
 
-            // Add an event listenre
+            // Add an event listener
             clone.GetComponent<EventTrigger>().triggers[0].callback.AddListener((data) => { OnObjectSelect(clone); });
+        }
+
+        // Remove the ones that arent in the list anymore
+        foreach (Transform transform in inventoryContainer)
+        {
+            if (transform.gameObject.name == "TEMPLATE") continue;
+
+            bool found = false;
+            foreach (ItemData itemData in list)
+            {
+                if (transform.gameObject.name == itemData.itemName)
+                {
+                    found = true;
+                    break;
+                }
+            }
+
+            if (!found)
+            {
+                Destroy(transform.gameObject);
+            }
         }
     }
 
@@ -117,7 +148,17 @@ public class HUDBehaviour : MonoBehaviour
     {
         if (selectedItem == null) return;
 
-        InventoryManager.Instance.RemoveItem(selectedItem);
-        ItemManager.Instance.UseItem(selectedItem.itemName);
+        if (selectedItem.value > 0)
+        {
+            InventoryManager.Instance.RemoveItem(selectedItem);
+            ItemManager.Instance.UseItem(selectedItem.itemName);
+        }
+        else
+        {
+            // De-select
+            selectedItem = null;
+            tooltipLabel.text = "";
+            useItemButton.gameObject.SetActive(false);
+        }
     }
 }
