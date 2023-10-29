@@ -18,19 +18,26 @@ public class UIBehaviour : MonoBehaviour
     private int startOriginalY;
     private int quitOriginalY;
 
+    private TextMeshProUGUI startLabel;
+    private TextMeshProUGUI quitLabel;
+
+
     // Start is called before the first frame update
     void Start()
     {
+        startLabel = startButton.GetComponentInChildren<TextMeshProUGUI>();
+        quitLabel = quitButton.GetComponentInChildren<TextMeshProUGUI>();
+
         titleOriginalY = (int)titleLabel.rectTransform.anchoredPosition.y;
-        startOriginalY = (int)startButton.GetComponentInChildren<TextMeshProUGUI>().rectTransform.anchoredPosition.y;
-        quitOriginalY = (int)quitButton.GetComponentInChildren<TextMeshProUGUI>().rectTransform.anchoredPosition.y;
+        startOriginalY = (int)startLabel.rectTransform.anchoredPosition.y;
+        quitOriginalY = (int)quitLabel.rectTransform.anchoredPosition.y;
 
         versionLabel.text = "Version: " + GameManager.GAME_VERSION;
 
         // Make the title fade in, after 1 second
         titleLabel.CrossFadeAlpha(0, 0, true);
-        startButton.GetComponentInChildren<TextMeshProUGUI>().CrossFadeAlpha(0, 0, true);
-        quitButton.GetComponentInChildren<TextMeshProUGUI>().CrossFadeAlpha(0, 0, true);
+        startLabel.CrossFadeAlpha(0, 0, true);
+        quitLabel.CrossFadeAlpha(0, 0, true);
 
         Invoke(nameof(FadeInTitle), 1.0f);
     }
@@ -47,27 +54,27 @@ public class UIBehaviour : MonoBehaviour
 
         // Make the buttons bounce up and down, and fade in and out
         float newStartY = startOriginalY + Mathf.Sin(Time.time * 2 + 3) * 5;
-        startButton.GetComponentInChildren<TextMeshProUGUI>().rectTransform.anchoredPosition = new Vector2(startButton.GetComponentInChildren<TextMeshProUGUI>().rectTransform.anchoredPosition.x, newStartY);
+        startLabel.rectTransform.anchoredPosition = new Vector2(startLabel.rectTransform.anchoredPosition.x, newStartY);
 
         float newStartRot = Mathf.Sin(Time.time * 3 + 3) * 0.2f;
-        startButton.GetComponentInChildren<TextMeshProUGUI>().rectTransform.rotation = Quaternion.Euler(0, 0, newStartRot);
+        startLabel.rectTransform.rotation = Quaternion.Euler(0, 0, newStartRot);
 
         float newQuitY = quitOriginalY + Mathf.Sin(Time.time * 2 + 4) * 5;
-        quitButton.GetComponentInChildren<TextMeshProUGUI>().rectTransform.anchoredPosition = new Vector2(quitButton.GetComponentInChildren<TextMeshProUGUI>().rectTransform.anchoredPosition.x, newQuitY);
+        quitLabel.rectTransform.anchoredPosition = new Vector2(quitLabel.rectTransform.anchoredPosition.x, newQuitY);
 
         float newQuitRot = Mathf.Sin(Time.time * 3 + 4) * 0.2f;
-        quitButton.GetComponentInChildren<TextMeshProUGUI>().rectTransform.rotation = Quaternion.Euler(0, 0, newQuitRot);
+        quitLabel.rectTransform.rotation = Quaternion.Euler(0, 0, newQuitRot);
 
         // Make the camera rotate (increment Y rot by 1 degree)
-        Camera.main.transform.rotation = Quaternion.Euler(0, Camera.main.transform.rotation.eulerAngles.y + Time.deltaTime, 0);
+        Camera.main.transform.rotation = Quaternion.Euler(45, Camera.main.transform.rotation.eulerAngles.y + Time.deltaTime, 0);
     }
 
     private void FadeInTitle()
     {
         titleLabel.CrossFadeAlpha(1, 1, false);
 
-        startButton.GetComponentInChildren<TextMeshProUGUI>().CrossFadeAlpha(1, 1, false);
-        quitButton.GetComponentInChildren<TextMeshProUGUI>().CrossFadeAlpha(1, 1, false);
+        startLabel.CrossFadeAlpha(1, 1, false);
+        quitLabel.CrossFadeAlpha(1, 1, false);
 
         StartExit();
         LeaveExit();
@@ -77,28 +84,28 @@ public class UIBehaviour : MonoBehaviour
     {
         titleLabel.CrossFadeAlpha(0, 1, false);
 
-        startButton.GetComponentInChildren<TextMeshProUGUI>().CrossFadeAlpha(0, 1, false);
-        quitButton.GetComponentInChildren<TextMeshProUGUI>().CrossFadeAlpha(0, 1, false);
+        startLabel.CrossFadeAlpha(0, 1, false);
+        quitLabel.CrossFadeAlpha(0, 1, false);
     }
 
     public void StartEnter()
     {
-        startButton.GetComponentInChildren<TextMeshProUGUI>().CrossFadeColor(new Color(0.3f, 0.5f, 0.3f, 0.5f), 0.5f, false, true);
+        startLabel.CrossFadeColor(new Color(0.3f, 0.5f, 0.3f, 0.5f), 0.5f, false, true);
     }
 
     public void StartExit()
     {
-        startButton.GetComponentInChildren<TextMeshProUGUI>().CrossFadeColor(new Color(0.1f, 0.3f, 0.1f, 0.5f), 0.5f, false, true);
+        startLabel.CrossFadeColor(new Color(0.1f, 0.3f, 0.1f, 0.5f), 0.5f, false, true);
     }
 
     public void LeaveEnter()
     {
-        quitButton.GetComponentInChildren<TextMeshProUGUI>().CrossFadeColor(new Color(0.5f, 0.3f, 0.3f, 0.5f), 0.5f, false, true);
+        quitLabel.CrossFadeColor(new Color(0.5f, 0.3f, 0.3f, 0.5f), 0.5f, false, true);
     }
 
     public void LeaveExit()
     {
-        quitButton.GetComponentInChildren<TextMeshProUGUI>().CrossFadeColor(new Color(0.3f, 0.1f, 0.1f, 0.5f), 0.5f, false, true);
+        quitLabel.CrossFadeColor(new Color(0.3f, 0.1f, 0.1f, 0.5f), 0.5f, false, true);
     }
 
     public void StartGame()
