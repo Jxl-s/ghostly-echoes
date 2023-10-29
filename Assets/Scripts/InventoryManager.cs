@@ -38,13 +38,39 @@ public class InventoryManager : MonoBehaviour
 
     public void AddItem(ItemData item)
     {
+        // Check if the item is already in the inventory, then increment the count
+        foreach (ItemData i in Items)
+        {
+            if (i.itemName == item.itemName)
+            {
+                i.value++;
+                HUDBehaviour.Instance.UpdateInventory(Items);
+                return;
+            }
+        }
+
+        // If the item is not in the inventory, add it
+        item.value = 1;
         Items.Add(item);
+
         HUDBehaviour.Instance.UpdateInventory(Items);
     }
 
     public void RemoveItem(ItemData item)
     {
-        Items.Remove(item);
-        HUDBehaviour.Instance.UpdateInventory(Items);
+        // Check if the item is already in the inventory, then increment the count
+        foreach (ItemData i in Items)
+        {
+            if (i.itemName == item.itemName)
+            {
+                i.value--;
+                if (i.value <= 0)
+                {
+                    Items.Remove(i);
+                }
+                HUDBehaviour.Instance.UpdateInventory(Items);
+                return;
+            }
+        }
     }
 }
