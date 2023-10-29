@@ -2052,7 +2052,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 0cc88751fe8aa2642ac62f32a6b98e9f, type: 2}
+  - {fileID: 2100000, guid: a1b28ca4e978e3b42b065baf5ca74d09, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -8124,7 +8124,7 @@ GameObject:
   - component: {fileID: 1129601458}
   m_Layer: 5
   m_Name: InteractLabel
-  m_TagString: InteractLabel
+  m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -15909,6 +15909,7 @@ GameObject:
   - component: {fileID: 2127337515}
   - component: {fileID: 2127337514}
   - component: {fileID: 2127337513}
+  - component: {fileID: 2127337517}
   m_Layer: 5
   m_Name: Canvas
   m_TagString: Untagged
@@ -16002,6 +16003,20 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0, y: 0}
+--- !u!114 &2127337517
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2127337512}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b291fb9dd1fe5e94f92ed198b13b6a3f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  inventoryPanel: {fileID: 1716659853}
+  interactLabel: {fileID: 1129601458}
 --- !u!1001 &3832491113927825128
 PrefabInstance:
   m_ObjectHideFlags: 0

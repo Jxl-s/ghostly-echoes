@@ -8,7 +8,6 @@ TagManager:
   - flashlight_light
   - batteryText
   - flashlight
-  - InteractLabel
   layers:
   - Default
   - TransparentFX

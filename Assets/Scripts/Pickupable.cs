@@ -15,13 +15,7 @@ public class Pickupable : MonoBehaviour
 
     public void OnMouseEnter()
     {
-        GameObject interactLabel = GameObject.FindGameObjectWithTag("InteractLabel");
-
-        if (interactLabel != null)
-        {
-            interactLabel.GetComponent<TextMeshProUGUI>().alpha = 1;
-            interactLabel.GetComponent<TextMeshProUGUI>().text = "Pickup <b>" + item.name + "</b>[F]";
-        }
+        HUDBehaviour.Instance.SetInteractText(true, "Pickup " + item.name + " [F]");
 
         // Make the "Selected" child object visible
         transform.Find("Normal").gameObject.SetActive(false);
@@ -30,12 +24,7 @@ public class Pickupable : MonoBehaviour
 
     public void OnMouseExit()
     {
-        // Get object with tag "InteractLabel"
-        GameObject interactLabel = GameObject.FindGameObjectWithTag("InteractLabel");
-        if (interactLabel != null)
-        {
-            interactLabel.GetComponent<TextMeshProUGUI>().alpha = 0;
-        }
+        HUDBehaviour.Instance.SetInteractText(false, "");
 
         transform.Find("Normal").gameObject.SetActive(true);
         transform.Find("Selected").gameObject.SetActive(false);
