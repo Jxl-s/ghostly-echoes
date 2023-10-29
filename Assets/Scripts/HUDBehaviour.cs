@@ -6,6 +6,8 @@ using UnityEngine;
 public class HUDBehaviour : MonoBehaviour
 {
     [SerializeField] private RectTransform inventoryPanel;
+    [SerializeField] private RectTransform inventoryContainer;
+
     [SerializeField] private TextMeshProUGUI interactLabel;
 
     public static HUDBehaviour Instance;
@@ -55,5 +57,27 @@ public class HUDBehaviour : MonoBehaviour
     {
         interactLabel.alpha = visible ? 1 : 0;
         interactLabel.text = text;
+    }
+
+    public void UpdateInventory(List<ItemData> list)
+    {
+        foreach (Transform transform in inventoryContainer)
+        {
+            if (transform.gameObject.name == "TEMPLATE") continue;
+            Destroy(transform.gameObject);
+        }
+
+        // Get the template object
+        GameObject template = inventoryContainer.Find("TEMPLATE").gameObject;
+        foreach (ItemData itemData in list)
+        {
+            // Clone the template
+            GameObject clone = Instantiate(template, inventoryContainer);
+
+            // Set the name, amount
+            clone.transform.Find("Amount").GetComponent<TextMeshProUGUI>().text = itemData.value.ToString();
+            clone.transform.Find("Name").GetComponent<TextMeshProUGUI>().text = itemData.itemName;
+            clone.SetActive(true);
+        }
     }
 }

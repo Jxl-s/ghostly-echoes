@@ -7,14 +7,20 @@ public class Pickupable : MonoBehaviour
 {
     public ItemData item;
 
-    void Pickup()
+    public void Pickup()
     {
-        InventoryManager.Instance.addItem(item);
+        InventoryManager.Instance.AddItem(item);
         Destroy(gameObject);
     }
 
     public void OnMouseEnter()
     {
+        // Make sure distance is less than 2f
+        if (Vector3.Distance(transform.position, Camera.main.transform.position) > 4f)
+        {
+            return;
+        }
+
         HUDBehaviour.Instance.SetInteractText(true, "Pickup " + item.name + " [F]");
 
         // Make the "Selected" child object visible
@@ -24,6 +30,12 @@ public class Pickupable : MonoBehaviour
 
     public void OnMouseExit()
     {
+        // Make sure distance is less than 2f
+        if (Vector3.Distance(transform.position, Camera.main.transform.position) > 4f)
+        {
+            return;
+        }
+
         HUDBehaviour.Instance.SetInteractText(false, "");
 
         transform.Find("Normal").gameObject.SetActive(true);

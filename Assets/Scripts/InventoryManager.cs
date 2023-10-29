@@ -10,6 +10,7 @@ public class InventoryManager : MonoBehaviour
     public List<ItemData> Items = new List<ItemData>();
     public Transform ItemContent;
     public GameObject InventoryItem;
+
     void Awake()
     {
         if (Instance == null)
@@ -21,27 +22,29 @@ public class InventoryManager : MonoBehaviour
             Destroy(gameObject);
         }
     }
-    public void addItem(ItemData item) {
+
+    void Update()
+    {
+        if (Input.GetKeyDown(KeyCode.F))
+        {
+            // Send a ray, check if the object is a pickupable
+            if (Physics.Raycast(Camera.main.transform.position, Camera.main.transform.forward, out RaycastHit hit, 4f))
+            {
+                Pickupable pickupable = hit.collider.gameObject.GetComponent<Pickupable>();
+                pickupable?.Pickup();
+            }
+        }
+    }
+
+    public void AddItem(ItemData item)
+    {
         Items.Add(item);
+        HUDBehaviour.Instance.UpdateInventory(Items);
     }
-    public void removeItem(ItemData item) {
+
+    public void RemoveItem(ItemData item)
+    {
         Items.Remove(item);
-    }
-
-    public void listItems() {
-
-        foreach (Transform item in ItemContent) {
-            Destroy(item.gameObject);
-        }
-        foreach(var item in Items) {
-            GameObject obj = Instantiate(InventoryItem, ItemContent);
-            var itemName = obj.transform.Find("Name").GetComponent<Text>();
-            var itemValue = obj.transform.Find("Value").GetComponent<Text>();
-            var itemDesc = obj.transform.Find("Description").GetComponent<Text>();
-    
-            itemName.text = item.itemName;
-            itemValue.text = item.value.ToString();
-            itemDesc.text = item.description;
-        }
+        HUDBehaviour.Instance.UpdateInventory(Items);
     }
 }
