@@ -153,7 +153,8 @@ public class HUDBehaviour : MonoBehaviour
             InventoryManager.Instance.RemoveItem(selectedItem);
             ItemManager.Instance.UseItem(selectedItem.itemName);
         }
-        else
+
+        if (selectedItem.value <= 0)
         {
             // De-select
             selectedItem = null;
