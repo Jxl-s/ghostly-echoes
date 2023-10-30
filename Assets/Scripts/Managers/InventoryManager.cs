@@ -8,7 +8,6 @@ public class InventoryManager : MonoBehaviour
 {
     public static InventoryManager Instance;
     public List<ItemData> Items = new List<ItemData>();
-    public light_Script flashlight;
 
     void Awake()
     {
@@ -20,6 +19,13 @@ public class InventoryManager : MonoBehaviour
         {
             Destroy(gameObject);
         }
+    }
+
+    void Start()
+    {
+        // Add the initial flashlight (2 for equipped, 1 for unequipped)
+        Items.Add(new ItemData { itemName = "Flashlight", value = 2, description = "You might need this to see...", type = ItemType.Equipment });
+        HUDManager.Instance.UpdateInventory(Items);
     }
 
     void Update()
@@ -43,7 +49,7 @@ public class InventoryManager : MonoBehaviour
             if (i.itemName == item.itemName)
             {
                 i.value++;
-                HUDBehaviour.Instance.UpdateInventory(Items);
+                HUDManager.Instance.UpdateInventory(Items);
                 return;
             }
         }
@@ -52,7 +58,7 @@ public class InventoryManager : MonoBehaviour
         item.value = 1;
         Items.Add(item);
 
-        HUDBehaviour.Instance.UpdateInventory(Items);
+        HUDManager.Instance.UpdateInventory(Items);
     }
 
     public void RemoveItem(ItemData item)
@@ -67,7 +73,7 @@ public class InventoryManager : MonoBehaviour
                 {
                     Items.Remove(i);
                 }
-                HUDBehaviour.Instance.UpdateInventory(Items);
+                HUDManager.Instance.UpdateInventory(Items);
                 return;
             }
         }

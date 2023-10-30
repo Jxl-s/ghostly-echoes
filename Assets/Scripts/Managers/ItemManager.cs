@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -32,13 +33,34 @@ public class ItemManager : MonoBehaviour
         }
     }
 
+    public void EquipItem(string itemName)
+    {
+        // Unequip everything first
+        switch (itemName)
+        {
+            case "Flashlight":
+                flashlight.gameObject.SetActive(true);
+                return;
+        }
+    }
+
+    public void UnequipItem(string itemName)
+    {
+        switch (itemName)
+        {
+            case "Flashlight":
+                flashlight.gameObject.SetActive(false);
+                return;
+        }
+    }
+
     private void UseBattery()
     {
-        if(flashlight.battery + 20 > 100 && flashlight.battery < 100){
-            flashlight.battery = 100;
-        } else if (flashlight.battery < 100) {
-            flashlight.battery += 20;
-        }    
-            flashlight.SetBatteryText();
+        // Update battery numbers
+        GameManager.Instance.BatteryPercentage += 20;
+        GameManager.Instance.BatteryPercentage = Math.Min(GameManager.Instance.BatteryPercentage, 100);
+
+        // Update display
+        HUDManager.Instance.UpdateStats();
     }
 }

@@ -3,6 +3,12 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+public enum ItemType
+{
+    Consumable,
+    Equipment
+}
+
 [CreateAssetMenu(fileName = "Item", menuName = "Items/InventoryData")]
 public class ItemData : ScriptableObject
 {
@@ -14,6 +20,9 @@ public class ItemData : ScriptableObject
 
     // A short description that appears as a tooltip when clicked
     public string description;
+
+    // Whether it's stackable or not
+    public ItemType type;
 
     public void Use() { }
 }

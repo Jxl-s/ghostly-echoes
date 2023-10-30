@@ -15,7 +15,7 @@ public class Pickupable : MonoBehaviour
 
     public void OnMouseEnter()
     {
-        HUDBehaviour.Instance.SetInteractText(true, "Pickup " + item.name + " [F]");
+        HUDManager.Instance.SetInteractText(true, "Pickup " + item.name + " [F]");
 
         // Make the "Selected" child object visible
         transform.Find("Normal").gameObject.SetActive(false);
@@ -24,7 +24,7 @@ public class Pickupable : MonoBehaviour
 
     public void OnMouseExit()
     {
-        HUDBehaviour.Instance.SetInteractText(false, "");
+        HUDManager.Instance.SetInteractText(false, "");
 
         transform.Find("Normal").gameObject.SetActive(true);
         transform.Find("Selected").gameObject.SetActive(false);

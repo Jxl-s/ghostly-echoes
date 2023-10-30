@@ -5,7 +5,7 @@ using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
-public class HUDBehaviour : MonoBehaviour
+public class HUDManager : MonoBehaviour
 {
     [SerializeField] private RectTransform inventoryPanel;
     [SerializeField] private RectTransform inventoryContainer;
@@ -26,7 +26,7 @@ public class HUDBehaviour : MonoBehaviour
 
     private ItemData selectedItem;
 
-    public static HUDBehaviour Instance;
+    public static HUDManager Instance;
 
     void Awake()
     {
@@ -88,28 +88,25 @@ public class HUDBehaviour : MonoBehaviour
 
         if (selectedItem == null) return;
         tooltipLabel.text = selectedItem.description;
+
+        if (selectedItem.type == ItemType.Equipment)
+        {
+            if (selectedItem.value == 1)
+            {
+
+                useItemButton.GetComponentInChildren<TextMeshProUGUI>().text = "Equip";
+            }
+            else
+            {
+                useItemButton.GetComponentInChildren<TextMeshProUGUI>().text = "Unequip";
+            }
+        }
+        else
+        {
+            useItemButton.GetComponentInChildren<TextMeshProUGUI>().text = "Use";
+        }
+
         useItemButton.gameObject.SetActive(true);
-    }
-
-    private void OnUseItem()
-    {
-        if (selectedItem == null) return;
-
-        if (selectedItem.value > 0)
-        {
-            InventoryManager.Instance.RemoveItem(selectedItem);
-            ItemManager.Instance.UseItem(selectedItem.itemName);
-        }
-
-        if (selectedItem.value <= 0)
-        {
-            // De-select
-            selectedItem = null;
-            tooltipLabel.text = "";
-            useItemButton.gameObject.SetActive(false);
-        }
-
-        UpdateStats();
     }
 
     // Public UI methods
@@ -134,6 +131,12 @@ public class HUDBehaviour : MonoBehaviour
                 {
                     // Update the amount
                     transform.Find("Amount").GetComponent<TextMeshProUGUI>().text = itemData.value.ToString();
+
+                    if (itemData.type == ItemType.Equipment)
+                    {
+                        transform.Find("Amount").GetComponent<TextMeshProUGUI>().text = "EQUIPMENT";
+                    }
+
                     found = true;
                     break;
                 }
@@ -148,6 +151,12 @@ public class HUDBehaviour : MonoBehaviour
             clone.gameObject.name = itemData.itemName;
             clone.transform.Find("Name").GetComponent<TextMeshProUGUI>().text = itemData.itemName;
             clone.transform.Find("Amount").GetComponent<TextMeshProUGUI>().text = itemData.value.ToString();
+
+            if (itemData.type == ItemType.Equipment)
+            {
+                clone.transform.Find("Amount").GetComponent<TextMeshProUGUI>().text = "EQUIPMENT";
+            }
+
             clone.SetActive(true);
 
             // Add an event listener
@@ -174,6 +183,47 @@ public class HUDBehaviour : MonoBehaviour
                 Destroy(transform.gameObject);
             }
         }
+    }
+
+
+    public void OnUseItem()
+    {
+        if (selectedItem == null) return;
+
+        if (selectedItem.value > 0 && selectedItem.type == ItemType.Consumable)
+        {
+            InventoryManager.Instance.RemoveItem(selectedItem);
+            ItemManager.Instance.UseItem(selectedItem.itemName);
+        }
+
+        if (selectedItem.type == ItemType.Equipment)
+        {
+            // Toggle the equipment
+            if (selectedItem.value == 2)
+            {
+                selectedItem.value = 1;
+                ItemManager.Instance.UnequipItem(selectedItem.itemName);
+            }
+            else
+            {
+                selectedItem.value = 2;
+                ItemManager.Instance.EquipItem(selectedItem.itemName);
+            }
+
+            // De-select
+            selectedItem = null;
+            tooltipLabel.text = "";
+            useItemButton.gameObject.SetActive(false);
+        }
+        else if (selectedItem.value <= 0)
+        {
+            // De-select
+            selectedItem = null;
+            tooltipLabel.text = "";
+            useItemButton.gameObject.SetActive(false);
+        }
+
+        UpdateStats();
     }
 
     // Stats, such as health, stamina, flashlight

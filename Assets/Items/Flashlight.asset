@@ -10,9 +10,9 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: feb726ce56ae34042a6a95fc055c9d0f, type: 3}
-  m_Name: Battery
+  m_Name: Flashlight
   m_EditorClassIdentifier: 
-  itemName: Battery
+  itemName: Flashlight
   value: 1
-  description: Don't get lost in the dark...
-  type: 0
+  description: You might need this to see...
+  type: 1
