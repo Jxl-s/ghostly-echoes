@@ -14,6 +14,16 @@ public class HUDBehaviour : MonoBehaviour
     [SerializeField] private TextMeshProUGUI tooltipLabel;
     [SerializeField] private Button useItemButton;
 
+    // Stats
+    [SerializeField] private TextMeshProUGUI healthLabel;
+    [SerializeField] private RectTransform healthBar;
+
+    [SerializeField] private TextMeshProUGUI staminaLabel;
+    [SerializeField] private RectTransform staminaBar;
+
+    [SerializeField] private TextMeshProUGUI batteryLabel;
+    [SerializeField] private RectTransform batteryBar;
+
     private ItemData selectedItem;
 
     public static HUDBehaviour Instance;
@@ -61,6 +71,45 @@ public class HUDBehaviour : MonoBehaviour
 
             inventoryPanel.gameObject.SetActive(newState);
         }
+    }
+
+
+    private void OnObjectSelect(GameObject selectedObject)
+    {
+        // InventoryManager.Instance.Items;
+        foreach (ItemData itemData in InventoryManager.Instance.Items)
+        {
+            if (itemData.itemName == selectedObject.name)
+            {
+                selectedItem = itemData;
+                break;
+            }
+        }
+
+        if (selectedItem == null) return;
+        tooltipLabel.text = selectedItem.description;
+        useItemButton.gameObject.SetActive(true);
+    }
+
+    private void OnUseItem()
+    {
+        if (selectedItem == null) return;
+
+        if (selectedItem.value > 0)
+        {
+            InventoryManager.Instance.RemoveItem(selectedItem);
+            ItemManager.Instance.UseItem(selectedItem.itemName);
+        }
+
+        if (selectedItem.value <= 0)
+        {
+            // De-select
+            selectedItem = null;
+            tooltipLabel.text = "";
+            useItemButton.gameObject.SetActive(false);
+        }
+
+        UpdateStats();
     }
 
     // Public UI methods
@@ -127,39 +176,17 @@ public class HUDBehaviour : MonoBehaviour
         }
     }
 
-    public void OnObjectSelect(GameObject selectedObject)
+    // Stats, such as health, stamina, flashlight
+    public void UpdateStats()
     {
-        // InventoryManager.Instance.Items;
-        foreach (ItemData itemData in InventoryManager.Instance.Items)
-        {
-            if (itemData.itemName == selectedObject.name)
-            {
-                selectedItem = itemData;
-                break;
-            }
-        }
+        // Update text
+        healthLabel.text = $"Health: <color=red>{GameManager.Instance.HealthPercentage}</color> / 100";
+        batteryLabel.text = $"Battery: <color=yellow>{GameManager.Instance.BatteryPercentage}</color> / 100";
+        staminaLabel.text = $"Stamina: <color=lightblue>{GameManager.Instance.StaminaPercentage}</color> / 100";
 
-        if (selectedItem == null) return;
-        tooltipLabel.text = selectedItem.description;
-        useItemButton.gameObject.SetActive(true);
-    }
-
-    public void OnUseItem()
-    {
-        if (selectedItem == null) return;
-
-        if (selectedItem.value > 0)
-        {
-            InventoryManager.Instance.RemoveItem(selectedItem);
-            ItemManager.Instance.UseItem(selectedItem.itemName);
-        }
-
-        if (selectedItem.value <= 0)
-        {
-            // De-select
-            selectedItem = null;
-            tooltipLabel.text = "";
-            useItemButton.gameObject.SetActive(false);
-        }
+        // Update bars
+        healthBar.anchorMax = new Vector2(GameManager.Instance.HealthPercentage / 100, 0);
+        batteryBar.anchorMax = new Vector2(GameManager.Instance.BatteryPercentage / 100, 0);
+        staminaBar.anchorMax = new Vector2(GameManager.Instance.StaminaPercentage / 100, 0);
     }
 }
