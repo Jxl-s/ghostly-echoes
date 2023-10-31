@@ -37,6 +37,8 @@ public class InventoryManager : MonoBehaviour
             {
                 Pickupable pickupable = hit.collider.gameObject.GetComponent<Pickupable>();
                 pickupable?.Pickup();
+                Interactable interactable = hit.collider.gameObject.GetComponent<Interactable>();
+                interactable?.Interact();
             }
         }
     }
