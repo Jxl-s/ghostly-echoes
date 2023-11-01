@@ -1,7 +1,4 @@
-using System.Collections;
-using System.Collections.Generic;
 using TMPro;
-using UnityEditor.SearchService;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
@@ -12,13 +9,16 @@ public class UIBehaviour : MonoBehaviour
     [SerializeField] private TextMeshProUGUI titleLabel;
 
     [SerializeField] private Button startButton;
+    [SerializeField] private Button settingsButton;
     [SerializeField] private Button quitButton;
 
     private int titleOriginalY;
     private int startOriginalY;
+    private int settingsOriginalY;
     private int quitOriginalY;
 
     private TextMeshProUGUI startLabel;
+    private TextMeshProUGUI settingsLabel;
     private TextMeshProUGUI quitLabel;
 
 
@@ -26,20 +26,28 @@ public class UIBehaviour : MonoBehaviour
     void Start()
     {
         startLabel = startButton.GetComponentInChildren<TextMeshProUGUI>();
+        settingsLabel = settingsButton.GetComponentInChildren<TextMeshProUGUI>();
         quitLabel = quitButton.GetComponentInChildren<TextMeshProUGUI>();
 
         titleOriginalY = (int)titleLabel.rectTransform.anchoredPosition.y;
         startOriginalY = (int)startLabel.rectTransform.anchoredPosition.y;
+        settingsOriginalY = (int)settingsLabel.rectTransform.anchoredPosition.y;
         quitOriginalY = (int)quitLabel.rectTransform.anchoredPosition.y;
 
         versionLabel.text = "Version: " + GameManager.GAME_VERSION;
 
         // Make the title fade in, after 1 second
         titleLabel.CrossFadeAlpha(0, 0, true);
+
         startLabel.CrossFadeAlpha(0, 0, true);
+        settingsLabel.CrossFadeAlpha(0, 0, true);
         quitLabel.CrossFadeAlpha(0, 0, true);
 
         Invoke(nameof(FadeInTitle), 1.0f);
+
+        Invoke(nameof(StartExit), 0.5f);
+        Invoke(nameof(SettingsExit), 0.5f);
+        Invoke(nameof(LeaveExit), 0.5f);
     }
 
     // Update is called once per frame
@@ -65,6 +73,12 @@ public class UIBehaviour : MonoBehaviour
         float newQuitRot = Mathf.Sin(Time.time * 3 + 4) * 0.2f;
         quitLabel.rectTransform.rotation = Quaternion.Euler(0, 0, newQuitRot);
 
+        float newSettingsY = settingsOriginalY + Mathf.Sin(Time.time * 2 + 5) * 5;
+        settingsLabel.rectTransform.anchoredPosition = new Vector2(settingsLabel.rectTransform.anchoredPosition.x, newSettingsY);
+
+        float newSettingsRot = Mathf.Sin(Time.time * 3 + 5) * 0.2f;
+        settingsLabel.rectTransform.rotation = Quaternion.Euler(0, 0, newSettingsRot);
+
         // Make the camera rotate (increment Y rot by 1 degree)
         Camera.main.transform.rotation = Quaternion.Euler(45, Camera.main.transform.rotation.eulerAngles.y + Time.deltaTime, 0);
     }
@@ -75,9 +89,6 @@ public class UIBehaviour : MonoBehaviour
 
         startLabel.CrossFadeAlpha(1, 1, false);
         quitLabel.CrossFadeAlpha(1, 1, false);
-
-        StartExit();
-        LeaveExit();
     }
 
     private void FadeOutTitle()
@@ -96,23 +107,40 @@ public class UIBehaviour : MonoBehaviour
 
     public void StartExit()
     {
-        startLabel.CrossFadeColor(new Color(0.6f, 0.6f, 0.6f, 1f), 0.5f, false, true);
+        startLabel.CrossFadeColor(new Color(0.3f, 0.3f, 0.3f), 0.5f, false, true);
+    }
+
+    public void SettingsEnter()
+    {
+        settingsLabel.CrossFadeColor(new Color(1.0f, 1.0f, 1.0f), 0.5f, false, true);
+    }
+
+    public void SettingsExit()
+    {
+        settingsLabel.CrossFadeColor(new Color(0.3f, 0.3f, 0.3f), 0.5f, false, true);
     }
 
     public void LeaveEnter()
     {
-        quitLabel.CrossFadeColor(new Color(1.0f, 1.0f, 1.0f, 0.75f), 0.5f, false, true);
+        quitLabel.CrossFadeColor(new Color(1.0f, 1.0f, 1.0f), 0.5f, false, true);
     }
 
     public void LeaveExit()
     {
-        quitLabel.CrossFadeColor(new Color(0.6f, 0.6f, 0.6f, 1f), 0.5f, false, true);
+        quitLabel.CrossFadeColor(new Color(0.3f, 0.3f, 0.3f), 0.5f, false, true);
     }
 
     public void StartGame()
     {
         FadeOutTitle();
         Invoke(nameof(LoadNextLevel), 1.0f);
+    }
+
+    public void ExitGame()
+    {
+        
+        FadeOutTitle();
+        Invoke(nameof(ExitGame), 1.0f);
     }
 
     private void LoadNextLevel() {
