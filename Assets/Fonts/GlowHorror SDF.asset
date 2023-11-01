@@ -57,11 +57,11 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 71c1514a6bd24e1e882cebbe1904ce04, type: 3}
-  m_Name: EasyHorror SDF
+  m_Name: GlowHorror SDF
   m_EditorClassIdentifier: 
-  hashCode: -2065774971
+  hashCode: -658831272
   material: {fileID: 589514215916183463}
-  materialHashCode: 1200911621
+  materialHashCode: -1565661832
   m_Version: 1.1.0
   m_SourceFontFileGUID: e03b8be7672a93e4695025ca3dbd2c02
   m_SourceFontFile_EditorRef: {fileID: 12800000, guid: e03b8be7672a93e4695025ca3dbd2c02, type: 3}
