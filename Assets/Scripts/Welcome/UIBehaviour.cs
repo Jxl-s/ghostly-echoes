@@ -91,22 +91,22 @@ public class UIBehaviour : MonoBehaviour
 // TODO: Fade in the background and fade it out when hover and leave
     public void StartEnter()
     {
-        startLabel.CrossFadeColor(new Color(0.75f, 0.75f, 0.75f, 0.75f), 0.5f, false, true);
+        startLabel.CrossFadeColor(new Color(1.0f, 1.0f, 1.0f, 0.75f), 0.5f, false, true);
     }
 
     public void StartExit()
     {
-        startLabel.CrossFadeColor(new Color(0.9f, 0.9f, 0.9f, 0.75f), 0.5f, false, true);
+        startLabel.CrossFadeColor(new Color(0.6f, 0.6f, 0.6f, 1f), 0.5f, false, true);
     }
 
     public void LeaveEnter()
     {
-        quitLabel.CrossFadeColor(new Color(0.75f, 0.75f, 0.75f, 0.75f), 0.5f, false, true);
+        quitLabel.CrossFadeColor(new Color(1.0f, 1.0f, 1.0f, 0.75f), 0.5f, false, true);
     }
 
     public void LeaveExit()
     {
-        quitLabel.CrossFadeColor(new Color(0.9f, 0.9f, 0.9f, 0.75f), 0.5f, false, true);
+        quitLabel.CrossFadeColor(new Color(0.6f, 0.6f, 0.6f, 1f), 0.5f, false, true);
     }
 
     public void StartGame()
