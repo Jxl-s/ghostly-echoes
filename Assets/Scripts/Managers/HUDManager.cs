@@ -21,8 +21,11 @@ public class HUDManager : MonoBehaviour
     [SerializeField] private TextMeshProUGUI staminaLabel;
     [SerializeField] private RectTransform staminaBar;
 
-    [SerializeField] private TextMeshProUGUI batteryLabel;
-    [SerializeField] private RectTransform batteryBar;
+    [SerializeField] public TextMeshProUGUI batteryLabel;
+    [SerializeField] public RectTransform batteryBar;
+    [SerializeField] public Image batteryBarImage;
+
+    public Color currentBattercolor = Color.yellow;
 
     private ItemData selectedItem;
 
@@ -238,5 +241,20 @@ public class HUDManager : MonoBehaviour
         healthBar.anchorMax = new Vector2(GameManager.Instance.HealthPercentage / 100, 0);
         batteryBar.anchorMax = new Vector2(GameManager.Instance.BatteryPercentage / 100, 0);
         staminaBar.anchorMax = new Vector2(GameManager.Instance.StaminaPercentage / 100, 0);
+
+        batteryBarImage.color = currentBattercolor;
+    }
+
+    public void DecrementBatteryPercentage(float decrement){
+        GameManager.Instance.BatteryPercentage -= decrement;
+        UpdateStats();
+    }
+
+    public void SetBatteryColor(Color color){
+        currentBattercolor = color;
+    }
+
+    public void UpdateBatteryBar(float percent){
+        batteryBar.anchorMax = new Vector2(percent / 100, 0);
     }
 }

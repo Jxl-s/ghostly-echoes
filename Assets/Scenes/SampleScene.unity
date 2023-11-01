@@ -2299,7 +2299,7 @@ Mesh:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: pb_Mesh35036
+  m_Name: pb_Mesh23118
   serializedVersion: 10
   m_SubMeshes:
   - serializedVersion: 2
@@ -4220,7 +4220,7 @@ GameObject:
   - component: {fileID: 486976980}
   - component: {fileID: 486976979}
   m_Layer: 5
-  m_Name: Percentage
+  m_Name: BatteryPercentage
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -7094,7 +7094,7 @@ Mesh:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: pb_Mesh34966
+  m_Name: pb_Mesh23064
   serializedVersion: 10
   m_SubMeshes:
   - serializedVersion: 2
@@ -7605,7 +7605,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: 'Battery: '
+  m_Text: 
 --- !u!222 &762878655
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -8138,7 +8138,7 @@ Mesh:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: pb_Mesh34938
+  m_Name: pb_Mesh23036
   serializedVersion: 10
   m_SubMeshes:
   - serializedVersion: 2
@@ -8437,7 +8437,7 @@ Mesh:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: pb_Mesh34952
+  m_Name: pb_Mesh23050
   serializedVersion: 10
   m_SubMeshes:
   - serializedVersion: 2
@@ -10241,7 +10241,7 @@ Mesh:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: pb_Mesh34766
+  m_Name: pb_Mesh22870
   serializedVersion: 10
   m_SubMeshes:
   - serializedVersion: 2
@@ -10466,7 +10466,7 @@ Mesh:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: pb_Mesh34906
+  m_Name: pb_Mesh23004
   serializedVersion: 10
   m_SubMeshes:
   - serializedVersion: 2
@@ -10765,7 +10765,7 @@ Mesh:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: pb_Mesh34846
+  m_Name: pb_Mesh22948
   serializedVersion: 10
   m_SubMeshes:
   - serializedVersion: 2
@@ -12372,7 +12372,7 @@ Mesh:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: pb_Mesh34604
+  m_Name: pb_Mesh22704
   serializedVersion: 10
   m_SubMeshes:
   - serializedVersion: 2
@@ -16485,7 +16485,7 @@ Mesh:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: pb_Mesh34998
+  m_Name: pb_Mesh23096
   serializedVersion: 10
   m_SubMeshes:
   - serializedVersion: 2
@@ -18318,7 +18318,7 @@ Mesh:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: pb_Mesh34464
+  m_Name: pb_Mesh22562
   serializedVersion: 10
   m_SubMeshes:
   - serializedVersion: 2
@@ -18779,7 +18779,7 @@ Mesh:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: pb_Mesh34524
+  m_Name: pb_Mesh22624
   serializedVersion: 10
   m_SubMeshes:
   - serializedVersion: 2
@@ -19486,6 +19486,8 @@ MonoBehaviour:
   staminaBar: {fileID: 441220697}
   batteryLabel: {fileID: 547278950}
   batteryBar: {fileID: 486976978}
+  batteryBarImage: {fileID: 486976979}
+  currentBattercolor: {r: 1, g: 0.92156863, b: 0.015686275, a: 1}
 --- !u!1001 &975078253491445583
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -19601,6 +19603,10 @@ PrefabInstance:
     - target: {fileID: 3832491112998621339, guid: d2963d26ee97ae943a511428e033efff, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3832491112998621340, guid: d2963d26ee97ae943a511428e033efff, type: 3}
+      propertyPath: drainSpeed
+      value: 0.01
       objectReference: {fileID: 0}
     - target: {fileID: 3832491112998621340, guid: d2963d26ee97ae943a511428e033efff, type: 3}
       propertyPath: maxLightRange

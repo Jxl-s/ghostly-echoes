@@ -8,6 +8,7 @@ TagManager:
   - flashlight_light
   - batteryText
   - flashlight
+  - hud
   layers:
   - Default
   - TransparentFX

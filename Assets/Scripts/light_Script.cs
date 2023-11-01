@@ -7,7 +7,7 @@ using UnityEngine.UI;
 
 public class light_Script : MonoBehaviour
 {
-    public int battery = 100;
+    public float battery;
     public float maxLightIntensity = 20;
     public float maxLightRange = 10;
     public float drainSpeed = 1f;
@@ -17,9 +17,13 @@ public class light_Script : MonoBehaviour
     public Text batteryText;
     public  Color batteryTextcolor = Color.red; 
 
+    public HUDManager hud;
+
     // Start is called before the first frame update
     void Start()
     {
+        hud = HUDManager.Instance;
+
         batteryText = GameObject.FindGameObjectWithTag("batteryText").GetComponent<Text>();
         spotLight = GameObject.FindGameObjectWithTag("flashlight_light");
         light = spotLight.GetComponent<Light>();
@@ -27,14 +31,14 @@ public class light_Script : MonoBehaviour
         light.intensity = maxLightIntensity;
         light.range = maxLightRange;
         toggleFlashlight(isOn);
-        SetBatteryText();
+        // SetBatteryText();
 
     }
 
     // Update is called once per frame
     void Update()
     {
-        HandleLight();
+                HandleLight();
     }
     void LateUpdate(){
         
@@ -44,7 +48,7 @@ public class light_Script : MonoBehaviour
     public void HandleLight(){
         SetFlashlight();
 
-        if(Input.GetKeyUp("r") && battery > 0 && !isOn){
+        if(Input.GetKeyUp("r") && GameManager.Instance.BatteryPercentage > 0 && !isOn){
             isOn = true;
             toggleFlashlight(isOn);
         }
@@ -52,12 +56,12 @@ public class light_Script : MonoBehaviour
             isOn = false;
             toggleFlashlight(isOn);
         }
-        else if (battery == 0){
+        else if (GameManager.Instance.BatteryPercentage == 0){
             batteryTextcolor = Color.red;
             isOn = false;
             toggleFlashlight(isOn);
         }
-        if (Input.GetKeyUp("r") && battery == 0){
+        if (Input.GetKeyUp("r") && GameManager.Instance.BatteryPercentage == 0){
             Debug.Log("tryflash");
             StartCoroutine(BatteryFlash(3f));
 
@@ -65,13 +69,13 @@ public class light_Script : MonoBehaviour
     }
 
     public float LightPower(){
-        if (battery > 70){
+        if (GameManager.Instance.BatteryPercentage > 70){
             return 1f;
         }
-        else if (battery > 40 && battery <= 70){
+        else if (GameManager.Instance.BatteryPercentage > 40 && GameManager.Instance.BatteryPercentage <= 70){
             return 0.6f;
         }
-        else if (battery > 0 && battery <= 40){
+        else if (GameManager.Instance.BatteryPercentage > 0 && GameManager.Instance.BatteryPercentage <= 40){
             return 0.4f;
         }
         else{
@@ -87,38 +91,46 @@ public class light_Script : MonoBehaviour
         light.intensity = maxLightIntensity * LightPower();
         light.range = maxLightRange * LightPower();
     }
-    // lowers the battery power over time
+    // lowers the GameManager.Instance.BatteryPercentage power over time
     public void DecrementBattery(){
-        if (battery > 0 && isOn){
-            battery -= 1;
+        if (GameManager.Instance.BatteryPercentage > 0 && isOn){
+            // GameManager.Instance.BatteryPercentage -= 1;
+            hud.DecrementBatteryPercentage(1f);
             SetBatteryText();
         }
+
     }
 
     public void SetBatteryText(){
-        if(battery > 70){
-            batteryTextcolor = Color.green;
-        }
-        else if (battery > 40 && battery <= 70){
-            batteryTextcolor = Color.blue;
-        }
-        else if (battery > 0 && battery <= 40){
+        Debug.Log(GameManager.Instance.BatteryPercentage);
+        if(GameManager.Instance.BatteryPercentage > 70){
             batteryTextcolor = Color.yellow;
         }
-        else{
+        else if (GameManager.Instance.BatteryPercentage > 40 && GameManager.Instance.BatteryPercentage <= 70){
+            batteryTextcolor = Color.blue;
+        }
+        else if (GameManager.Instance.BatteryPercentage > 0 && GameManager.Instance.BatteryPercentage <= 40){
+            batteryTextcolor = Color.green;
+        }
+        else if (GameManager.Instance.BatteryPercentage == 0){
             batteryTextcolor = Color.red;
         }
         batteryText.color = batteryTextcolor;
-        batteryText.text = "Battery: " + battery + "%";
+        hud.SetBatteryColor(batteryTextcolor);
+
+        batteryText.text = "Battery: " + GameManager.Instance.BatteryPercentage + "%";
     }
 
     public IEnumerator BatteryFlash(float time){
         float maxtime = time;
         bool shouldBlink = true;
-        batteryText.text = "No more battery!!!";
+        // batteryText.text = "No more battery!!!";
+        hud.UpdateBatteryBar(100f);
         while(shouldBlink){
             batteryText.color = Color.white;
+            hud.SetBatteryColor(Color.white);
             yield return new WaitForSeconds(0.2f);
+            hud.SetBatteryColor(batteryTextcolor);
             batteryText.color = batteryTextcolor;
             yield return new WaitForSeconds(0.2f);
             if (maxtime != 0){
@@ -128,5 +140,6 @@ public class light_Script : MonoBehaviour
                 shouldBlink = false;
             }
         }
+        hud.UpdateBatteryBar(GameManager.Instance.BatteryPercentage);
     }
 }
