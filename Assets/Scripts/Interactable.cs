@@ -10,10 +10,11 @@ public class Interactable : MonoBehaviour
     public bool openState;
     public string objectName;
     public string type;
+    Animator animator;
 
     public void Interact()
     {
-        Animator animator = gameObject.GetComponent<Animator>();
+        animator = gameObject.GetComponent<Animator>();
         switch(type){
             case "door":
                 if(checkItems() && !openState) {
@@ -21,7 +22,7 @@ public class Interactable : MonoBehaviour
                     openState = true;
                     animator.SetBool("Locked", false);
                     animator.SetBool("Closed", false);
-                    gameObject.GetComponent<Collider>().isTrigger = false;
+                    gameObject.GetComponent<Collider>().isTrigger = true;
                     break;
                 }
                 if(openState && animator.GetBool("Closed")) {
@@ -39,6 +40,23 @@ public class Interactable : MonoBehaviour
                     animator.SetTrigger("Shake");
                     break;
                 }
+            case "cabinet":
+                if(animator.GetBool("Closed")) {
+                    animator.SetBool("Closed", false);
+                    if(item != null)
+                        HUDManager.Instance.SetInteractText(true, item.itemName + " [F]");
+                    break;
+                }
+                if(!animator.GetBool("Closed") && item != null) {
+                    InventoryManager.Instance.AddItem(item);
+                    HUDManager.Instance.SetInteractText(true, objectName + " [F]");
+                    item = null;
+                    break;
+                } else {
+                    HUDManager.Instance.SetInteractText(true, objectName + " [F]");
+                    animator.SetBool("Closed", true);
+                    break;
+                }
             default:
                 break;    
         }
@@ -46,14 +64,27 @@ public class Interactable : MonoBehaviour
 
     public void OnMouseEnter()
     {
-        if(item == null) {
+        animator = gameObject.GetComponent<Animator>();
+        if(item == null || openState) {
             openState = true;
-            HUDManager.Instance.SetInteractText(true, objectName+ " [F]");
+            HUDManager.Instance.SetInteractText(true, objectName + " [F]");
         } else {
-            if(checkItems()) {
-                HUDManager.Instance.SetInteractText(true, "Use " + item.itemName + " [F]");
-            } else {
-                HUDManager.Instance.SetInteractText(true, "Locked");
+            switch(type){
+                case "cabinet":
+                    if(!animator.GetBool("Closed")) {
+                        HUDManager.Instance.SetInteractText(true, item.itemName + " [F]");
+                    } else {
+                        HUDManager.Instance.SetInteractText(true, objectName + " [F]");
+                    }
+                    break;
+                default: 
+                    if(checkItems()) {
+                        HUDManager.Instance.SetInteractText(true, "Use " + item.itemName + " [F]");
+                    } else {
+                        HUDManager.Instance.SetInteractText(true, "Locked");
+                    }
+                    break; 
+                
             }
         }
 
