@@ -94,12 +94,20 @@ public class UIBehaviour : MonoBehaviour
     private void FadeOutTitle()
     {
         titleLabel.CrossFadeAlpha(0, 1, false);
-
         startLabel.CrossFadeAlpha(0, 1, false);
+        settingsLabel.CrossFadeAlpha(0, 1, false);
         quitLabel.CrossFadeAlpha(0, 1, false);
+
+        // makr them not visible
+        Invoke(nameof(DeactiveUI), 0.5f);
     }
 
-// TODO: Fade in the background and fade it out when hover and leave
+    private void DeactiveUI() {
+        startLabel.gameObject.SetActive(false);
+        settingsLabel.gameObject.SetActive(false);
+        quitLabel.gameObject.SetActive(false);
+    }
+
     public void StartEnter()
     {
         startLabel.CrossFadeColor(new Color(1.0f, 1.0f, 1.0f, 0.75f), 0.5f, false, true);
@@ -138,16 +146,15 @@ public class UIBehaviour : MonoBehaviour
 
     public void ExitGame()
     {
-        
         FadeOutTitle();
-        Invoke(nameof(ExitGame), 1.0f);
+        Invoke(nameof(QuitGame), 1.0f);
     }
 
     private void LoadNextLevel() {
         SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
     }
 
-    public void LeaveGame()
+    public void QuitGame()
     {
         Application.Quit();
     }
