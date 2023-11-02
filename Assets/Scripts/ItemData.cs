@@ -6,7 +6,9 @@ using UnityEngine;
 public enum ItemType
 {
     Consumable,
-    Equipment
+    Equipment,
+    Key,
+    Memory
 }
 
 [CreateAssetMenu(fileName = "Item", menuName = "Items/InventoryData")]
