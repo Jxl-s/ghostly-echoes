@@ -242,19 +242,48 @@ public class HUDManager : MonoBehaviour
         batteryBar.anchorMax = new Vector2(GameManager.Instance.BatteryPercentage / 100, 0);
         staminaBar.anchorMax = new Vector2(GameManager.Instance.StaminaPercentage / 100, 0);
 
+        batteryBar.gameObject.SetActive(GameManager.Instance.BatteryPercentage > 0);
+
         batteryBarImage.color = currentBattercolor;
     }
 
-    public void DecrementBatteryPercentage(float decrement){
+    public void DecrementBatteryPercentage(float decrement)
+    {
         GameManager.Instance.BatteryPercentage -= decrement;
         UpdateStats();
     }
 
-    public void SetBatteryColor(Color color){
+    public void SetBatteryColor(Color color)
+    {
         currentBattercolor = color;
     }
 
-    public void UpdateBatteryBar(float percent){
+    public void UpdateBatteryBar(float percent)
+    {
         batteryBar.anchorMax = new Vector2(percent / 100, 0);
+    }
+
+    public void Blink(){
+        StartCoroutine(BatteryFlash(3f));
+    }
+
+    public IEnumerator BatteryFlash(float time){
+        float maxtime = time;
+        bool shouldBlink = true;
+        // batteryText.text = "No more battery!!!";
+        UpdateBatteryBar(100f);
+        while(shouldBlink){
+            SetBatteryColor(Color.white);
+            yield return new WaitForSeconds(0.2f);
+            SetBatteryColor(currentBattercolor);
+            yield return new WaitForSeconds(0.2f);
+            if (maxtime != 0){
+                maxtime -= 1;
+            }
+            else{
+                shouldBlink = false;
+            }
+        }
+        UpdateBatteryBar(GameManager.Instance.BatteryPercentage);
     }
 }

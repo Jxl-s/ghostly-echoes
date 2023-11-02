@@ -7,7 +7,6 @@ using UnityEngine.UI;
 
 public class light_Script : MonoBehaviour
 {
-    public float battery;
     public float maxLightIntensity = 20;
     public float maxLightRange = 10;
     public float drainSpeed = 1f;
@@ -38,7 +37,7 @@ public class light_Script : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-                HandleLight();
+        HandleLight();
     }
     void LateUpdate(){
         
@@ -63,9 +62,10 @@ public class light_Script : MonoBehaviour
         }
         if (Input.GetKeyUp("r") && GameManager.Instance.BatteryPercentage == 0){
             Debug.Log("tryflash");
-            StartCoroutine(BatteryFlash(3f));
+            hud.Blink();
 
         }
+        SetBatteryText();
     }
 
     public float LightPower(){
@@ -96,7 +96,6 @@ public class light_Script : MonoBehaviour
         if (GameManager.Instance.BatteryPercentage > 0 && isOn){
             // GameManager.Instance.BatteryPercentage -= 1;
             hud.DecrementBatteryPercentage(1f);
-            SetBatteryText();
         }
 
     }
@@ -121,25 +120,25 @@ public class light_Script : MonoBehaviour
         batteryText.text = "Battery: " + GameManager.Instance.BatteryPercentage + "%";
     }
 
-    public IEnumerator BatteryFlash(float time){
-        float maxtime = time;
-        bool shouldBlink = true;
-        // batteryText.text = "No more battery!!!";
-        hud.UpdateBatteryBar(100f);
-        while(shouldBlink){
-            batteryText.color = Color.white;
-            hud.SetBatteryColor(Color.white);
-            yield return new WaitForSeconds(0.2f);
-            hud.SetBatteryColor(batteryTextcolor);
-            batteryText.color = batteryTextcolor;
-            yield return new WaitForSeconds(0.2f);
-            if (maxtime != 0){
-                maxtime -= 1;
-            }
-            else{
-                shouldBlink = false;
-            }
-        }
-        hud.UpdateBatteryBar(GameManager.Instance.BatteryPercentage);
-    }
+    // public IEnumerator BatteryFlash(float time){
+    //     float maxtime = time;
+    //     bool shouldBlink = true;
+    //     // batteryText.text = "No more battery!!!";
+    //     hud.UpdateBatteryBar(100f);
+    //     while(shouldBlink){
+    //         batteryText.color = Color.white;
+    //         hud.SetBatteryColor(Color.white);
+    //         yield return new WaitForSeconds(0.2f);
+    //         hud.SetBatteryColor(batteryTextcolor);
+    //         batteryText.color = batteryTextcolor;
+    //         yield return new WaitForSeconds(0.2f);
+    //         if (maxtime != 0){
+    //             maxtime -= 1;
+    //         }
+    //         else{
+    //             shouldBlink = false;
+    //         }
+    //     }
+    //     hud.UpdateBatteryBar(GameManager.Instance.BatteryPercentage);
+    // }
 }
