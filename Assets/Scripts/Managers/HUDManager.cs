@@ -243,7 +243,7 @@ public class HUDManager : MonoBehaviour
         staminaBar.anchorMax = new Vector2(GameManager.Instance.StaminaPercentage / 100, 0);
 
         batteryBar.gameObject.SetActive(GameManager.Instance.BatteryPercentage > 0);
-
+        SetBatteryColor();
         batteryBarImage.color = currentBattercolor;
     }
 
@@ -253,37 +253,49 @@ public class HUDManager : MonoBehaviour
         UpdateStats();
     }
 
-    public void SetBatteryColor(Color color)
-    {
-        currentBattercolor = color;
-    }
-
     public void UpdateBatteryBar(float percent)
     {
         batteryBar.anchorMax = new Vector2(percent / 100, 0);
     }
 
-    public void Blink(){
-        StartCoroutine(BatteryFlash(3f));
+    public void SetBatteryColor(){
+
+        Debug.Log(GameManager.Instance.BatteryPercentage);
+        if(GameManager.Instance.BatteryPercentage > 70){
+            currentBattercolor = Color.yellow;
+        }
+        else if (GameManager.Instance.BatteryPercentage > 40 && GameManager.Instance.BatteryPercentage <= 70){
+            currentBattercolor = Color.blue;
+        }
+        else if (GameManager.Instance.BatteryPercentage > 0 && GameManager.Instance.BatteryPercentage <= 40){
+            currentBattercolor = Color.green;
+        }
+        else if (GameManager.Instance.BatteryPercentage == 0){
+            currentBattercolor = Color.red;
+        }
     }
 
-    public IEnumerator BatteryFlash(float time){
-        float maxtime = time;
-        bool shouldBlink = true;
-        // batteryText.text = "No more battery!!!";
-        UpdateBatteryBar(100f);
-        while(shouldBlink){
-            SetBatteryColor(Color.white);
-            yield return new WaitForSeconds(0.2f);
-            SetBatteryColor(currentBattercolor);
-            yield return new WaitForSeconds(0.2f);
-            if (maxtime != 0){
-                maxtime -= 1;
-            }
-            else{
-                shouldBlink = false;
-            }
-        }
-        UpdateBatteryBar(GameManager.Instance.BatteryPercentage);
-    }
+    // public void Blink(){
+    //     StartCoroutine(BatteryFlash(3f));
+    // }
+
+    // public IEnumerator BatteryFlash(float time){
+    //     float maxtime = time;
+    //     bool shouldBlink = true;
+    //     // batteryText.text = "No more battery!!!";
+    //     UpdateBatteryBar(100f);
+    //     while(shouldBlink){
+    //         SetBatteryColor(Color.white);
+    //         yield return new WaitForSeconds(0.2f);
+    //         SetBatteryColor(currentBattercolor);
+    //         yield return new WaitForSeconds(0.2f);
+    //         if (maxtime != 0){
+    //             maxtime -= 1;
+    //         }
+    //         else{
+    //             shouldBlink = false;
+    //         }
+    //     }
+    //     UpdateBatteryBar(GameManager.Instance.BatteryPercentage);
+    // }
 }

@@ -14,8 +14,6 @@ public class light_Script : MonoBehaviour
     public GameObject spotLight;
     public Light light;
     public Text batteryText;
-    public  Color batteryTextcolor = Color.red; 
-
     public HUDManager hud;
 
     // Start is called before the first frame update
@@ -56,16 +54,15 @@ public class light_Script : MonoBehaviour
             toggleFlashlight(isOn);
         }
         else if (GameManager.Instance.BatteryPercentage == 0){
-            batteryTextcolor = Color.red;
+
             isOn = false;
             toggleFlashlight(isOn);
         }
         if (Input.GetKeyUp("r") && GameManager.Instance.BatteryPercentage == 0){
             Debug.Log("tryflash");
-            hud.Blink();
+            // hud.Blink();
 
         }
-        SetBatteryText();
     }
 
     public float LightPower(){
@@ -100,25 +97,7 @@ public class light_Script : MonoBehaviour
 
     }
 
-    public void SetBatteryText(){
-        Debug.Log(GameManager.Instance.BatteryPercentage);
-        if(GameManager.Instance.BatteryPercentage > 70){
-            batteryTextcolor = Color.yellow;
-        }
-        else if (GameManager.Instance.BatteryPercentage > 40 && GameManager.Instance.BatteryPercentage <= 70){
-            batteryTextcolor = Color.blue;
-        }
-        else if (GameManager.Instance.BatteryPercentage > 0 && GameManager.Instance.BatteryPercentage <= 40){
-            batteryTextcolor = Color.green;
-        }
-        else if (GameManager.Instance.BatteryPercentage == 0){
-            batteryTextcolor = Color.red;
-        }
-        batteryText.color = batteryTextcolor;
-        hud.SetBatteryColor(batteryTextcolor);
 
-        batteryText.text = "Battery: " + GameManager.Instance.BatteryPercentage + "%";
-    }
 
     // public IEnumerator BatteryFlash(float time){
     //     float maxtime = time;
