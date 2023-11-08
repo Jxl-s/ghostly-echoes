@@ -12,6 +12,14 @@ public class UIBehaviour : MonoBehaviour
     [SerializeField] private Button settingsButton;
     [SerializeField] private Button quitButton;
 
+    // Panels
+    [SerializeField] private GameObject mainPanel;
+    [SerializeField] private GameObject settingsPanel;
+
+    // Settings
+    [SerializeField] private Button backButton;
+    [SerializeField] private Button soundToggle;
+
     private int titleOriginalY;
     private int startOriginalY;
     private int settingsOriginalY;
@@ -48,6 +56,8 @@ public class UIBehaviour : MonoBehaviour
         Invoke(nameof(StartExit), 0.5f);
         Invoke(nameof(SettingsExit), 0.5f);
         Invoke(nameof(LeaveExit), 0.5f);
+
+        UpdateToggles();
     }
 
     // Update is called once per frame
@@ -138,6 +148,26 @@ public class UIBehaviour : MonoBehaviour
         quitLabel.CrossFadeColor(new Color(0.3f, 0.3f, 0.3f), 0.5f, false, true);
     }
 
+    public void ToggleSound()
+    {
+        GameManager.Instance.SFXEnabled = !GameManager.Instance.SFXEnabled;
+        UpdateToggles();
+    }
+
+    public void UpdateToggles()
+    {
+        if (GameManager.Instance.SFXEnabled)
+        {
+            soundToggle.GetComponentInChildren<TextMeshProUGUI>().text = "Sound Effects: ON";
+            soundToggle.GetComponent<Image>().color = new Color(0.2f, 0.8f, 0.2f, 0.5f);
+        }
+        else
+        {
+            soundToggle.GetComponentInChildren<TextMeshProUGUI>().text = "Sound Effects: OFF";
+            soundToggle.GetComponent<Image>().color = new Color(0.8f, 0.2f, 0.2f, 0.5f);
+        }
+    }
+
     public void StartGame()
     {
         FadeOutTitle();
@@ -148,6 +178,18 @@ public class UIBehaviour : MonoBehaviour
     {
         FadeOutTitle();
         Invoke(nameof(QuitGame), 1.0f);
+    }
+
+    public void GoSettings()
+    {
+        mainPanel.SetActive(false);
+        settingsPanel.SetActive(true);
+    }
+
+    public void GoMain()
+    {
+        mainPanel.SetActive(true);
+        settingsPanel.SetActive(false);
     }
 
     private void LoadNextLevel() {
