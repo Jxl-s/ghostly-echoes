@@ -184,6 +184,7 @@ public class UIBehaviour : MonoBehaviour
     {
         mainPanel.SetActive(false);
         settingsPanel.SetActive(true);
+        SettingsExit();
     }
 
     public void GoMain()
