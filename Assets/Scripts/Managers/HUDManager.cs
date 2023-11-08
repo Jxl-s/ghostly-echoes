@@ -14,6 +14,8 @@ public class HUDManager : MonoBehaviour
     [SerializeField] private TextMeshProUGUI tooltipLabel;
     [SerializeField] private Button useItemButton;
 
+    [SerializeField] private TextMeshProUGUI dialogueLabel;
+
     // Stats
     [SerializeField] private TextMeshProUGUI healthLabel;
     [SerializeField] private RectTransform healthBar;
@@ -25,6 +27,7 @@ public class HUDManager : MonoBehaviour
     [SerializeField] public RectTransform batteryBar;
     [SerializeField] public Image batteryBarImage;
 
+    private int dialogueOriginalY;
     public Color currentBattercolor = Color.yellow;
 
     private ItemData selectedItem;
@@ -44,10 +47,27 @@ public class HUDManager : MonoBehaviour
         }
     }
 
+    void Start()
+    {
+        dialogueLabel.CrossFadeAlpha(0.0f, 0.0f, true);
+        dialogueOriginalY = (int)dialogueLabel.rectTransform.anchoredPosition.y;
+    }
+
     // Update is called once per frame
     void Update()
     {
         HandleInventoryVisible();
+        HandleDialogueFloat();
+    }
+
+    void HandleDialogueFloat()
+    {
+        // Make the title bounce up and down, rotate a bit too, and fade in and out
+        float newY = dialogueOriginalY + Mathf.Sin(Time.time * 2) * 10;
+        dialogueLabel.rectTransform.anchoredPosition = new Vector2(dialogueLabel.rectTransform.anchoredPosition.x, newY);
+
+        float newRot = Mathf.Sin(Time.time * 3) * 0.5f;
+        dialogueLabel.rectTransform.rotation = Quaternion.Euler(0, 0, newRot);
     }
 
     private void HandleInventoryVisible()
@@ -273,6 +293,23 @@ public class HUDManager : MonoBehaviour
         else if (GameManager.Instance.BatteryPercentage == 0){
             currentBattercolor = Color.red;
         }
+    }
+
+    public void ShowDialogue(string message)
+    {
+        dialogueLabel.text = message;
+        dialogueLabel.CrossFadeAlpha(1, 0.5f, false);
+        Invoke(nameof(HideDialogue), 3.0f);
+    }
+
+    private void HideDialogue()
+    {
+        dialogueLabel.CrossFadeAlpha(0, 0.5f, false);
+    }
+
+    private void ResetDialogue()
+    {
+        dialogueLabel.text = "";
     }
 
     // public void Blink(){
