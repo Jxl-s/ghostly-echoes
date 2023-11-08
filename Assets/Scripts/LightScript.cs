@@ -5,9 +5,9 @@ using UnityEngine;
 using UnityEngine.Experimental.GlobalIllumination;
 using UnityEngine.UI;
 
-public class light_Script : MonoBehaviour
+public class LightScript : MonoBehaviour
 {
-    public float maxLightIntensity = 20;
+    public float maxLightIntensity = 5;
     public float maxLightRange = 10;
     public float drainSpeed = 1f;
     public bool isOn = false;

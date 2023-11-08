@@ -6,7 +6,7 @@ using UnityEngine;
 public class ItemManager : MonoBehaviour
 {
     public static ItemManager Instance;
-    public light_Script flashlight;
+    public LightScript flashlight;
 
     void Awake()
     {
