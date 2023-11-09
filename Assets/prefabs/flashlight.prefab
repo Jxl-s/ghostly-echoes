@@ -134,7 +134,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 06deeed22d560b545a422fb6dd7e4ddb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  maxLightIntensity: 60
+  maxLightIntensity: 30
   maxLightRange: 50
   drainSpeed: 0.5
   isOn: 0

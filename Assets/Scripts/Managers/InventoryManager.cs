@@ -8,6 +8,7 @@ public class InventoryManager : MonoBehaviour
 {
     public static InventoryManager Instance;
     public List<ItemData> Items = new List<ItemData>();
+    public static float RANGE = 4f;
 
     void Awake()
     {
@@ -33,7 +34,7 @@ public class InventoryManager : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.F))
         {
             // Send a ray, check if the object is a pickupable
-            if (Physics.Raycast(Camera.main.transform.position, Camera.main.transform.forward, out RaycastHit hit, 4f))
+            if (Physics.Raycast(Camera.main.transform.position, Camera.main.transform.forward, out RaycastHit hit, RANGE))
             {
                 Pickupable pickupable = hit.collider.gameObject.GetComponent<Pickupable>();
                 pickupable?.Pickup();

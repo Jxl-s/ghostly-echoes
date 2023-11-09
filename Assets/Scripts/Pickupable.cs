@@ -13,14 +13,14 @@ public class Pickupable : MonoBehaviour
         Destroy(gameObject);
     }
 
-    public void OnMouseEnter()
-    {
-        HUDManager.Instance.SetInteractText(true, "Pickup " + item.name + " [F]");
+    // public void OnMouseEnter()
+    // {
+    //     HUDManager.Instance.SetInteractText(true, "Pickup " + item.name + " [F]");
 
-        // Make the "Selected" child object visible
-        transform.Find("Normal").gameObject.SetActive(false);
-        transform.Find("Selected").gameObject.SetActive(true);
-    }
+    //     // Make the "Selected" child object visible
+    //     transform.Find("Normal").gameObject.SetActive(false);
+    //     transform.Find("Selected").gameObject.SetActive(true);
+    // }
 
     public void OnMouseExit()
     {
@@ -28,5 +28,16 @@ public class Pickupable : MonoBehaviour
 
         transform.Find("Normal").gameObject.SetActive(true);
         transform.Find("Selected").gameObject.SetActive(false);
+    }
+
+    public void OnMouseOver()
+    {
+        HUDManager.Instance.SetInteractText(true, "Pickup " + item.name + " [F]");
+
+        // Make the "Selected" child object visible
+        // bool normal = transform.Find("Normal").activeSelf;
+        // bool selected = transform.Find("Selected").activeSelf;
+        transform.Find("Normal").gameObject.SetActive(false);
+        transform.Find("Selected").gameObject.SetActive(true);
     }
 }
