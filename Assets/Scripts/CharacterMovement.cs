@@ -9,11 +9,11 @@ public class CharacterMovement : MonoBehaviour
     public Vector3 playerVelocity;
     public bool groundedPlayer;
     public float mouseSensitivy = 5.0f;
-    private float jumpHeight = 1f;
     private float gravityValue = -9.81f;
     private CharacterController controller;
     private float walkSpeed = 5;
-    private float runSpeed = 8; 
+    private float runSpeed = 8;
+    private Animator animator;
     
  
     private void Start()
@@ -22,6 +22,7 @@ public class CharacterMovement : MonoBehaviour
         Cursor.lockState = CursorLockMode.Locked;
 
         controller = GetComponent<CharacterController>();
+        animator = GetComponent<Animator>();
     }
 
     public void Update()
@@ -29,9 +30,20 @@ public class CharacterMovement : MonoBehaviour
        UpdateRotation();
        ProcessMovement();
     }
+
+    public void LateUpdate()
+    {
+        float vertical = Input.GetAxis("Vertical");
+        float horizontal = Input.GetAxis("Horizontal");
+        bool isMoving = Mathf.Ceil(Mathf.Abs(vertical) + Mathf.Abs(horizontal)) > 0;
+        
+        animator.SetFloat("Speed", (isMoving ? 1 : 0) * GetMovementSpeed() / runSpeed);
+        animator.SetFloat("VerticalDirection", vertical);
+    }
+
     void UpdateRotation()
     {
-        transform.Rotate(0, Input.GetAxis("Mouse X")* mouseSensitivy, 0, Space.Self);
+        // transform.Rotate(0, Input.GetAxis("Mouse X")* mouseSensitivy, 0, Space.Self);
  
     }
     void ShootLaser()
@@ -65,15 +77,7 @@ public class CharacterMovement : MonoBehaviour
         groundedPlayer = controller.isGrounded;
         if (groundedPlayer)
         {
-            if (Input.GetButtonDown("Jump"))
-            {
-                gravity.y += Mathf.Sqrt(jumpHeight * -3.0f * gravityValue);
-            }
-            else
-            {
-                // Dont apply gravity if grounded and not jumping
-                gravity.y = -1.0f;
-            }
+            gravity.y = -1.0f;
         }
         else
         {
