@@ -1,7 +1,9 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class Interactable : MonoBehaviour
 {
@@ -15,6 +17,7 @@ public class Interactable : MonoBehaviour
     public void Interact()
     {
         animator = gameObject.GetComponent<Animator>();
+        String interact_text = "";
         switch(type){
             case "door":
                 if(checkItems() && !openState) {
@@ -44,50 +47,60 @@ public class Interactable : MonoBehaviour
                 if(animator.GetBool("Closed")) {
                     animator.SetBool("Closed", false);
                     if(item != null)
-                        HUDManager.Instance.SetInteractText(true, item.itemName + " [F]");
+                        interact_text = item.itemName + " [F]";
                     break;
                 }
                 if(!animator.GetBool("Closed") && item != null) {
                     InventoryManager.Instance.AddItem(item);
-                    HUDManager.Instance.SetInteractText(true, objectName + " [F]");
+                    interact_text = objectName + " [F]";
                     item = null;
                     break;
                 } else {
-                    HUDManager.Instance.SetInteractText(true, objectName + " [F]");
+                    interact_text = objectName + " [F]";
                     animator.SetBool("Closed", true);
                     break;
                 }
             default:
                 break;    
         }
+        if (Physics.Raycast(Camera.main.transform.position, Camera.main.transform.forward, out RaycastHit hit, 4.0f)) {
+            HUDManager.Instance.SetInteractText(true, interact_text);
+        } else {
+            HUDManager.Instance.SetInteractText(false, "");
+        }
     }
 
-    public void OnMouseEnter()
+    public void OnMouseOver()
     {
         animator = gameObject.GetComponent<Animator>();
+        String interact_text = "";
         if(item == null || openState) {
             openState = true;
-            HUDManager.Instance.SetInteractText(true, objectName + " [F]");
+            interact_text = objectName + " [F]";
         } else {
             switch(type){
                 case "cabinet":
                     if(!animator.GetBool("Closed")) {
-                        HUDManager.Instance.SetInteractText(true, item.itemName + " [F]");
+                        interact_text = item.itemName + " [F]";
                     } else {
-                        HUDManager.Instance.SetInteractText(true, objectName + " [F]");
+                        interact_text = objectName + " [F]";
                     }
                     break;
                 default: 
                     if(checkItems()) {
-                        HUDManager.Instance.SetInteractText(true, "Use " + item.itemName + " [F]");
+                        interact_text = "Use " + item.itemName + " [F]";
                     } else {
-                        HUDManager.Instance.SetInteractText(true, "Locked");
+                        interact_text = "Locked";
                     }
                     break; 
                 
             }
         }
-
+        if (Physics.Raycast(Camera.main.transform.position, Camera.main.transform.forward, out RaycastHit hit, 4.0f)) {
+            HUDManager.Instance.SetInteractText(true, interact_text);
+        } else {
+            HUDManager.Instance.SetInteractText(false, "");
+        }
     }
 
     public void OnMouseExit()
