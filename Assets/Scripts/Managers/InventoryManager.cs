@@ -25,8 +25,12 @@ public class InventoryManager : MonoBehaviour
     void Start()
     {
         // Add the initial flashlight (2 for equipped, 1 for unequipped)
-        Items.Add(new ItemData { itemName = "Flashlight", value = 2, description = "You might need this to see...", type = ItemType.Equipment });
         HUDManager.Instance.UpdateInventory(Items);
+    }
+
+    void GetFlashlight()
+    {
+        Items.Add(new ItemData { itemName = "Flashlight", value = 2, description = "You might need this to see...", type = ItemType.Equipment });
     }
 
     void Update()
