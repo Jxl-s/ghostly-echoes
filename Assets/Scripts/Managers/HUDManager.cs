@@ -7,7 +7,7 @@ using UnityEngine.UI;
 
 public class HUDManager : MonoBehaviour
 {
-    [SerializeField] private RectTransform inventoryPanel;
+    [SerializeField] public RectTransform inventoryPanel;
     [SerializeField] private RectTransform inventoryContainer;
 
     [SerializeField] private TextMeshProUGUI interactLabel;
