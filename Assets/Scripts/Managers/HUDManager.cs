@@ -22,11 +22,12 @@ public class HUDManager : MonoBehaviour
 
     [SerializeField] private TextMeshProUGUI staminaLabel;
     [SerializeField] private RectTransform staminaBar;
-    [SerializeField] private Image staminaBarImage;
+    private Image staminaBarImage;
+    [SerializeField] private RectTransform mask;
 
     [SerializeField] public TextMeshProUGUI batteryLabel;
     [SerializeField] public RectTransform batteryBar;
-    [SerializeField] public Image batteryBarImage;
+    private Image batteryBarImage;
 
     private int dialogueOriginalY;
     public Color32 currentBattercolor = new Color32(255, 255, 0, 255);
@@ -54,6 +55,9 @@ public class HUDManager : MonoBehaviour
         SetSprintColor(new Color32(124, 180, 255, 255));
         dialogueLabel.CrossFadeAlpha(0.0f, 0.0f, true);
         dialogueOriginalY = (int)dialogueLabel.rectTransform.anchoredPosition.y;
+
+        staminaBarImage = staminaBar.GetComponent<Image>();
+        batteryBarImage = batteryBar.GetComponent<Image>();
     }
 
     // Update is called once per frame
