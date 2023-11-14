@@ -32,13 +32,6 @@ public class CharacterMovement : MonoBehaviour
 
     public void Update()
     {
-
-        if (GameManager.Instance.ControlsEnabled == false)
-        {
-            return;
-        }
-
-        UpdateRotation();
         ProcessMovement();
     }
 
@@ -57,11 +50,6 @@ public class CharacterMovement : MonoBehaviour
         animator.SetFloat("VerticalDirection", vertical);
     }
 
-    void UpdateRotation()
-    {
-        // transform.Rotate(0, Input.GetAxis("Mouse X")* mouseSensitivy, 0, Space.Self);
-
-    }
     void ShootLaser()
     {
 
@@ -100,6 +88,12 @@ public class CharacterMovement : MonoBehaviour
 
         // Apply the movement direction and speed
         Vector3 movement = moveDirection.normalized * speed * Time.deltaTime;
+        
+        if (GameManager.Instance.ControlsEnabled == false)
+        {
+            movement = Vector3.zero;
+        }
+
 
         groundedPlayer = controller.isGrounded;
         if (groundedPlayer)

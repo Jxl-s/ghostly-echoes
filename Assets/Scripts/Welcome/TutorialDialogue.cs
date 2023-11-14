@@ -33,6 +33,7 @@ public class TutorialDialogue : MonoBehaviour
     {
         // Start the coroutine when the script starts
         GameManager.Instance.ControlsEnabled = false;
+        HUDManager.Instance.SetContainerVisible(false);
         StartCoroutine(DoMonologue());
     }
 
@@ -48,6 +49,7 @@ public class TutorialDialogue : MonoBehaviour
         yield return new WaitForSeconds(4f);
 
         GameManager.Instance.ControlsEnabled = true;
+        HUDManager.Instance.SetContainerVisible(true);
         monologueFinished = true;
     }
 

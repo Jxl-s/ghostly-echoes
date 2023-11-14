@@ -27,6 +27,8 @@ public class HUDManager : MonoBehaviour
 
     [SerializeField] public TextMeshProUGUI batteryLabel;
     [SerializeField] public RectTransform batteryBar;
+    [SerializeField] private RectTransform elementContainer;
+
     private Image batteryBarImage;
 
     private int dialogueOriginalY;
@@ -333,7 +335,15 @@ public class HUDManager : MonoBehaviour
         dialogueLabel.text = "";
     }
 
-    
+    public void SetContainerVisible(bool visible) {
+        elementContainer.gameObject.SetActive(visible);
+    }
+
+    private float maskAlpha = 0;
+    public void SetMaskAlpha(float alpha)
+    {
+        maskAlpha = alpha;
+    }
 
     // public void Blink(){
     //     StartCoroutine(BatteryFlash(3f));
