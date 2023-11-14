@@ -26,9 +26,9 @@ public class Pickupable : MonoBehaviour
     public void OnMouseExit()
     {
         HUDManager.Instance.SetInteractText(false, "");
-
-        transform.Find("Normal").gameObject.SetActive(true);
-        transform.Find("Selected").gameObject.SetActive(false);
+        gameObject.GetComponent<Outline>().OutlineWidth = 0.0f;
+        // transform.Find("Normal").gameObject.SetActive(true);
+        // transform.Find("Selected").gameObject.SetActive(false);
     }
 
     public void OnMouseOver()
@@ -39,13 +39,14 @@ public class Pickupable : MonoBehaviour
             // Make the "Selected" child object visible
             // bool normal = transform.Find("Normal").activeSelf;
             // bool selected = transform.Find("Selected").activeSelf;
-            transform.Find("Normal").gameObject.SetActive(false);
-            transform.Find("Selected").gameObject.SetActive(true);
+            // transform.Find("Normal").gameObject.SetActive(false);
+            // transform.Find("Selected").gameObject.SetActive(true);
+            gameObject.GetComponent<Outline>().OutlineWidth = 10.0f;
         } else {
             HUDManager.Instance.SetInteractText(false, "");
-
-            transform.Find("Normal").gameObject.SetActive(true);
-            transform.Find("Selected").gameObject.SetActive(false);
+            gameObject.GetComponent<Outline>().OutlineWidth = 0.0f;
+            // transform.Find("Normal").gameObject.SetActive(true);
+            // transform.Find("Selected").gameObject.SetActive(false);
         }
     }
 }
