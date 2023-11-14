@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class CharacterMovement : MonoBehaviour
 {
-
+    public float drainStamina = 0.1f;
     public Vector3 gravity;
     public Vector3 playerVelocity;
     public bool groundedPlayer;
@@ -13,20 +13,26 @@ public class CharacterMovement : MonoBehaviour
     private CharacterController controller;
     private float walkSpeed = 5;
     private float runSpeed = 8;
+    private bool isSprint = false;
+    private bool canSprint = true;
     private Animator animator;
 
-
+    public HUDManager hud;    
+ 
     private void Start()
     {
+        hud = HUDManager.Instance;
         Cursor.visible = false;
         Cursor.lockState = CursorLockMode.Locked;
-
+        InvokeRepeating("Sprint", 1.0f, drainStamina);
+        InvokeRepeating("SprintRecharge", 1.0f, drainStamina);
         controller = GetComponent<CharacterController>();
         animator = GetComponent<Animator>();
     }
 
     public void Update()
     {
+
         if (GameManager.Instance.ControlsEnabled == false)
         {
             return;
@@ -61,8 +67,19 @@ public class CharacterMovement : MonoBehaviour
 
     }
 
-    void ProcessMovement()
+   void ProcessMovement()
     {
+        if (GameManager.Instance.StaminaPercentage == 0){
+            canSprint = false;
+        }
+        if(Input.GetButton("Fire3")){
+            if(canSprint){
+                isSprint = true;
+            }
+        }
+        else{
+            isSprint = false;
+        }
         // Moving the character forward according to the speed
         float speed = GetMovementSpeed();
 
@@ -99,9 +116,29 @@ public class CharacterMovement : MonoBehaviour
         controller.Move(playerVelocity);
     }
 
+    public void Sprint(){
+        if (GameManager.Instance.StaminaPercentage >= 0 && isSprint && (playerVelocity.x != 0 || playerVelocity.z != 0)){
+            GameManager.Instance.StaminaPercentage -= 1;
+        }
+    }
+
+    public void SprintRecharge(){
+        if(!canSprint) {
+            hud.SetSprintColor(new Color32(255, 0, 0, 255));
+            if(GameManager.Instance.StaminaPercentage == 100){
+                hud.SetSprintColor(new Color32(124, 180, 255, 255));
+                canSprint = true;
+            }
+            else{
+                GameManager.Instance.StaminaPercentage += 1;
+            }
+        }
+    }
+
     float GetMovementSpeed()
     {
-        if (Input.GetButton("Fire3"))// Left shift
+        Debug.Log("Is Sprint: " + isSprint);
+        if (isSprint)// Left shift
         {
             return runSpeed;
         }

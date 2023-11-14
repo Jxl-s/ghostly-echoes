@@ -22,13 +22,15 @@ public class HUDManager : MonoBehaviour
 
     [SerializeField] private TextMeshProUGUI staminaLabel;
     [SerializeField] private RectTransform staminaBar;
+    [SerializeField] private Image staminaBarImage;
 
     [SerializeField] public TextMeshProUGUI batteryLabel;
     [SerializeField] public RectTransform batteryBar;
     [SerializeField] public Image batteryBarImage;
 
     private int dialogueOriginalY;
-    public Color currentBattercolor = Color.yellow;
+    public Color32 currentBattercolor = new Color32(255, 255, 0, 255);
+    public Color32 currentStaminacolor = new Color32(124, 180, 255, 255);
 
     private ItemData selectedItem;
 
@@ -49,6 +51,7 @@ public class HUDManager : MonoBehaviour
 
     void Start()
     {
+        SetSprintColor(new Color32(124, 180, 255, 255));
         dialogueLabel.CrossFadeAlpha(0.0f, 0.0f, true);
         dialogueOriginalY = (int)dialogueLabel.rectTransform.anchoredPosition.y;
     }
@@ -56,6 +59,7 @@ public class HUDManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        UpdateStats();
         HandleInventoryVisible();
         HandleDialogueFloat();
     }
@@ -264,13 +268,15 @@ public class HUDManager : MonoBehaviour
 
         batteryBar.gameObject.SetActive(GameManager.Instance.BatteryPercentage > 0);
         SetBatteryColor();
+        
         batteryBarImage.color = currentBattercolor;
+        staminaBarImage.color = currentStaminacolor;
     }
 
     public void DecrementBatteryPercentage(float decrement)
     {
         GameManager.Instance.BatteryPercentage -= decrement;
-        UpdateStats();
+
     }
 
     public void UpdateBatteryBar(float percent)
@@ -280,19 +286,30 @@ public class HUDManager : MonoBehaviour
 
     public void SetBatteryColor(){
 
-        Debug.Log(GameManager.Instance.BatteryPercentage);
         if(GameManager.Instance.BatteryPercentage > 70){
-            currentBattercolor = Color.yellow;
+            currentBattercolor = new Color32(255, 255, 0, 255);
         }
         else if (GameManager.Instance.BatteryPercentage > 40 && GameManager.Instance.BatteryPercentage <= 70){
-            currentBattercolor = Color.blue;
+            currentBattercolor = new Color32(255, 190, 0, 255);
         }
         else if (GameManager.Instance.BatteryPercentage > 0 && GameManager.Instance.BatteryPercentage <= 40){
-            currentBattercolor = Color.green;
+            currentBattercolor = new Color32(255, 130, 0, 255);
         }
         else if (GameManager.Instance.BatteryPercentage == 0){
-            currentBattercolor = Color.red;
+            currentBattercolor = new Color(255f, 1f, 0f, 1.0f);
         }
+    }
+
+    public void SetSprintColor(Color32 color){
+        currentStaminacolor = color;
+    }
+
+    public void TakeDamage(float dmg){
+        GameManager.Instance.HealthPercentage -= dmg;
+    }
+
+    public void DrainStamina(float stamina){
+        GameManager.Instance.StaminaPercentage -= stamina;
     }
 
     public void ShowDialogue(string message)
@@ -311,6 +328,8 @@ public class HUDManager : MonoBehaviour
     {
         dialogueLabel.text = "";
     }
+
+    
 
     // public void Blink(){
     //     StartCoroutine(BatteryFlash(3f));
