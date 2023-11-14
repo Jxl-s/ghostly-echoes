@@ -27,6 +27,7 @@ public class TutorialDialogue : MonoBehaviour
     void Start()
     {
         // Start the coroutine when the script starts
+        GameManager.Instance.ControlsEnabled = false;
         StartCoroutine(DoMonologue());
     }
 
@@ -41,6 +42,7 @@ public class TutorialDialogue : MonoBehaviour
         HUDManager.Instance.ShowDialogue("I don't remember...");
         yield return new WaitForSeconds(4f);
 
+        GameManager.Instance.ControlsEnabled = true;
         monologueFinished = true;
     }
 

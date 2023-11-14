@@ -23,6 +23,10 @@ public class CameraRotation : MonoBehaviour
 
     void Update()
     {
+        if (GameManager.Instance.ControlsEnabled == false) {
+            return;
+        }
+
         rotation.x += Input.GetAxis(xAxis) * sensitivity;
         rotation.y += Input.GetAxis(yAxis) * sensitivity;
         rotation.y = Mathf.Clamp(rotation.y, -yRotationLimit, yRotationLimit);

@@ -14,8 +14,8 @@ public class CharacterMovement : MonoBehaviour
     private float walkSpeed = 5;
     private float runSpeed = 8;
     private Animator animator;
-    
- 
+
+
     private void Start()
     {
         Cursor.visible = false;
@@ -27,16 +27,26 @@ public class CharacterMovement : MonoBehaviour
 
     public void Update()
     {
-       UpdateRotation();
-       ProcessMovement();
+        if (GameManager.Instance.ControlsEnabled == false)
+        {
+            return;
+        }
+
+        UpdateRotation();
+        ProcessMovement();
     }
 
     public void LateUpdate()
     {
+        if (GameManager.Instance.ControlsEnabled == false)
+        {
+            return;
+        }
+
         float vertical = Input.GetAxis("Vertical");
         float horizontal = Input.GetAxis("Horizontal");
         bool isMoving = Mathf.Ceil(Mathf.Abs(vertical) + Mathf.Abs(horizontal)) > 0;
-        
+
         animator.SetFloat("Speed", (isMoving ? 1 : 0) * GetMovementSpeed() / runSpeed);
         animator.SetFloat("VerticalDirection", vertical);
     }
@@ -44,36 +54,36 @@ public class CharacterMovement : MonoBehaviour
     void UpdateRotation()
     {
         // transform.Rotate(0, Input.GetAxis("Mouse X")* mouseSensitivy, 0, Space.Self);
- 
+
     }
     void ShootLaser()
     {
 
     }
-    
-   void ProcessMovement()
-    { 
+
+    void ProcessMovement()
+    {
         // Moving the character forward according to the speed
         float speed = GetMovementSpeed();
- 
+
         // Get the camera's forward and right vectors
         Vector3 cameraForward = Camera.main.transform.forward;
         Vector3 cameraRight = Camera.main.transform.right;
- 
+
         // Make sure to flatten the vectors so that they don't contain any vertical component
         cameraForward.y = 0;
         cameraRight.y = 0;
- 
+
         // Normalize the vectors to ensure consistent speed in all directions
         cameraForward.Normalize();
         cameraRight.Normalize();
- 
+
         // Calculate the movement direction based on input and camera orientation
         Vector3 moveDirection = (cameraForward * Input.GetAxis("Vertical")) + (cameraRight * Input.GetAxis("Horizontal"));
- 
+
         // Apply the movement direction and speed
         Vector3 movement = moveDirection.normalized * speed * Time.deltaTime;
- 
+
         groundedPlayer = controller.isGrounded;
         if (groundedPlayer)
         {
