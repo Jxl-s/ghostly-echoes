@@ -22,8 +22,11 @@ public class TutorialDialogue : MonoBehaviour
     private bool hasPlayerEquippedFlashlight = false;
     private bool hasPlayerToggledFlashlight = false;
 
+    [SerializeField] private GameObject flashlightSpotlight;
+
     [SerializeField] private GameObject station_1;
     [SerializeField] private GameObject station_2;
+    [SerializeField] private GameObject station_3;
 
     // Start is called before the first frame update
     void Start()
@@ -150,10 +153,19 @@ public class TutorialDialogue : MonoBehaviour
         if (!hasPlayerToggledFlashlight)
         {
             DisplayKey("R", "Use <color=yellow>\"R\"</color> to toggle your flashlight");
+
             // Check if the flashlight is toggled (some check with the spotlight)
+            if (flashlightSpotlight.activeSelf)
+            {
+                hasPlayerToggledFlashlight = true;
+                displayDebounce = 1f;
+                HideKey();
+            }
+
             return false;
         }
 
+        station_3.SetActive(true);
         DisplayKey("!", "You are ready...");
         return true;
     }
