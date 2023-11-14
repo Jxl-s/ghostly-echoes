@@ -22,6 +22,8 @@ public class TutorialDialogue : MonoBehaviour
     private bool hasPlayerEquippedFlashlight = false;
     private bool hasPlayerToggledFlashlight = false;
 
+    [SerializeField] private GameObject station_1;
+    [SerializeField] private GameObject station_2;
 
     // Start is called before the first frame update
     void Start()
@@ -73,21 +75,40 @@ public class TutorialDialogue : MonoBehaviour
         // Also do checks for the tutorial steps
         if (!hasPlayerMoved)
         {
+            station_1.SetActive(true);
             DisplayKey("W", "Use <color=yellow>\"wasd\"</color> to move");
             // Check the player position, make sure its not the default
+            GameObject player = GameObject.FindGameObjectWithTag("Player");
+
+            if (player != null)
+            {
+                Vector3 position = player.transform.position;
+                Vector2 position2 = new Vector2(position.x, position.z);
+                Vector2 targetPosition = new Vector2(-4, -26f);
+
+                if ((position2 - targetPosition).magnitude < 3f)
+                {
+                    hasPlayerMoved = true;
+                    displayDebounce = 1f;
+                    station_1.SetActive(false);
+                    HideKey();
+                }
+            }
 
             return false;
         }
 
         if (!hasPlayerInteracted)
         {
+            station_2.SetActive(true);
             DisplayKey("F", "Use <color=yellow>\"F\"</color> to interact");
 
             // Make sure the object is now in the inventory
             if (InventoryManager.Instance.Items.Count > 0)
             {
                 hasPlayerInteracted = true;
-                displayDebounce = 3f;
+                displayDebounce = 1f;
+                station_2.SetActive(false);
                 HideKey();
             }
 
@@ -102,7 +123,7 @@ public class TutorialDialogue : MonoBehaviour
             if (HUDManager.Instance.inventoryPanel.gameObject.activeSelf)
             {
                 hasPlayerOpenedInventory = true;
-                displayDebounce = 3f;
+                displayDebounce = 1f;
                 HideKey();
             }
 
@@ -112,7 +133,6 @@ public class TutorialDialogue : MonoBehaviour
 
         if (!hasPlayerEquippedFlashlight)
         {
-
             DisplayKey("!", "Equip your flashlight");
 
             // Check if the flashlight is equipped
@@ -120,7 +140,7 @@ public class TutorialDialogue : MonoBehaviour
             if (ItemManager.Instance.flashlight.gameObject.activeSelf)
             {
                 hasPlayerEquippedFlashlight = true;
-                displayDebounce = 3f;
+                displayDebounce = 1f;
                 HideKey();
             }
 
@@ -147,7 +167,8 @@ public class TutorialDialogue : MonoBehaviour
         if (monologueFinished)
         {
             displayDebounce -= Time.deltaTime;
-            if (displayDebounce <= 0) {
+            if (displayDebounce <= 0)
+            {
                 displayDebounce = 0;
                 CheckTutorialSteps();
             }
