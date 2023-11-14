@@ -12,6 +12,8 @@ public class TutorialDialogue : MonoBehaviour
     private bool monologueFinished = false;
     private bool isDisplaying = false;
     private string curDisplay = "";
+    private float displayDebounce = 0;
+
 
     // For steps of tutorial
     private bool hasPlayerMoved = false;
@@ -83,6 +85,8 @@ public class TutorialDialogue : MonoBehaviour
             if (InventoryManager.Instance.Items.Count > 0)
             {
                 hasPlayerInteracted = true;
+                displayDebounce = 3f;
+                HideKey();
             }
 
             return false;
@@ -96,6 +100,8 @@ public class TutorialDialogue : MonoBehaviour
             if (HUDManager.Instance.inventoryPanel.gameObject.activeSelf)
             {
                 hasPlayerOpenedInventory = true;
+                displayDebounce = 3f;
+                HideKey();
             }
 
             // Make sure the inventory is currently open
@@ -108,9 +114,12 @@ public class TutorialDialogue : MonoBehaviour
             DisplayKey("!", "Equip your flashlight");
 
             // Check if the flashlight is equipped
+            // PROBLEM: make sure the instance is set soon
             if (ItemManager.Instance.flashlight.gameObject.activeSelf)
             {
                 hasPlayerEquippedFlashlight = true;
+                displayDebounce = 3f;
+                HideKey();
             }
 
             return false;
@@ -135,7 +144,11 @@ public class TutorialDialogue : MonoBehaviour
 
         if (monologueFinished)
         {
-            CheckTutorialSteps();
+            displayDebounce -= Time.deltaTime;
+            if (displayDebounce <= 0) {
+                displayDebounce = 0;
+                CheckTutorialSteps();
+            }
         }
     }
 }
