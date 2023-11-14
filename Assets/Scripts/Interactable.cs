@@ -13,7 +13,11 @@ public class Interactable : MonoBehaviour
     public string objectName;
     public string type;
     Animator animator;
+    AudioSource audio;
 
+    void Awake() {
+        audio = gameObject.GetComponent<AudioSource>();
+    }
     public void Interact()
     {
         animator = gameObject.GetComponent<Animator>();
@@ -26,12 +30,14 @@ public class Interactable : MonoBehaviour
                     animator.SetBool("Locked", false);
                     animator.SetBool("Closed", false);
                     gameObject.GetComponent<Collider>().isTrigger = true;
+                    audio.Play();
                     break;
                 }
                 if(openState && animator.GetBool("Closed")) {
                     Debug.Log("case2");
                     animator.SetBool("Closed", false);
                     gameObject.GetComponent<Collider>().isTrigger = true; 
+                    audio.Play();
                     break;
                 } else if(openState && !animator.GetBool("Closed")) {
                     Debug.Log("case3");
