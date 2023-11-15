@@ -8,4 +8,7 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/WelcomeScene.unity
     guid: 52edac95ac6efa14aadb879e9d8096e8
+  - enabled: 1
+    path: Assets/Scenes/TutorialScene.unity
+    guid: fd00a49ce2ee17048bf9b4e58df4c3fb
   m_configObjects: {}
