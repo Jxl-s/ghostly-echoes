@@ -1644,6 +1644,14 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 973816989411506504, guid: 3119fd4473b319b4286a68862a7c9ee7, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 973816989411506504, guid: 3119fd4473b319b4286a68862a7c9ee7, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0.824
+      objectReference: {fileID: 0}
     - target: {fileID: 973816989411506508, guid: 3119fd4473b319b4286a68862a7c9ee7, type: 3}
       propertyPath: m_CullingMask.m_Bits
       value: 4294967295

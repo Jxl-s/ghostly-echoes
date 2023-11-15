@@ -35,6 +35,8 @@ public class TutorialDialogue : MonoBehaviour
         GameManager.Instance.ControlsEnabled = false;
         HUDManager.Instance.SetContainerVisible(false);
         StartCoroutine(DoMonologue());
+
+        Camera.main.transform.localPosition = new Vector3(-16.76f, 8.44f, 0.338f);
     }
 
     IEnumerator DoMonologue()
@@ -51,6 +53,9 @@ public class TutorialDialogue : MonoBehaviour
         GameManager.Instance.ControlsEnabled = true;
         HUDManager.Instance.SetContainerVisible(true);
         monologueFinished = true;
+
+        Camera.main.transform.localPosition = new Vector3(0, 0.824f, 0.338f);
+        Camera.main.transform.rotation = Quaternion.Euler(0, 0, 0);
     }
 
     void DisplayKey(string key, string message)
@@ -162,14 +167,26 @@ public class TutorialDialogue : MonoBehaviour
                 hasPlayerToggledFlashlight = true;
                 displayDebounce = 1f;
                 HideKey();
+
+                // Play the next monologue
+                StartCoroutine(SecondMonologue());
             }
 
             return false;
         }
 
-        station_3.SetActive(true);
-        DisplayKey("!", "You are ready...");
+
         return true;
+    }
+
+    IEnumerator SecondMonologue()
+    {
+        yield return new WaitForSeconds(2f);
+        HUDManager.Instance.ShowDialogue("A voice is calling you from inside ...");
+        yield return new WaitForSeconds(4f);
+        HUDManager.Instance.ShowDialogue("Enter the school ... find the secrets ...");
+        yield return new WaitForSeconds(2f);
+        station_3.SetActive(true);
     }
 
     void Update()
@@ -180,12 +197,21 @@ public class TutorialDialogue : MonoBehaviour
 
         if (monologueFinished)
         {
-            displayDebounce -= Time.deltaTime;
-            if (displayDebounce <= 0)
+            if (!hasPlayerToggledFlashlight)
             {
-                displayDebounce = 0;
-                CheckTutorialSteps();
+                displayDebounce -= Time.deltaTime;
+                if (displayDebounce <= 0)
+                {
+                    displayDebounce = 0;
+                    CheckTutorialSteps();
+                }
             }
+        }
+        else
+        {
+            // Move the camera a little bit more again
+            Camera.main.transform.rotation = Quaternion.Euler(Mathf.Sin(Time.time * 2.0f) * 2f, 0, Mathf.Sin(Time.time + 3) * 0.75f);
+            Camera.main.transform.position += new Vector3(Time.deltaTime * 2f, 0, 0);
         }
     }
 }
