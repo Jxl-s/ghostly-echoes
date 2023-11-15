@@ -11,14 +11,14 @@ public class CharacterMovement : MonoBehaviour
     public float mouseSensitivy = 5.0f;
     private float gravityValue = -9.81f;
     private CharacterController controller;
-    private float walkSpeed = 5;
-    private float runSpeed = 8;
+    private float walkSpeed = 3;
+    private float runSpeed = 6;
     private bool isSprint = false;
     private bool canSprint = true;
     private Animator animator;
 
-    public HUDManager hud;    
- 
+    public HUDManager hud;
+
     private void Start()
     {
         hud = HUDManager.Instance;
@@ -55,17 +55,21 @@ public class CharacterMovement : MonoBehaviour
 
     }
 
-   void ProcessMovement()
+    void ProcessMovement()
     {
-        if (GameManager.Instance.StaminaPercentage == 0){
+        if (GameManager.Instance.StaminaPercentage == 0)
+        {
             canSprint = false;
         }
-        if(Input.GetButton("Fire3")){
-            if(canSprint){
+        if (Input.GetButton("Fire3"))
+        {
+            if (canSprint)
+            {
                 isSprint = true;
             }
         }
-        else{
+        else
+        {
             isSprint = false;
         }
         // Moving the character forward according to the speed
@@ -84,11 +88,11 @@ public class CharacterMovement : MonoBehaviour
         cameraRight.Normalize();
 
         // Calculate the movement direction based on input and camera orientation
-        Vector3 moveDirection = (cameraForward * Input.GetAxis("Vertical") * 0.5f) + (cameraRight * Input.GetAxis("Horizontal") * 0.5f);
+        Vector3 moveDirection = (cameraForward * Input.GetAxis("Vertical")) + (cameraRight * Input.GetAxis("Horizontal"));
 
         // Apply the movement direction and speed
         Vector3 movement = moveDirection.normalized * speed * Time.deltaTime;
-        
+
         if (GameManager.Instance.ControlsEnabled == false)
         {
             movement = Vector3.zero;
@@ -110,20 +114,26 @@ public class CharacterMovement : MonoBehaviour
         controller.Move(playerVelocity);
     }
 
-    public void Sprint(){
-        if (GameManager.Instance.StaminaPercentage >= 0 && isSprint && (playerVelocity.x != 0 || playerVelocity.z != 0)){
+    public void Sprint()
+    {
+        if (GameManager.Instance.StaminaPercentage >= 0 && isSprint && (playerVelocity.x != 0 || playerVelocity.z != 0))
+        {
             GameManager.Instance.StaminaPercentage -= 1;
         }
     }
 
-    public void SprintRecharge(){
-        if(!canSprint) {
+    public void SprintRecharge()
+    {
+        if (!canSprint)
+        {
             hud.SetSprintColor(new Color32(255, 0, 0, 255));
-            if(GameManager.Instance.StaminaPercentage == 100){
+            if (GameManager.Instance.StaminaPercentage == 100)
+            {
                 hud.SetSprintColor(new Color32(124, 180, 255, 255));
                 canSprint = true;
             }
-            else{
+            else
+            {
                 GameManager.Instance.StaminaPercentage += 1;
             }
         }
@@ -131,7 +141,7 @@ public class CharacterMovement : MonoBehaviour
 
     float GetMovementSpeed()
     {
-        if (isSprint)// Left shift
+        if (isSprint && GameManager.Instance.SprintEnabled)// Left shift
         {
             return runSpeed;
         }

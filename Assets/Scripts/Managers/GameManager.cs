@@ -12,6 +12,7 @@ public class GameManager : MonoBehaviour
     public float HealthPercentage = 100;
 
     public bool ControlsEnabled = true;
+    public bool SprintEnabled = false;
     public bool SFXEnabled = true;
 
     void Awake()
