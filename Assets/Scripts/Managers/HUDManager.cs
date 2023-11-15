@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using TMPro;
@@ -17,14 +18,17 @@ public class HUDManager : MonoBehaviour
     [SerializeField] private TextMeshProUGUI dialogueLabel;
 
     // Stats
+    [SerializeField] private GameObject health;
     [SerializeField] private TextMeshProUGUI healthLabel;
     [SerializeField] private RectTransform healthBar;
 
+    [SerializeField] private GameObject stamina;
     [SerializeField] private TextMeshProUGUI staminaLabel;
     [SerializeField] private RectTransform staminaBar;
     private Image staminaBarImage;
     [SerializeField] private RectTransform mask;
 
+    [SerializeField] public GameObject battery;
     [SerializeField] public TextMeshProUGUI batteryLabel;
     [SerializeField] public RectTransform batteryBar;
     [SerializeField] private RectTransform elementContainer;
@@ -142,6 +146,40 @@ public class HUDManager : MonoBehaviour
     }
 
     // Public UI methods
+    public void EnableElement(string element)
+    {
+        switch (element)
+        {
+            case "battery":
+                battery.SetActive(true);
+                return;
+            case "stamina":
+                stamina.SetActive(true);
+                return;
+            case "health":
+                health.SetActive(true);
+                return;
+            default:
+                return;
+        }
+    }
+    public void DisableElement(string element)
+    {
+        switch (element)
+        {
+            case "battery":
+                battery.SetActive(false);
+                return;
+            case "stamina":
+                stamina.SetActive(false);
+                return;
+            case "health":
+                health.SetActive(false);
+                return;
+            default:
+                return;
+        }
+    }
     public void SetInteractText(bool visible, string text)
     {
         interactLabel.alpha = visible ? 1 : 0;
@@ -365,10 +403,18 @@ public class HUDManager : MonoBehaviour
         elementContainer.gameObject.SetActive(visible);
     }
 
-    private float maskAlpha = 0;
-    public void SetMaskAlpha(float alpha)
+    public IEnumerator UpdateMask(float endValue, float duration)
     {
-        maskAlpha = alpha;
+        Image maskImage = mask.GetComponent<Image>();
+        float elapsedTime = 0;
+        float startValue = maskImage.color.a;
+        while (elapsedTime < duration)
+        {
+            elapsedTime += Time.deltaTime;
+            float newAlpha = Mathf.Lerp(startValue, endValue, elapsedTime / duration);
+            maskImage.color = new Color(maskImage.color.r, maskImage.color.g, maskImage.color.b, newAlpha);
+            yield return null;
+        }
     }
 
     // public void Blink(){

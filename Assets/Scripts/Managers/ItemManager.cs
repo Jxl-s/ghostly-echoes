@@ -39,6 +39,7 @@ public class ItemManager : MonoBehaviour
         switch (itemName)
         {
             case "Flashlight":
+                HUDManager.Instance.EnableElement("battery");
                 flashlight.gameObject.SetActive(true);
                 return;
         }
@@ -49,6 +50,7 @@ public class ItemManager : MonoBehaviour
         switch (itemName)
         {
             case "Flashlight":
+                HUDManager.Instance.DisableElement("battery");
                 flashlight.gameObject.SetActive(false);
                 return;
         }
