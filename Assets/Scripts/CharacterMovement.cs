@@ -84,7 +84,7 @@ public class CharacterMovement : MonoBehaviour
         cameraRight.Normalize();
 
         // Calculate the movement direction based on input and camera orientation
-        Vector3 moveDirection = (cameraForward * Input.GetAxis("Vertical")) + (cameraRight * Input.GetAxis("Horizontal"));
+        Vector3 moveDirection = (cameraForward * Input.GetAxis("Vertical") * 0.5f) + (cameraRight * Input.GetAxis("Horizontal") * 0.5f);
 
         // Apply the movement direction and speed
         Vector3 movement = moveDirection.normalized * speed * Time.deltaTime;

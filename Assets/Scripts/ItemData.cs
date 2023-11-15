@@ -22,6 +22,7 @@ public class ItemData : ScriptableObject
 
     // A short description that appears as a tooltip when clicked
     public string description;
+    public Texture2D icon;
 
     // Whether it's stackable or not
     public ItemType type;

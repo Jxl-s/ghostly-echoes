@@ -15,4 +15,5 @@ MonoBehaviour:
   itemName: Battery
   value: 1
   description: Don't get lost in the dark...
+  icon: {fileID: 2800000, guid: cfa6766e757ad1247862f048b33f51d9, type: 3}
   type: 0

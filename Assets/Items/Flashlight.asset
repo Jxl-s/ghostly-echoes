@@ -15,4 +15,5 @@ MonoBehaviour:
   itemName: Flashlight
   value: 1
   description: You might need this to see...
+  icon: {fileID: 2800000, guid: 48c0e4fbbd556504bb0a88cd1683cce8, type: 3}
   type: 1

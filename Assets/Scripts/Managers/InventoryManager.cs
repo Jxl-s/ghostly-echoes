@@ -28,11 +28,6 @@ public class InventoryManager : MonoBehaviour
         HUDManager.Instance.UpdateInventory(Items);
     }
 
-    void GetFlashlight()
-    {
-        Items.Add(new ItemData { itemName = "Flashlight", value = 2, description = "You might need this to see...", type = ItemType.Equipment });
-    }
-
     void Update()
     {
         if (Input.GetKeyDown(KeyCode.F))

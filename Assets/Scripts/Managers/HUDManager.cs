@@ -106,7 +106,6 @@ public class HUDManager : MonoBehaviour
         }
     }
 
-
     private void OnObjectSelect(GameObject selectedObject)
     {
         // InventoryManager.Instance.Items;
@@ -167,9 +166,17 @@ public class HUDManager : MonoBehaviour
 
                     if (itemData.type == ItemType.Equipment)
                     {
-                        transform.Find("Amount").GetComponent<TextMeshProUGUI>().text = "EQUIPMENT";
+                        if (itemData.value == 2)
+                        {
+                            transform.Find("Amount").GetComponent<TextMeshProUGUI>().text = "EQUIPPED!";
+                            transform.GetComponent<Image>().color = new Color32(128, 100, 100, 128);
+                        }
+                        else
+                        {
+                            transform.Find("Amount").GetComponent<TextMeshProUGUI>().text = "EQUIP";
+                            transform.GetComponent<Image>().color = new Color32(100, 75, 75, 128);
+                        }
                     }
-
                     found = true;
                     break;
                 }
@@ -183,11 +190,21 @@ public class HUDManager : MonoBehaviour
 
             clone.gameObject.name = itemData.itemName;
             clone.transform.Find("Name").GetComponent<TextMeshProUGUI>().text = itemData.itemName;
+            clone.transform.Find("Image").GetComponent<RawImage>().texture = itemData.icon;
             clone.transform.Find("Amount").GetComponent<TextMeshProUGUI>().text = itemData.value.ToString();
 
             if (itemData.type == ItemType.Equipment)
             {
-                clone.transform.Find("Amount").GetComponent<TextMeshProUGUI>().text = "EQUIPMENT";
+                if (itemData.value == 2)
+                {
+                    clone.transform.Find("Amount").GetComponent<TextMeshProUGUI>().text = "EQUIPPED!";
+                    clone.transform.GetComponent<Image>().color = new Color32(128, 100, 100, 128);
+                }
+                else
+                {
+                    clone.transform.Find("Amount").GetComponent<TextMeshProUGUI>().text = "EQUIP";
+                    clone.transform.GetComponent<Image>().color = new Color32(100, 75, 75, 128);
+                }
             }
 
             clone.SetActive(true);
@@ -217,7 +234,6 @@ public class HUDManager : MonoBehaviour
             }
         }
     }
-
 
     public void OnUseItem()
     {
@@ -256,6 +272,7 @@ public class HUDManager : MonoBehaviour
             useItemButton.gameObject.SetActive(false);
         }
 
+        UpdateInventory(InventoryManager.Instance.Items);
         UpdateStats();
     }
 
@@ -274,7 +291,7 @@ public class HUDManager : MonoBehaviour
 
         batteryBar.gameObject.SetActive(GameManager.Instance.BatteryPercentage > 0);
         SetBatteryColor();
-        
+
         batteryBarImage.color = currentBattercolor;
         staminaBarImage.color = currentStaminacolor;
     }
@@ -290,31 +307,39 @@ public class HUDManager : MonoBehaviour
         batteryBar.anchorMax = new Vector2(percent / 100, 0);
     }
 
-    public void SetBatteryColor(){
+    public void SetBatteryColor()
+    {
 
-        if(GameManager.Instance.BatteryPercentage > 70){
+        if (GameManager.Instance.BatteryPercentage > 70)
+        {
             currentBattercolor = new Color32(255, 255, 0, 255);
         }
-        else if (GameManager.Instance.BatteryPercentage > 40 && GameManager.Instance.BatteryPercentage <= 70){
+        else if (GameManager.Instance.BatteryPercentage > 40 && GameManager.Instance.BatteryPercentage <= 70)
+        {
             currentBattercolor = new Color32(255, 190, 0, 255);
         }
-        else if (GameManager.Instance.BatteryPercentage > 0 && GameManager.Instance.BatteryPercentage <= 40){
+        else if (GameManager.Instance.BatteryPercentage > 0 && GameManager.Instance.BatteryPercentage <= 40)
+        {
             currentBattercolor = new Color32(255, 130, 0, 255);
         }
-        else if (GameManager.Instance.BatteryPercentage == 0){
+        else if (GameManager.Instance.BatteryPercentage == 0)
+        {
             currentBattercolor = new Color(255f, 1f, 0f, 1.0f);
         }
     }
 
-    public void SetSprintColor(Color32 color){
+    public void SetSprintColor(Color32 color)
+    {
         currentStaminacolor = color;
     }
 
-    public void TakeDamage(float dmg){
+    public void TakeDamage(float dmg)
+    {
         GameManager.Instance.HealthPercentage -= dmg;
     }
 
-    public void DrainStamina(float stamina){
+    public void DrainStamina(float stamina)
+    {
         GameManager.Instance.StaminaPercentage -= stamina;
     }
 
@@ -335,7 +360,8 @@ public class HUDManager : MonoBehaviour
         dialogueLabel.text = "";
     }
 
-    public void SetContainerVisible(bool visible) {
+    public void SetContainerVisible(bool visible)
+    {
         elementContainer.gameObject.SetActive(visible);
     }
 
