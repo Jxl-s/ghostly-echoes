@@ -124,9 +124,11 @@ public class CharacterMovement : MonoBehaviour
 
     public void SprintRecharge()
     {
-        if (!canSprint)
+        if (!isSprint || !canSprint)
         {
-            hud.SetSprintColor(new Color32(255, 0, 0, 255));
+            if (!canSprint){
+                hud.SetSprintColor(new Color32(255, 0, 0, 255));
+            }
             if (GameManager.Instance.StaminaPercentage == 100)
             {
                 hud.SetSprintColor(new Color32(124, 180, 255, 255));
@@ -138,6 +140,7 @@ public class CharacterMovement : MonoBehaviour
             }
         }
     }
+    
 
     float GetMovementSpeed()
     {
