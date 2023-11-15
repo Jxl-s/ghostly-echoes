@@ -21,6 +21,7 @@ public class TutorialDialogue : MonoBehaviour
     private bool hasPlayerInteracted = false;
     private bool hasPlayerOpenedInventory = false;
     private bool hasPlayerEquippedFlashlight = false;
+    private bool hasPlayerOpenedFlashlight = false;
     private bool hasPlayerToggledFlashlight = false;
 
     [SerializeField] private GameObject flashlightSpotlight;
@@ -158,12 +159,27 @@ public class TutorialDialogue : MonoBehaviour
             return false;
         }
 
-        if (!hasPlayerToggledFlashlight)
+        if (!hasPlayerOpenedFlashlight)
         {
             DisplayKey("R", "Use <color=yellow>\"R\"</color> to toggle your flashlight");
 
             // Check if the flashlight is toggled (some check with the spotlight)
             if (flashlightSpotlight.activeSelf)
+            {
+                hasPlayerOpenedFlashlight = true;
+                displayDebounce = 1f;
+                HideKey();
+            }
+
+            return false;
+        }
+
+        if (!hasPlayerToggledFlashlight)
+        {
+            DisplayKey("R", "Turn off your flashlight");
+
+            // Check if the flashlight is toggled (some check with the spotlight)
+            if (!flashlightSpotlight.activeSelf)
             {
                 hasPlayerToggledFlashlight = true;
                 displayDebounce = 1f;
