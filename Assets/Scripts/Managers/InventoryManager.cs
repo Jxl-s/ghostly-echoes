@@ -15,6 +15,7 @@ public class InventoryManager : MonoBehaviour
         if (Instance == null)
         {
             Instance = this;
+            DontDestroyOnLoad(gameObject);
         }
         else
         {
@@ -24,14 +25,14 @@ public class InventoryManager : MonoBehaviour
 
     void Start()
     {
-        // Add the initial flashlight (2 for equipped, 1 for unequipped)
-        HUDManager.Instance.UpdateInventory(Items);
+        HUDManager.Instance?.UpdateInventory(Items);
     }
 
     void Update()
     {
         if (Input.GetKeyDown(KeyCode.F))
         {
+            Debug.Log("F is down");
             // Send a ray, check if the object is a pickupable
             if (Physics.Raycast(Camera.main.transform.position, Camera.main.transform.forward, out RaycastHit hit, RANGE))
             {
