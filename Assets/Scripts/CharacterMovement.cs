@@ -131,7 +131,6 @@ public class CharacterMovement : MonoBehaviour
 
     float GetMovementSpeed()
     {
-        Debug.Log("Is Sprint: " + isSprint);
         if (isSprint)// Left shift
         {
             return runSpeed;

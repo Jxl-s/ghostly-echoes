@@ -10,6 +10,7 @@ public class TutorialDialogue : MonoBehaviour
     [SerializeField] private TextMeshProUGUI messageText;
 
     private bool monologueFinished = false;
+    private bool secondMonologueFinished = false;
     private bool isDisplaying = false;
     private string curDisplay = "";
     private float displayDebounce = 0;
@@ -182,11 +183,19 @@ public class TutorialDialogue : MonoBehaviour
     IEnumerator SecondMonologue()
     {
         yield return new WaitForSeconds(2f);
+        Camera.main.transform.position = new Vector3(-5.943f, 2.12f, -15.123f);
+        yield return new WaitForSeconds(2f);
         HUDManager.Instance.ShowDialogue("A voice is calling you from inside ...");
         yield return new WaitForSeconds(4f);
         HUDManager.Instance.ShowDialogue("Enter the school ... find the secrets ...");
         yield return new WaitForSeconds(2f);
+
         station_3.SetActive(true);
+        Camera.main.transform.localPosition = new Vector3(0, 0.824f, 0.338f);
+        Camera.main.transform.rotation = Quaternion.Euler(0, 0, 0);
+
+        GameManager.Instance.ControlsEnabled = true;
+        secondMonologueFinished = true;
     }
 
     void Update()
@@ -205,6 +214,12 @@ public class TutorialDialogue : MonoBehaviour
                     displayDebounce = 0;
                     CheckTutorialSteps();
                 }
+            }
+            else if (!secondMonologueFinished)
+            {
+                GameManager.Instance.ControlsEnabled = false;
+                Camera.main.transform.position -= new Vector3(0, 0, Time.deltaTime * 0.5f);
+                Camera.main.transform.rotation = Quaternion.Euler(Mathf.Sin(Time.time * 2.0f) * 2f, 0, Mathf.Sin(Time.time * 2f) * 2f);
             }
         }
         else
