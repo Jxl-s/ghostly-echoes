@@ -2754,6 +2754,7 @@ GameObject:
   m_Component:
   - component: {fileID: 2033628919}
   - component: {fileID: 2033628920}
+  - component: {fileID: 2033628921}
   m_Layer: 0
   m_Name: GameManager
   m_TagString: Untagged
@@ -2791,7 +2792,22 @@ MonoBehaviour:
   BatteryPercentage: 100
   StaminaPercentage: 100
   HealthPercentage: 100
+  ControlsEnabled: 1
+  SprintEnabled: 0
   SFXEnabled: 1
+--- !u!114 &2033628921
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2033628918}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 63a5f1135df3d4f41bf38eee3a7ea19c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Items: []
 --- !u!1 &2125821207
 GameObject:
   m_ObjectHideFlags: 0
