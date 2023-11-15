@@ -15,6 +15,7 @@ public class CharacterMovement : MonoBehaviour
     private float runSpeed = 6;
     private bool isSprint = false;
     private bool canSprint = true;
+    private bool toggleSprint = false;
     private Animator animator;
 
     public HUDManager hud;
@@ -61,7 +62,7 @@ public class CharacterMovement : MonoBehaviour
         {
             canSprint = false;
         }
-        if (Input.GetButton("Fire3"))
+        if (Input.GetButton("Fire3") && toggleSprint)
         {
             if (canSprint)
             {
@@ -116,7 +117,7 @@ public class CharacterMovement : MonoBehaviour
 
     public void Sprint()
     {
-        if (GameManager.Instance.StaminaPercentage >= 0 && isSprint && (playerVelocity.x != 0 || playerVelocity.z != 0))
+        if (GameManager.Instance.SprintEnabled && GameManager.Instance.StaminaPercentage >= 0 && isSprint && (playerVelocity.x != 0 || playerVelocity.z != 0))
         {
             GameManager.Instance.StaminaPercentage -= 1;
         }
@@ -124,9 +125,11 @@ public class CharacterMovement : MonoBehaviour
 
     public void SprintRecharge()
     {
-        if (!canSprint)
+        if (!isSprint || !canSprint)
         {
-            hud.SetSprintColor(new Color32(255, 0, 0, 255));
+            if (!canSprint){
+                hud.SetSprintColor(new Color32(255, 0, 0, 255));
+            }
             if (GameManager.Instance.StaminaPercentage == 100)
             {
                 hud.SetSprintColor(new Color32(124, 180, 255, 255));
@@ -138,6 +141,7 @@ public class CharacterMovement : MonoBehaviour
             }
         }
     }
+    
 
     float GetMovementSpeed()
     {

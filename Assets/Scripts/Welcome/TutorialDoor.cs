@@ -23,6 +23,8 @@ public class TutorialDoor : MonoBehaviour
         }
 
         // Load the next level
+        StartCoroutine(HUDManager.Instance.UpdateMask(5f, 5f));
+
         Debug.Log("next level...");
     }
 }
