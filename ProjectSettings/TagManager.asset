@@ -9,6 +9,7 @@ TagManager:
   - batteryText
   - flashlight
   - hud
+  - PlayerModel
   layers:
   - Default
   - TransparentFX

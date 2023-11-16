@@ -30,9 +30,13 @@ public class TutorialDialogue : MonoBehaviour
     [SerializeField] private GameObject station_2;
     [SerializeField] private GameObject station_3;
 
+    [SerializeField] private GameObject playerModel;
+    [SerializeField] private GameObject flashlight;
     // Start is called before the first frame update
     void Start()
     {
+        playerModel = GameObject.FindGameObjectWithTag("PlayerModel");
+        flashlight = GameObject.FindGameObjectWithTag("flashlight");
         // Start the coroutine when the script starts
         GameManager.Instance.ControlsEnabled = false;
         HUDManager.Instance.SetContainerVisible(false);
@@ -203,6 +207,8 @@ public class TutorialDialogue : MonoBehaviour
 
     IEnumerator SecondMonologue()
     {
+        
+        EnablePlayerModel(false);
         yield return new WaitForSeconds(2f);
         Camera.main.transform.position = new Vector3(-5.943f, 2.12f, -15.123f);
         yield return new WaitForSeconds(2f);
@@ -212,6 +218,8 @@ public class TutorialDialogue : MonoBehaviour
         yield return new WaitForSeconds(2f);
 
         station_3.SetActive(true);
+        EnablePlayerModel(true);
+
         Camera.main.transform.localPosition = new Vector3(0, 0.824f, 0.338f);
         Camera.main.transform.rotation = Quaternion.Euler(0, 0, 0);
 
@@ -249,5 +257,14 @@ public class TutorialDialogue : MonoBehaviour
             Camera.main.transform.rotation = Quaternion.Euler(Mathf.Sin(Time.time * 2.0f) * 2f, 0, Mathf.Sin(Time.time + 3) * 0.75f);
             Camera.main.transform.position += new Vector3(Time.deltaTime * 2f, 0, 0);
         }
+    }
+    // disable player model for cutscene
+    void EnablePlayerModel(bool enabled)
+    {
+        flashlight = GameObject.FindGameObjectWithTag("flashlight");
+        if( playerModel != null)
+            playerModel.SetActive(enabled);
+        if( flashlight != null)
+            flashlight.SetActive(enabled);
     }
 }
