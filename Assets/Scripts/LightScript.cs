@@ -12,25 +12,18 @@ public class LightScript : MonoBehaviour
     public float maxLightRange = 10;
     public float drainSpeed = 1f;
     public bool isOn = false;
+
     public GameObject spotLight;
-    public Light light;
-    public Text batteryText;
-    public HUDManager hud;
+    private Light flashLight;
 
     // Start is called before the first frame update
     void Start()
     {
-        hud = HUDManager.Instance;
-
-        batteryText = GameObject.FindGameObjectWithTag("batteryText").GetComponent<Text>();
-        spotLight = GameObject.FindGameObjectWithTag("flashlight_light");
-        light = spotLight.GetComponent<Light>();
+        flashLight = spotLight.GetComponent<Light>();
         InvokeRepeating("DecrementBattery", 1.0f, drainSpeed);
-        light.intensity = maxLightIntensity;
-        light.range = maxLightRange;
+        flashLight.intensity = maxLightIntensity;
+        flashLight.range = maxLightRange;
         toggleFlashlight(isOn);
-        // SetBatteryText();
-
     }
 
     // Update is called once per frame
@@ -103,8 +96,8 @@ public class LightScript : MonoBehaviour
 
     public void SetFlashlight()
     {
-        light.intensity = maxLightIntensity * LightPower();
-        light.range = maxLightRange * LightPower();
+        flashLight.intensity = maxLightIntensity * LightPower();
+        flashLight.range = maxLightRange * LightPower();
     }
     // lowers the GameManager.Instance.BatteryPercentage power over time
     public void DecrementBattery()
@@ -112,32 +105,7 @@ public class LightScript : MonoBehaviour
         if (GameManager.Instance.BatteryPercentage > 0 && isOn)
         {
             // GameManager.Instance.BatteryPercentage -= 1;
-            hud.DecrementBatteryPercentage(1f);
+            HUDManager.Instance.DecrementBatteryPercentage(1f);
         }
-
     }
-
-
-
-    // public IEnumerator BatteryFlash(float time){
-    //     float maxtime = time;
-    //     bool shouldBlink = true;
-    //     // batteryText.text = "No more battery!!!";
-    //     hud.UpdateBatteryBar(100f);
-    //     while(shouldBlink){
-    //         batteryText.color = Color.white;
-    //         hud.SetBatteryColor(Color.white);
-    //         yield return new WaitForSeconds(0.2f);
-    //         hud.SetBatteryColor(batteryTextcolor);
-    //         batteryText.color = batteryTextcolor;
-    //         yield return new WaitForSeconds(0.2f);
-    //         if (maxtime != 0){
-    //             maxtime -= 1;
-    //         }
-    //         else{
-    //             shouldBlink = false;
-    //         }
-    //     }
-    //     hud.UpdateBatteryBar(GameManager.Instance.BatteryPercentage);
-    // }
 }

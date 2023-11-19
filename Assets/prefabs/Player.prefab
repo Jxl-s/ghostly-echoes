@@ -566,8 +566,17 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 3.041
       objectReference: {fileID: 0}
+    - target: {fileID: 3282412995043056745, guid: 0de31f626cca867479dddfc6c16c0f83, type: 3}
+      propertyPath: spotLight
+      value: 
+      objectReference: {fileID: 176680949992788119}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 0de31f626cca867479dddfc6c16c0f83, type: 3}
+--- !u!1 &176680949992788119 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 3282412993473995278, guid: 0de31f626cca867479dddfc6c16c0f83, type: 3}
+  m_PrefabInstance: {fileID: 3458425148267491993}
+  m_PrefabAsset: {fileID: 0}
 --- !u!4 &430387463406671051 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 3028600687431788114, guid: 0de31f626cca867479dddfc6c16c0f83, type: 3}
