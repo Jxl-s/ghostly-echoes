@@ -18,11 +18,8 @@ public class CharacterMovement : MonoBehaviour
     private bool toggleSprint = false;
     private Animator animator;
 
-    public HUDManager hud;
-
     private void Start()
     {
-        hud = HUDManager.Instance;
         Cursor.visible = false;
         Cursor.lockState = CursorLockMode.Locked;
         InvokeRepeating("Sprint", 1.0f, drainStamina);
@@ -127,12 +124,13 @@ public class CharacterMovement : MonoBehaviour
     {
         if (!isSprint || !canSprint)
         {
-            if (!canSprint){
-                hud.SetSprintColor(new Color32(255, 0, 0, 255));
+            if (!canSprint)
+            {
+                HUDManager.Instance.SetSprintColor(new Color32(255, 0, 0, 255));
             }
             if (GameManager.Instance.StaminaPercentage == 100)
             {
-                hud.SetSprintColor(new Color32(124, 180, 255, 255));
+                HUDManager.Instance.SetSprintColor(new Color32(124, 180, 255, 255));
                 canSprint = true;
             }
             else
@@ -141,7 +139,6 @@ public class CharacterMovement : MonoBehaviour
             }
         }
     }
-    
 
     float GetMovementSpeed()
     {

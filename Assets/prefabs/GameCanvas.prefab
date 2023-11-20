@@ -283,14 +283,14 @@ MonoBehaviour:
   tooltipLabel: {fileID: 8689767876910232940}
   useItemButton: {fileID: 8689767875872230332}
   dialogueLabel: {fileID: 8689767876526846476}
-  health: {fileID: 0}
+  health: {fileID: 8689767876238313456}
   healthLabel: {fileID: 8689767876238313422}
   healthBar: {fileID: 8689767876812035881}
-  stamina: {fileID: 0}
+  stamina: {fileID: 8689767875916577024}
   staminaLabel: {fileID: 8689767875916577054}
   staminaBar: {fileID: 8689767876466823350}
   mask: {fileID: 7862038724786507717}
-  battery: {fileID: 0}
+  battery: {fileID: 8689767876371250827}
   batteryLabel: {fileID: 8689767876371250825}
   batteryBar: {fileID: 8689767876546855741}
   elementContainer: {fileID: 7308395953776733089}

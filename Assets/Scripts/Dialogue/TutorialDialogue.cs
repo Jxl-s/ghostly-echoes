@@ -35,12 +35,12 @@ public class TutorialDialogue : MonoBehaviour
     {
         // Start the coroutine when the script starts
         GameManager.Instance.ControlsEnabled = false;
+
         HUDManager.Instance.SetContainerVisible(false);
         HUDManager.Instance.DisableElement("stamina");
         HUDManager.Instance.DisableElement("battery");
-        StartCoroutine(HUDManager.Instance.UpdateMask(0f, 3f));
 
-        
+        StartCoroutine(HUDManager.Instance.UpdateMask(0f, 3f));
         StartCoroutine(DoMonologue());
 
         Camera.main.transform.localPosition = new Vector3(-16.76f, 8.44f, 0.338f);

@@ -64,6 +64,8 @@ public class HUDManager : MonoBehaviour
 
         staminaBarImage = staminaBar.GetComponent<Image>();
         batteryBarImage = batteryBar.GetComponent<Image>();
+
+        UpdateInventory(InventoryManager.Instance.Items);
     }
 
     // Update is called once per frame

@@ -1,6 +1,4 @@
 using System;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class ItemManager : MonoBehaviour
@@ -20,8 +18,26 @@ public class ItemManager : MonoBehaviour
         }
     }
 
+    public void Start()
+    {
+        PreloadItems();
+    }
+
+    public void PreloadItems()
+    {
+        // make references, player must exist
+        GameObject player = GameObject.FindGameObjectWithTag("Player");
+        GameObject flashlightObject = player.transform.Find("flashlight").gameObject;
+
+        flashlight = flashlightObject.GetComponent<LightScript>();
+        Debug.Log("found flashlight!");
+        Debug.Log(flashlight);
+    }
+
     public void UseItem(string itemName)
     {
+        PreloadItems();
+
         switch (itemName)
         {
             case "Battery":
@@ -35,7 +51,9 @@ public class ItemManager : MonoBehaviour
 
     public void EquipItem(string itemName)
     {
-        // Unequip everything first
+        PreloadItems();
+
+        // TODO: Unequip everything first
         switch (itemName)
         {
             case "Flashlight":
@@ -47,6 +65,8 @@ public class ItemManager : MonoBehaviour
 
     public void UnequipItem(string itemName)
     {
+        PreloadItems();
+
         switch (itemName)
         {
             case "Flashlight":

@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 public class InventoryManager : MonoBehaviour
@@ -15,6 +16,7 @@ public class InventoryManager : MonoBehaviour
         if (Instance == null)
         {
             Instance = this;
+            SceneManager.sceneLoaded += OnSceneLoaded;
             DontDestroyOnLoad(gameObject);
         }
         else
@@ -23,9 +25,18 @@ public class InventoryManager : MonoBehaviour
         }
     }
 
-    void Start()
+    private void OnSceneLoaded(Scene scene, LoadSceneMode mode)
     {
-        HUDManager.Instance?.UpdateInventory(Items);
+        foreach (ItemData item in Items)
+        {
+            Debug.Log(item.itemName);
+            Debug.Log(item.value);
+
+            if (item.type == ItemType.Equipment && item.value == 2)
+            {
+                ItemManager.Instance.EquipItem(item.itemName);
+            }
+        }
     }
 
     void Update()

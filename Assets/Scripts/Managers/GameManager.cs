@@ -15,6 +15,8 @@ public class GameManager : MonoBehaviour
     public bool SprintEnabled = false;
     public bool SFXEnabled = true;
 
+    public bool BasementFinished = false; // Indicate if the player has been through basement already.
+
     void Awake()
     {
         if (Instance == null)
