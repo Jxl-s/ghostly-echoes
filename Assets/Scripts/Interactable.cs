@@ -14,9 +14,11 @@ public class Interactable : MonoBehaviour
     public string type;
     Animator animator;
     AudioSource audio;
+    Collider collider;
 
     void Awake() {
         audio = gameObject.GetComponent<AudioSource>();
+        collider = gameObject.GetComponent<BoxCollider>();
     }
     public void Interact()
     {
@@ -54,18 +56,16 @@ public class Interactable : MonoBehaviour
                     animator.SetBool("Closed", false);
                     if(item != null)
                         interact_text = item.itemName + " [F]";
+                        collider.enabled = false;
                     break;
-                }
-                if(!animator.GetBool("Closed") && item != null) {
+                } else if(!animator.GetBool("Closed") && item != null) {
                     InventoryManager.Instance.AddItem(item);
                     interact_text = objectName + " [F]";
                     item = null;
-                    break;
-                } else {
-                    interact_text = objectName + " [F]";
-                    animator.SetBool("Closed", true);
+                    collider.enabled = false;
                     break;
                 }
+                break;
             default:
                 break;    
         }
