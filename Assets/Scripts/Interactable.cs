@@ -26,12 +26,19 @@ public class Interactable : MonoBehaviour
         String interact_text = "";
         switch(type){
             case "door":
+                List<GameObject> doors = new List<GameObject>();
+                foreach(Transform door in this.gameObject.transform.GetChild(0).transform) {
+                    doors.Add(door.gameObject);
+                }
                 if(checkItems() && !openState) {
                     Debug.Log("case1");
                     openState = true;
                     animator.SetBool("Locked", false);
                     animator.SetBool("Closed", false);
                     gameObject.GetComponent<Collider>().isTrigger = true;
+                    foreach(GameObject door in doors){
+                        door.GetComponent<Collider>().isTrigger = true;
+                    }
                     audio.Play();
                     break;
                 }
@@ -39,12 +46,18 @@ public class Interactable : MonoBehaviour
                     Debug.Log("case2");
                     animator.SetBool("Closed", false);
                     gameObject.GetComponent<Collider>().isTrigger = true; 
+                    foreach(GameObject door in doors){
+                        door.GetComponent<Collider>().isTrigger = true;
+                    }
                     audio.Play();
                     break;
                 } else if(openState && !animator.GetBool("Closed")) {
                     Debug.Log("case3");
                     animator.SetBool("Closed", true);
                     gameObject.GetComponent<Collider>().isTrigger = false; 
+                    foreach(GameObject door in doors){
+                        door.GetComponent<Collider>().isTrigger = false;
+                    }
                     break;
                 } else {
                     Debug.Log("case4");
