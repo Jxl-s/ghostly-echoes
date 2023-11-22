@@ -15,4 +15,5 @@ MonoBehaviour:
   itemName: Key
   value: 1
   description: A key
+  icon: {fileID: 0}
   type: 2
