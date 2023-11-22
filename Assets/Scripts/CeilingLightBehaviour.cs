@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class CeilingLightBehaviour : MonoBehaviour
 {
+    public bool canFlash = true;
     public float minFlashInterval = 4f;
     public float maxFlashInterval = 10f;
     public float minFlashDuration = 0.1f;
@@ -26,21 +27,23 @@ public class CeilingLightBehaviour : MonoBehaviour
         // Wait for the delay
         yield return new WaitForSeconds(delay);
 
-        while (true)
-        {
-            // Turn on the light
-            lightComponent.enabled = false;
+        if (canFlash){
+            while (true)
+            {
+                // Turn on the light
+                lightComponent.enabled = false;
 
-            // Wait for the duration of the flash
-            float randomDuration = Random.Range(minFlashDuration, maxFlashDuration);
-            yield return new WaitForSeconds(randomDuration);
+                // Wait for the duration of the flash
+                float randomDuration = Random.Range(minFlashDuration, maxFlashDuration);
+                yield return new WaitForSeconds(randomDuration);
 
-            // Turn off the light
-            lightComponent.enabled = true;
+                // Turn off the light
+                lightComponent.enabled = true;
 
-            // Wait for a random interval before the next flash
-            float randomInterval = Random.Range(minFlashInterval, maxFlashInterval);
-            yield return new WaitForSeconds(randomInterval);
+                // Wait for a random interval before the next flash
+                float randomInterval = Random.Range(minFlashInterval, maxFlashInterval);
+                yield return new WaitForSeconds(randomInterval);
+            }
         }
     }
 }

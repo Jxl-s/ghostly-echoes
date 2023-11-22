@@ -11,8 +11,8 @@ public class CharacterMovement : MonoBehaviour
     public float mouseSensitivy = 5.0f;
     private float gravityValue = -9.81f;
     private CharacterController controller;
-    private float walkSpeed = 3;
-    private float runSpeed = 6;
+    private float walkSpeed = 6;
+    private float runSpeed = 9;
     private bool isSprint = false;
     private bool canSprint = true;
     private bool toggleSprint = false;
