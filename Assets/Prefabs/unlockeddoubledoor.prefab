@@ -409,7 +409,7 @@ GameObject:
   - component: {fileID: 8524717565058571839}
   - component: {fileID: 4474649368607995098}
   m_Layer: 0
-  m_Name: unlockeddoubledoor
+  m_Name: UnlockedDoubleDoor
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

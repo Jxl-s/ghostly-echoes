@@ -231,7 +231,7 @@ GameObject:
   - component: {fileID: 6183627168755696676}
   - component: {fileID: 6183627168755696683}
   m_Layer: 0
-  m_Name: envelope
+  m_Name: Envelope
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

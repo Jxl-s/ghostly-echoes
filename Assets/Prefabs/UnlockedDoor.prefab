@@ -310,7 +310,7 @@ GameObject:
   - component: {fileID: 7929652295879273062}
   - component: {fileID: -130963561120935724}
   m_Layer: 0
-  m_Name: unlockedDoor
+  m_Name: UnlockedDoor
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
