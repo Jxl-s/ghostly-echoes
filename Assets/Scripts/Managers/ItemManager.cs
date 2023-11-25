@@ -27,7 +27,7 @@ public class ItemManager : MonoBehaviour
     {
         // make references, player must exist
         GameObject player = GameObject.FindGameObjectWithTag("Player");
-        GameObject flashlightObject = player.transform.Find("flashlight").gameObject;
+        GameObject flashlightObject = player.transform.Find("Flashlight").gameObject;
 
         flashlight = flashlightObject.GetComponent<LightScript>();
         Debug.Log("found flashlight!");
