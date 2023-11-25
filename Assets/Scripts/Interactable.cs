@@ -13,12 +13,12 @@ public class Interactable : MonoBehaviour
     public string objectName;
     public string type;
     Animator animator;
-    AudioSource audio;
-    Collider collider;
+    AudioSource sound;
+    Collider colli;
 
     void Awake() {
-        audio = gameObject.GetComponent<AudioSource>();
-        collider = gameObject.GetComponent<BoxCollider>();
+        sound = gameObject.GetComponent<AudioSource>();
+        colli = gameObject.GetComponent<BoxCollider>();
     }
     public void Interact()
     {
@@ -39,7 +39,7 @@ public class Interactable : MonoBehaviour
                     foreach(GameObject door in doors){
                         door.GetComponent<Collider>().isTrigger = true;
                     }
-                    audio.Play();
+                    sound.Play();
                     break;
                 }
                 if(openState && animator.GetBool("Closed")) {
@@ -49,7 +49,7 @@ public class Interactable : MonoBehaviour
                     foreach(GameObject door in doors){
                         door.GetComponent<Collider>().isTrigger = true;
                     }
-                    audio.Play();
+                    sound.Play();
                     break;
                 } else if(openState && !animator.GetBool("Closed")) {
                     Debug.Log("case3");
@@ -69,13 +69,13 @@ public class Interactable : MonoBehaviour
                     animator.SetBool("Closed", false);
                     if(item != null)
                         interact_text = item.itemName + " [F]";
-                        collider.enabled = false;
+                        colli.enabled = false;
                     break;
                 } else if(!animator.GetBool("Closed") && item != null) {
                     InventoryManager.Instance.AddItem(item);
                     interact_text = objectName + " [F]";
                     item = null;
-                    collider.enabled = false;
+                    colli.enabled = false;
                     break;
                 }
                 break;
