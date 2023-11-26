@@ -2,12 +2,15 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using TMPro;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.EventSystems;
+using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 public class HUDManager : MonoBehaviour
 {
+    [SerializeField] private GameObject inventoryCell;
     [SerializeField] public RectTransform inventoryPanel;
     [SerializeField] private RectTransform inventoryContainer;
 
@@ -32,6 +35,8 @@ public class HUDManager : MonoBehaviour
     [SerializeField] public TextMeshProUGUI batteryLabel;
     [SerializeField] public RectTransform batteryBar;
     [SerializeField] private RectTransform elementContainer;
+
+    [SerializeField] public RectTransform memoryPanel;
 
     private Image batteryBarImage;
 
@@ -112,7 +117,7 @@ public class HUDManager : MonoBehaviour
         }
     }
 
-    private void OnObjectSelect(GameObject selectedObject)
+    public void OnObjectSelect(GameObject selectedObject)
     {
         // InventoryManager.Instance.Items;
         foreach (ItemData itemData in InventoryManager.Instance.Items)
@@ -139,9 +144,13 @@ public class HUDManager : MonoBehaviour
                 useItemButton.GetComponentInChildren<TextMeshProUGUI>().text = "Unequip";
             }
         }
-        else
+        else if (selectedItem.type == ItemType.Consumable)
         {
             useItemButton.GetComponentInChildren<TextMeshProUGUI>().text = "Use";
+        }
+        else if (selectedItem.type == ItemType.Memory)
+        {
+            useItemButton.GetComponentInChildren<TextMeshProUGUI>().text = "View";
         }
 
         useItemButton.gameObject.SetActive(true);
@@ -217,6 +226,7 @@ public class HUDManager : MonoBehaviour
                             transform.GetComponent<Image>().color = new Color32(100, 75, 75, 128);
                         }
                     }
+
                     found = true;
                     break;
                 }
@@ -225,8 +235,7 @@ public class HUDManager : MonoBehaviour
             if (found) continue;
 
             // If the item is not in the inventory, add it
-            GameObject template = inventoryContainer.Find("TEMPLATE").gameObject;
-            GameObject clone = Instantiate(template, inventoryContainer);
+            GameObject clone = Instantiate(inventoryCell, inventoryContainer);
 
             clone.gameObject.name = itemData.itemName;
             clone.transform.Find("Name").GetComponent<TextMeshProUGUI>().text = itemData.itemName;
@@ -248,9 +257,6 @@ public class HUDManager : MonoBehaviour
             }
 
             clone.SetActive(true);
-
-            // Add an event listener
-            clone.GetComponent<EventTrigger>().triggers[0].callback.AddListener((data) => { OnObjectSelect(clone); });
         }
 
         // Remove the ones that arent in the list anymore
@@ -285,6 +291,12 @@ public class HUDManager : MonoBehaviour
             ItemManager.Instance.UseItem(selectedItem.itemName);
         }
 
+        if (selectedItem.type == ItemType.Memory)
+        {
+            // Show an UI containing the memory
+            StartCoroutine(HUDManager.Instance.ShowMemory(selectedItem.memoryText));
+        }
+
         if (selectedItem.type == ItemType.Equipment)
         {
             // Toggle the equipment
@@ -311,6 +323,7 @@ public class HUDManager : MonoBehaviour
             tooltipLabel.text = "";
             useItemButton.gameObject.SetActive(false);
         }
+
 
         UpdateInventory(InventoryManager.Instance.Items);
         UpdateStats();
@@ -417,6 +430,54 @@ public class HUDManager : MonoBehaviour
             maskImage.color = new Color(maskImage.color.r, maskImage.color.g, maskImage.color.b, newAlpha);
             yield return null;
         }
+    }
+
+    public IEnumerator UpdateImageAlpha(Image image, float endValue, float duration)
+    {
+        float elapsedTime = 0;
+        float startValue = image.color.a;
+        while (elapsedTime < duration)
+        {
+            elapsedTime += Time.deltaTime;
+            float newAlpha = Mathf.Lerp(startValue, endValue, elapsedTime / duration);
+            image.color = new Color(image.color.r, image.color.g, image.color.b, newAlpha);
+            yield return null;
+        }
+    }
+
+    public IEnumerator ShowMemory(string message)
+    {
+        // Make the panel active, fade in the background, show the text, then show the close buttono
+        memoryPanel.gameObject.SetActive(true);
+        yield return UpdateImageAlpha(memoryPanel.GetComponent<Image>(), 0.8f, 0.5f);
+
+        Transform text = memoryPanel.Find("Text");
+        TextMeshProUGUI textMesh = text.GetComponent<TextMeshProUGUI>();
+
+        textMesh.text = message;
+        text.Find("Close").gameObject.SetActive(true);
+
+        Cursor.lockState = CursorLockMode.None;
+        Cursor.visible = true;
+    }
+
+    public void HideMemory()
+    {
+        StartCoroutine(HideMemoryCoroutine());
+    }
+
+    private IEnumerator HideMemoryCoroutine()
+    {
+        Transform text = memoryPanel.Find("Text");
+        TextMeshProUGUI textMesh = text.GetComponent<TextMeshProUGUI>();
+        textMesh.text = "";
+        text.Find("Close").gameObject.SetActive(false);
+
+        yield return UpdateImageAlpha(memoryPanel.GetComponent<Image>(), 0.0f, 0.5f);
+        memoryPanel.gameObject.SetActive(false);
+
+        Cursor.lockState = CursorLockMode.Locked;
+        Cursor.visible = false;
     }
 
     // public void Blink(){

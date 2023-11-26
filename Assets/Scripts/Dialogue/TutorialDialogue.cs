@@ -121,7 +121,7 @@ public class TutorialDialogue : MonoBehaviour
             DisplayKey("F", "Use <color=yellow>\"F\"</color> to interact");
 
             // Make sure the object is now in the inventory
-            if (InventoryManager.Instance.Items.Count > 0)
+            if (InventoryManager.Instance.Items.Count > 0 && InventoryManager.Instance.Items.Find((item) => item.itemName == "Flashlight") != null)
             {
                 hasPlayerInteracted = true;
                 displayDebounce = 1f;

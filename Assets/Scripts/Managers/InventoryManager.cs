@@ -71,6 +71,12 @@ public class InventoryManager : MonoBehaviour
         item.value = 1;
         Items.Add(item);
 
+        if (item.type == ItemType.Memory)
+        {
+            // Show an UI containing the memory
+            StartCoroutine(HUDManager.Instance.ShowMemory(item.memoryText));
+        }
+ 
         HUDManager.Instance.UpdateInventory(Items);
     }
 

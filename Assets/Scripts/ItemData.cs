@@ -26,6 +26,7 @@ public class ItemData : ScriptableObject
 
     // Whether it's stackable or not
     public ItemType type;
+    public string memoryText; // for memories, the text that will be displayed when the player clicks on it
 
     public void Use() { }
 }
