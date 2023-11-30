@@ -38,6 +38,8 @@ public class HUDManager : MonoBehaviour
 
     [SerializeField] public RectTransform memoryPanel;
 
+    [SerializeField] GameObject pauseMenu = null;
+
     private Image batteryBarImage;
 
     private int dialogueOriginalY;
@@ -47,6 +49,10 @@ public class HUDManager : MonoBehaviour
     private ItemData selectedItem;
 
     public static HUDManager Instance;
+
+    private bool isPausedMenu;
+    private bool isPausedLetter;
+    private bool isPausedInventory;
 
     void Awake()
     {
@@ -58,6 +64,17 @@ public class HUDManager : MonoBehaviour
         {
             Destroy(gameObject);
             return;
+        }
+    }
+
+    void PauseGame(bool toggle){
+        if (!isPausedMenu || !isPausedLetter || !isPausedInventory){
+            if (toggle){
+                GameManager.Instance.ControlsEnabled = false;
+            }
+            else{
+                GameManager.Instance.ControlsEnabled = true;
+            }
         }
     }
 
@@ -79,6 +96,7 @@ public class HUDManager : MonoBehaviour
         UpdateStats();
         HandleInventoryVisible();
         HandleDialogueFloat();
+        MenuToggle();
     }
 
     void HandleDialogueFloat()
@@ -91,6 +109,16 @@ public class HUDManager : MonoBehaviour
         dialogueLabel.rectTransform.rotation = Quaternion.Euler(0, 0, newRot);
     }
 
+    private void MenuToggle(){
+        if (Input.GetKeyDown(KeyCode.Escape))
+        {
+            isPausedMenu = !isPausedMenu;
+            PauseGame(isPausedMenu);
+            Debug.Log(isPausedMenu);
+            // pauseMenu.SetActive(isPaused);
+        }
+    }
+
     private void HandleInventoryVisible()
     {
         if (Input.GetKeyDown(KeyCode.T))
@@ -99,11 +127,13 @@ public class HUDManager : MonoBehaviour
             bool newState = !inventoryPanel.gameObject.activeSelf;
             if (newState)
             {
+                isPausedInventory = true;
                 Cursor.lockState = CursorLockMode.None;
                 Cursor.visible = true;
             }
             else
             {
+                isPausedInventory = false;
                 Cursor.lockState = CursorLockMode.Locked;
                 Cursor.visible = false;
 
@@ -112,7 +142,7 @@ public class HUDManager : MonoBehaviour
                 tooltipLabel.text = "";
                 useItemButton.gameObject.SetActive(false);
             }
-
+            PauseGame(isPausedInventory);
             inventoryPanel.gameObject.SetActive(newState);
         }
     }
@@ -448,6 +478,8 @@ public class HUDManager : MonoBehaviour
     public IEnumerator ShowMemory(string message)
     {
         // Make the panel active, fade in the background, show the text, then show the close buttono
+        isPausedLetter = false;
+        PauseGame(isPausedLetter);
         memoryPanel.gameObject.SetActive(true);
         yield return UpdateImageAlpha(memoryPanel.GetComponent<Image>(), 0.8f, 0.5f);
 
@@ -463,6 +495,8 @@ public class HUDManager : MonoBehaviour
 
     public void HideMemory()
     {
+        isPausedLetter = true;
+        PauseGame(isPausedLetter);
         StartCoroutine(HideMemoryCoroutine());
     }
 

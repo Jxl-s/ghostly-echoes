@@ -27,21 +27,22 @@ public class CameraRotation : MonoBehaviour
             return;
         }
 
-        rotation.x += Input.GetAxis(xAxis) * sensitivity;
-        rotation.y += Input.GetAxis(yAxis) * sensitivity;
-        rotation.y = Mathf.Clamp(rotation.y, -yRotationLimit, yRotationLimit);
+        if (GameManager.Instance.ControlsEnabled){
+            rotation.x += Input.GetAxis(xAxis) * sensitivity;
+            rotation.y += Input.GetAxis(yAxis) * sensitivity;
+            rotation.y = Mathf.Clamp(rotation.y, -yRotationLimit, yRotationLimit);
 
-        var xQuat = Quaternion.AngleAxis(rotation.x, Vector3.up);
-        var yQuat = Quaternion.AngleAxis(rotation.y, Vector3.left);
-        
+            var xQuat = Quaternion.AngleAxis(rotation.x, Vector3.up);
+            var yQuat = Quaternion.AngleAxis(rotation.y, Vector3.left);
+            
 
-        transform.parent.transform.localRotation = Quaternion.Slerp(transform.parent.transform.localRotation, xQuat, smoothTurnRate);
+            transform.parent.transform.localRotation = Quaternion.Slerp(transform.parent.transform.localRotation, xQuat, smoothTurnRate);
 
-        transform.localRotation = Quaternion.Slerp(transform.localRotation, yQuat, smoothTurnRate);
+            transform.localRotation = Quaternion.Slerp(transform.localRotation, yQuat, smoothTurnRate);
 
-        Vector3 rot = transform.localRotation.eulerAngles;
-        Quaternion rotQuat = Quaternion.Euler(rot.x + 90, rot.y, rot.z);
-
+            Vector3 rot = transform.localRotation.eulerAngles;
+            Quaternion rotQuat = Quaternion.Euler(rot.x + 90, rot.y, rot.z);
+        }
         // InHandObject.transform.localRotation = rotQuat;
     }
 }

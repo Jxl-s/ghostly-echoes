@@ -55,61 +55,66 @@ public class CharacterMovement : MonoBehaviour
 
     void ProcessMovement()
     {
-        if (GameManager.Instance.StaminaPercentage == 0)
-        {
-            canSprint = false;
-        }
-        if (Input.GetButton("Fire3") && toggleSprint)
-        {
-            if (canSprint)
+        if(GameManager.Instance.ControlsEnabled){
+            if (GameManager.Instance.StaminaPercentage == 0)
             {
-                isSprint = true;
+                canSprint = false;
             }
+
+            if (Input.GetButton("Fire3") && toggleSprint)
+            {
+                if (canSprint)
+                {
+                    isSprint = true;
+                }
+            }
+            else
+            {
+                isSprint = false;
+            }
+
+            // Moving the character forward according to the speed
+            float speed = GetMovementSpeed();
+
+            // Get the camera's forward and right vectors
+            Vector3 cameraForward = Camera.main.transform.forward;
+            Vector3 cameraRight = Camera.main.transform.right;
+
+            // Make sure to flatten the vectors so that they don't contain any vertical component
+            cameraForward.y = 0;
+            cameraRight.y = 0;
+
+            // Normalize the vectors to ensure consistent speed in all directions
+            cameraForward.Normalize();
+            cameraRight.Normalize();
+
+            // Calculate the movement direction based on input and camera orientation
+            Vector3 moveDirection = (cameraForward * Input.GetAxis("Vertical")) + (cameraRight * Input.GetAxis("Horizontal"));
+
+            // Apply the movement direction and speed
+            Vector3 movement = moveDirection.normalized * speed * Time.deltaTime;
+
+            if (GameManager.Instance.ControlsEnabled == false)
+            {
+                movement = Vector3.zero;
+            }
+
+
+            groundedPlayer = controller.isGrounded;
+            if (groundedPlayer)
+            {
+                gravity.y = -1.0f;
+            }
+            else
+            {
+                // Since there is no physics applied on character controller we have this applies to reapply gravity
+                gravity.y += gravityValue * Time.deltaTime;
+            }
+            
+            // Apply gravity and move the character
+            playerVelocity = gravity * Time.deltaTime + movement;
+            controller.Move(playerVelocity);
         }
-        else
-        {
-            isSprint = false;
-        }
-        // Moving the character forward according to the speed
-        float speed = GetMovementSpeed();
-
-        // Get the camera's forward and right vectors
-        Vector3 cameraForward = Camera.main.transform.forward;
-        Vector3 cameraRight = Camera.main.transform.right;
-
-        // Make sure to flatten the vectors so that they don't contain any vertical component
-        cameraForward.y = 0;
-        cameraRight.y = 0;
-
-        // Normalize the vectors to ensure consistent speed in all directions
-        cameraForward.Normalize();
-        cameraRight.Normalize();
-
-        // Calculate the movement direction based on input and camera orientation
-        Vector3 moveDirection = (cameraForward * Input.GetAxis("Vertical")) + (cameraRight * Input.GetAxis("Horizontal"));
-
-        // Apply the movement direction and speed
-        Vector3 movement = moveDirection.normalized * speed * Time.deltaTime;
-
-        if (GameManager.Instance.ControlsEnabled == false)
-        {
-            movement = Vector3.zero;
-        }
-
-
-        groundedPlayer = controller.isGrounded;
-        if (groundedPlayer)
-        {
-            gravity.y = -1.0f;
-        }
-        else
-        {
-            // Since there is no physics applied on character controller we have this applies to reapply gravity
-            gravity.y += gravityValue * Time.deltaTime;
-        }
-        // Apply gravity and move the character
-        playerVelocity = gravity * Time.deltaTime + movement;
-        controller.Move(playerVelocity);
     }
 
     public void Sprint()
