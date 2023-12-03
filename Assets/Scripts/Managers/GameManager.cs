@@ -31,4 +31,7 @@ public class GameManager : MonoBehaviour
             Destroy(gameObject);
         }
     }
+    public void ReduceHealth(int damage) {
+         HealthPercentage -= damage;
+    }
 }

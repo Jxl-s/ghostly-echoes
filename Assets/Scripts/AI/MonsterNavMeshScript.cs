@@ -7,31 +7,31 @@ public class MonsterNavMeshScript : MonoBehaviour
 {
     public NavMeshAgent navMeshAgent;               //  Nav mesh agent component
     public Animator animator;                       //  Animator component
-    public float startWaitTime = 2;                 //  Wait time of every action
+    public float startWaitTime = 1;                 //  Wait time of every action
+    public float startTeleportTime = 2;             //  Wait time of every teleport
     public float timeToRotate = 2;                  //  Wait time when the enemy detect near the player without seeing
-    public float speed = 6;                         //  Walking speed, speed in the nav mesh agent                     
- 
-    public float viewRadius = 15;                   //  Radius of the enemy view
-    public float viewAngle = 90;                    //  Angle of the enemy view
+    public float speed = 5;                         //  Walking speed, speed in the nav mesh agent  
+    float radius = 0.05f;                            //  Teleport radius                     
+    public float viewRadius = 5;                   //  Radius of the enemy view
+    public float viewAngle = 180;                    //  Angle of the enemy view
     public LayerMask playerMask;                    //  To detect the player with the raycast
     public LayerMask obstacleMask;                  //  To detect the obstacules with the raycast
     public float meshResolution = 1.0f;             //  How many rays will cast per degree
     public int edgeIterations = 4;                  //  Number of iterations to get a better performance of the mesh filter when the raycast hit an obstacule
-    public float edgeDistance = 0.5f;               //  Max distance to calcule the a minumun and a maximum raycast when hits something
+    public float edgeDistance = 0.5f;               //  Max distance to calcule the a minumun and a maximum raycast when hits something       
 
-    public List<Transform> waypoints = new List<Transform>();                   //  All the waypoints where the enemy patrols
+    public List<Transform> waypoints;                  //  All the waypoints where the enemy patrols
     int m_CurrentWaypointIndex;                     //  Current waypoint where the enemy is going to
- 
     Vector3 playerLastPosition = Vector3.zero;      //  Last position of the player when was near the enemy
     Vector3 m_PlayerPosition;                       //  Last position of the player when the player is seen by the enemy
- 
     float m_WaitTime;                               //  Variable of the wait time that makes the delay
     float m_TimeToRotate;                           //  Variable of the wait time to rotate when the player is near that makes the delay
     bool m_playerInRange;                           //  If the player is in range of vision, state of chasing
     bool m_PlayerNear;                              //  If the player is near, state of hearing
     bool m_IsPatrol;                                //  If the enemy is patrol, state of patroling
     bool m_CaughtPlayer;                            //  if the enemy has caught the player
- 
+    float m_TeleportTime;                           //  Variable of the wait time between teleports
+    
     void Start()
     {
         m_PlayerPosition = Vector3.zero;
@@ -43,46 +43,60 @@ public class MonsterNavMeshScript : MonoBehaviour
         m_TimeToRotate = timeToRotate;
 
         animator = GetComponent<Animator>();
- 
+
         playerMask = LayerMask.GetMask("Player");
         obstacleMask = LayerMask.GetMask("Obstacle"); 
 
         m_CurrentWaypointIndex = 0;                 //  Set the initial waypoint
         navMeshAgent = GetComponent<NavMeshAgent>();
         GameObject[] objects = GameObject.FindGameObjectsWithTag("waypoint");
+        waypoints = new List<Transform>(); 
         foreach(GameObject obj in objects) {
-           waypoints.Add(obj.transform);
+            waypoints.Add(obj.transform);
         }
- 
+
         navMeshAgent.isStopped = false;
         navMeshAgent.speed = speed;             //  Set the navemesh speed with the normal speed of the enemy
         navMeshAgent.SetDestination(waypoints[m_CurrentWaypointIndex].position);    //  Set the destination to the first waypoint
     }
- 
+
     private void Update()
     {
         EnviromentView();                       //  Check whether or not the player is in the enemy's field of vision
- 
+
         if (!m_IsPatrol)
         {
             Chasing();
+            
         }
         else
         {
             Patroling();
         }
     }
- 
+
     private void Chasing()
     {
         //  The enemy is chasing the player
         m_PlayerNear = false;                       //  Set false that hte player is near beacause the enemy already sees the player
         playerLastPosition = Vector3.zero;          //  Reset the player near position
- 
+
         if (!m_CaughtPlayer)
         {
+            if(m_TeleportTime <= 0) {
+                float x = this.transform.position.x;
+                float y = this.transform.position.y;
+                float z = this.transform.position.z;
+                Debug.Log(this.transform.position.x);
+                Debug.Log(this.transform.position.z);
+                Vector2 point = Random.insideUnitCircle * radius;      //  set the destination of the enemy to the player location
+                this.transform.position = new Vector3(x*(point.x + 1), y, z * (point.y + 1));
+                Debug.Log(this.transform.position.ToString());
+                m_TeleportTime = startTeleportTime;
+            }
             Move(speed);
-            navMeshAgent.SetDestination(m_PlayerPosition);          //  set the destination of the enemy to the player location
+            navMeshAgent.SetDestination(m_PlayerPosition);  
+            m_TeleportTime -= Time.deltaTime;
         }
         if (navMeshAgent.remainingDistance <= navMeshAgent.stoppingDistance)    //  Control if the enemy arrive to the player location
         {
@@ -105,7 +119,6 @@ public class MonsterNavMeshScript : MonoBehaviour
             }
         }
     }
- 
     private void Patroling()
     {
         if (m_PlayerNear)
@@ -145,37 +158,27 @@ public class MonsterNavMeshScript : MonoBehaviour
             }
         }
     }
- 
-    private void OnAnimatorMove()
-    {
- 
-    }
- 
     public void NextPoint()
     {
         m_CurrentWaypointIndex = (m_CurrentWaypointIndex + 1) % waypoints.Count;
         navMeshAgent.SetDestination(waypoints[m_CurrentWaypointIndex].position);
     }
- 
     void Stop()
     {
         navMeshAgent.isStopped = true;
         animator.SetBool("Running", false);
         navMeshAgent.speed = 0;
     }
- 
     void Move(float speed)
     {
         navMeshAgent.isStopped = false;
         animator.SetBool("Running", true);
         navMeshAgent.speed = speed;
     }
- 
     void CaughtPlayer()
     {
         m_CaughtPlayer = true;
     }
- 
     void LookingPlayer(Vector3 player)
     {
         navMeshAgent.SetDestination(player);
@@ -196,11 +199,10 @@ public class MonsterNavMeshScript : MonoBehaviour
             }
         }
     }
- 
     void EnviromentView()
     {
         Collider[] playerInRange = Physics.OverlapSphere(transform.position, viewRadius, playerMask);   //  Make an overlap sphere around the enemy to detect the playermask in the view radius
- 
+
         for (int i = 0; i < playerInRange.Length; i++)
         {
             Transform player = playerInRange[i].transform;
@@ -236,6 +238,13 @@ public class MonsterNavMeshScript : MonoBehaviour
                  * */
                 m_PlayerPosition = player.transform.position;       //  Save the player's current position if the player is in range of vision
             }
+        }
+    } 
+    private void OnTriggerEnter(Collider other)
+    {
+        if(other.tag == "Player") {
+            animator.SetTrigger("Attack");
+            GameManager.Instance.ReduceHealth(20);
         }
     }
 }
