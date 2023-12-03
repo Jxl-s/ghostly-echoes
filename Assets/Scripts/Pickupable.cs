@@ -33,7 +33,7 @@ public class Pickupable : MonoBehaviour
 
     public void OnMouseOver()
     {
-        if (Physics.Raycast(Camera.main.transform.position, Camera.main.transform.forward, out RaycastHit hit, 4.0f)) {
+        if (Physics.Raycast(Camera.main.transform.position, Camera.main.transform.forward, out RaycastHit hit, 4.0f) && GameManager.Instance.ControlsEnabled) {
             HUDManager.Instance.SetInteractText(true, "Pickup " + item.name + " [F]");
 
             // Make the "Selected" child object visible

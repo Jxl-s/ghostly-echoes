@@ -34,4 +34,13 @@ public class GameManager : MonoBehaviour
     public void ReduceHealth(int damage) {
          HealthPercentage -= damage;
     }
+    public void PauseGame()
+    {
+        ControlsEnabled = false;
+    }
+
+    public void ResumeGame()
+    {
+        ControlsEnabled = true;
+    }
 }

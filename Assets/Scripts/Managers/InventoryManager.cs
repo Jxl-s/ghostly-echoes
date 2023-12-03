@@ -41,7 +41,7 @@ public class InventoryManager : MonoBehaviour
 
     void Update()
     {
-        if (Input.GetKeyDown(KeyCode.F))
+        if (Input.GetKeyDown(KeyCode.F) && GameManager.Instance.ControlsEnabled)
         {
             // Send a ray, check if the object is a pickupable
             if (Physics.Raycast(Camera.main.transform.position, Camera.main.transform.forward, out RaycastHit hit, RANGE))
