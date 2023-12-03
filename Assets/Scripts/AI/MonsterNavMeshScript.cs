@@ -84,15 +84,7 @@ public class MonsterNavMeshScript : MonoBehaviour
         if (!m_CaughtPlayer)
         {
             if(m_TeleportTime <= 0) {
-                float x = this.transform.position.x;
-                float y = this.transform.position.y;
-                float z = this.transform.position.z;
-                Debug.Log(this.transform.position.x);
-                Debug.Log(this.transform.position.z);
-                Vector2 point = Random.insideUnitCircle * radius;      //  set the destination of the enemy to the player location
-                this.transform.position = new Vector3(x*(point.x + 1), y, z * (point.y + 1));
-                Debug.Log(this.transform.position.ToString());
-                m_TeleportTime = startTeleportTime;
+                Teleport();
             }
             Move(speed);
             navMeshAgent.SetDestination(m_PlayerPosition);  
@@ -245,6 +237,19 @@ public class MonsterNavMeshScript : MonoBehaviour
         if(other.tag == "Player") {
             animator.SetTrigger("Attack");
             GameManager.Instance.ReduceHealth(20);
+            Teleport();
         }
+    }
+
+    /*
+    * Teleport the monster within a circle radius   
+    */
+    private void Teleport() {
+        float x = this.transform.position.x;
+        float y = this.transform.position.y;
+        float z = this.transform.position.z;
+        Vector2 point = Random.insideUnitCircle * radius;      //  set the destination of the enemy to the player location
+        this.transform.position = new Vector3(x*(point.x + 1), y, z * (point.y + 1));
+        m_TeleportTime = startTeleportTime;
     }
 }
