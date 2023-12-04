@@ -37,8 +37,8 @@ public class TutorialDialogue : MonoBehaviour
         GameManager.Instance.ControlsEnabled = false;
 
         HUDManager.Instance.SetContainerVisible(false);
-        HUDManager.Instance.DisableElement("stamina");
-        HUDManager.Instance.DisableElement("battery");
+        // HUDManager.Instance.DisableElement("stamina");
+        // HUDManager.Instance.DisableElement("battery");
 
         StartCoroutine(HUDManager.Instance.UpdateMask(0f, 3f));
         StartCoroutine(DoMonologue());

@@ -30,6 +30,7 @@ public class CharacterMovement : MonoBehaviour
 
     public void Update()
     {
+        Debug.Log("Sprint: " + isSprint + " SprintEnabled: " + GameManager.Instance.SprintEnabled + " Stamina: " + GameManager.Instance.StaminaPercentage);
         ProcessMovement();
     }
 
@@ -61,7 +62,7 @@ public class CharacterMovement : MonoBehaviour
                 canSprint = false;
             }
 
-            if (Input.GetButton("Fire3") && toggleSprint)
+            if (Input.GetButton("Fire3") )
             {
                 if (canSprint)
                 {

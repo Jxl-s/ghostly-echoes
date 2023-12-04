@@ -14,7 +14,7 @@ public class GameManager : MonoBehaviour
     public float HealthPercentage = 100;
 
     public bool ControlsEnabled = true;
-    public bool SprintEnabled = false;
+    public bool SprintEnabled = true;
     public bool SFXEnabled = true;
 
     public bool BasementFinished = false; // Indicate if the player has been through basement already.
@@ -30,6 +30,7 @@ public class GameManager : MonoBehaviour
         {
             Destroy(gameObject);
         }
+        SprintEnabled = true;
     }
     public void ReduceHealth(int damage) {
          HealthPercentage -= damage;

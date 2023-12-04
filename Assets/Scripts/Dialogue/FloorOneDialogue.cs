@@ -20,8 +20,8 @@ public class FloorOneDialogue : MonoBehaviour
             doingSecondMonologue = true;
             SecondTimeCutscene();
         }
-        HUDManager.Instance.DisableElement("stamina");
-        HUDManager.Instance.DisableElement("battery");
+        // HUDManager.Instance.DisableElement("stamina");
+        // HUDManager.Instance.DisableElement("battery");
     }
 
     void FirstTimeCutscene()

@@ -70,7 +70,7 @@ public class ItemManager : MonoBehaviour
         switch (itemName)
         {
             case "Flashlight":
-                HUDManager.Instance.DisableElement("battery");
+                // HUDManager.Instance.DisableElement("battery");
                 flashlight.gameObject.SetActive(false);
                 return;
         }
