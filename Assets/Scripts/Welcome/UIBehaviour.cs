@@ -194,6 +194,7 @@ public class UIBehaviour : MonoBehaviour
     }
 
     private void LoadNextLevel() {
+        AudioManager.Instance.ChangeSound(1);
         SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
     }
 

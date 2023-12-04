@@ -11,14 +11,14 @@ public class MonsterNavMeshScript : MonoBehaviour
     public float startTeleportTime = 2;             //  Wait time of every teleport
     public float timeToRotate = 2;                  //  Wait time when the enemy detect near the player without seeing
     public float speed = 5;                         //  Walking speed, speed in the nav mesh agent  
-    float radius = 0.05f;                            //  Teleport radius                     
+    float radius = 0.03f;                            //  Teleport radius                     
     public float viewRadius = 5;                   //  Radius of the enemy view
     public float viewAngle = 180;                    //  Angle of the enemy view
     public LayerMask playerMask;                    //  To detect the player with the raycast
-    public LayerMask obstacleMask;                  //  To detect the obstacules with the raycast
+    public LayerMask obstacleMask;                  //  To detect the obstacles with the raycast
     public float meshResolution = 1.0f;             //  How many rays will cast per degree
     public int edgeIterations = 4;                  //  Number of iterations to get a better performance of the mesh filter when the raycast hit an obstacule
-    public float edgeDistance = 0.5f;               //  Max distance to calcule the a minumun and a maximum raycast when hits something       
+    public float edgeDistance = 0.5f;               //  Max distance to calculate the a minumun and a maximum raycast when hits something       
 
     public List<Transform> waypoints;                  //  All the waypoints where the enemy patrols
     int m_CurrentWaypointIndex;                     //  Current waypoint where the enemy is going to

@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using TMPro;
@@ -7,8 +8,10 @@ public class Pickupable : MonoBehaviour
 {
     public ItemData item;
 
+
     public void Pickup()
     {
+        AudioManager.Instance.PlayEffect();
         InventoryManager.Instance.AddItem(item);
         HUDManager.Instance.SetInteractText(false, "");
         Destroy(gameObject);
