@@ -30,7 +30,6 @@ public class CharacterMovement : MonoBehaviour
 
     public void Update()
     {
-        Debug.Log("Sprint: " + isSprint + " SprintEnabled: " + GameManager.Instance.SprintEnabled + " Stamina: " + GameManager.Instance.StaminaPercentage);
         ProcessMovement();
     }
 

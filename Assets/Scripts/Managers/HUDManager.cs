@@ -512,8 +512,11 @@ public class HUDManager : MonoBehaviour
         yield return UpdateImageAlpha(memoryPanel.GetComponent<Image>(), 0.0f, 0.5f);
         memoryPanel.gameObject.SetActive(false);
         
-        Cursor.lockState = CursorLockMode.Locked;
-        Cursor.visible = false;
+        if (!inventoryPanel.gameObject.activeSelf)
+        {
+            Cursor.lockState = CursorLockMode.Locked;
+            Cursor.visible = false;
+        }
     }
 
     // public void Blink(){
