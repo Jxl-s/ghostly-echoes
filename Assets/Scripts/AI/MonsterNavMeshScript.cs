@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.AI;
 
@@ -9,6 +10,7 @@ public class MonsterNavMeshScript : MonoBehaviour
     public Animator animator;                       //  Animator component
     public float startWaitTime = 1;                 //  Wait time of every action
     public float startTeleportTime = 2;             //  Wait time of every teleport
+    public float startAttackTime = 3;             //  Wait time of every teleport
     public float timeToRotate = 2;                  //  Wait time when the enemy detect near the player without seeing
     public float speed = 5;                         //  Walking speed, speed in the nav mesh agent  
     float radius = 0.03f;                            //  Teleport radius                     
@@ -28,9 +30,10 @@ public class MonsterNavMeshScript : MonoBehaviour
     float m_TimeToRotate;                           //  Variable of the wait time to rotate when the player is near that makes the delay
     bool m_playerInRange;                           //  If the player is in range of vision, state of chasing
     bool m_PlayerNear;                              //  If the player is near, state of hearing
-    bool m_IsPatrol;                                //  If the enemy is patrol, state of patroling
+    bool m_IsPatrol;                                //  If the enemy is patrol, state of patrolling
     bool m_CaughtPlayer;                            //  if the enemy has caught the player
     float m_TeleportTime;                           //  Variable of the wait time between teleports
+    float m_AttackTime;                             //  Variable of the wait time between attacks
     
     void Start()
     {
@@ -41,6 +44,7 @@ public class MonsterNavMeshScript : MonoBehaviour
         m_PlayerNear = false;
         m_WaitTime = startWaitTime;                 //  Set the wait time variable that will change
         m_TimeToRotate = timeToRotate;
+        m_AttackTime = 0;
 
         animator = GetComponent<Animator>();
 
@@ -67,7 +71,9 @@ public class MonsterNavMeshScript : MonoBehaviour
         if (!m_IsPatrol)
         {
             Chasing();
-            
+            if(m_AttackTime > 0) {
+                m_AttackTime -= Time.deltaTime;
+            }
         }
         else
         {
@@ -234,10 +240,11 @@ public class MonsterNavMeshScript : MonoBehaviour
     } 
     private void OnTriggerEnter(Collider other)
     {
-        if(other.tag == "Player") {
+        if(other.tag == "Player" && m_AttackTime <= 0) {
             animator.SetTrigger("Attack");
             GameManager.Instance.ReduceHealth(20);
             Teleport();
+            m_AttackTime = startAttackTime;
         }
     }
 
