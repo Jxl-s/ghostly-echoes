@@ -39,6 +39,7 @@ public class HUDManager : MonoBehaviour
     [SerializeField] public RectTransform memoryPanel;
 
     [SerializeField] GameObject pauseMenu = null;
+    [SerializeField] private GameObject damagePanel;
 
     private Image batteryBarImage;
 
@@ -87,6 +88,7 @@ public class HUDManager : MonoBehaviour
         HandleDialogueFloat();
         MenuToggle();
     }
+    
     void HandleDialogueFloat()
     {
         // Make the title bounce up and down, rotate a bit too, and fade in and out
@@ -226,6 +228,14 @@ public class HUDManager : MonoBehaviour
     {
         interactLabel.alpha = visible ? 1 : 0;
         interactLabel.text = text;
+    }
+
+    public IEnumerator ShowDamageMask()
+    {
+        damagePanel.SetActive(true);
+        yield return UpdateImageAlpha(damagePanel.GetComponent<Image>(), 0f, 2f);
+        damagePanel.SetActive(false);
+        damagePanel.GetComponent<Image>().color = new Color(1f, 0f, 0f, 0.2f);
     }
 
     public void UpdateInventory(List<ItemData> list)

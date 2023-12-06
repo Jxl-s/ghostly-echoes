@@ -32,9 +32,13 @@ public class GameManager : MonoBehaviour
         }
         SprintEnabled = true;
     }
-    public void ReduceHealth(int damage) {
-         HealthPercentage -= damage;
+
+    public void ReduceHealth(int damage)
+    {
+        HealthPercentage -= damage;
+        StartCoroutine(HUDManager.Instance.ShowDamageMask());
     }
+
     public void PauseGame()
     {
         ControlsEnabled = false;
