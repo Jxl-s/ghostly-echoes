@@ -35,7 +35,7 @@ public class TutorialDialogue : MonoBehaviour
     {
         // Start the coroutine when the script starts
         GameManager.Instance.ControlsEnabled = false;
-
+        
         HUDManager.Instance.SetContainerVisible(false);
         // HUDManager.Instance.DisableElement("stamina");
         // HUDManager.Instance.DisableElement("battery");
@@ -48,6 +48,8 @@ public class TutorialDialogue : MonoBehaviour
 
     IEnumerator DoMonologue()
     {
+        GameManager.Instance.SetCutscene(true);
+
         // Display the first text
         yield return new WaitForSeconds(2f);
         HUDManager.Instance.ShowDialogue("This place looks pretty familiar...");
@@ -63,6 +65,8 @@ public class TutorialDialogue : MonoBehaviour
 
         Camera.main.transform.localPosition = new Vector3(0, 0.824f, 0.338f);
         Camera.main.transform.rotation = Quaternion.Euler(0, 0, 0);
+
+        GameManager.Instance.SetCutscene(false);
     }
 
     void DisplayKey(string key, string message)
@@ -202,7 +206,9 @@ public class TutorialDialogue : MonoBehaviour
     }
 
     IEnumerator SecondMonologue()
-    {        
+    {
+        GameManager.Instance.SetCutscene(true);
+
         yield return new WaitForSeconds(2f);
         Camera.main.transform.position = new Vector3(-5.943f, 2.12f, -15.123f);
         yield return new WaitForSeconds(2f);
@@ -218,6 +224,9 @@ public class TutorialDialogue : MonoBehaviour
 
         GameManager.Instance.ControlsEnabled = true;
         secondMonologueFinished = true;
+
+        GameManager.Instance.SetCutscene(false);
+
     }
 
     void Update()

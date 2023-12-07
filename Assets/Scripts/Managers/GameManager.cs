@@ -16,6 +16,7 @@ public class GameManager : MonoBehaviour
     public bool ControlsEnabled = true;
     public bool SprintEnabled = true;
     public bool SFXEnabled = true;
+    public bool isCutscene = false;
 
     public bool BasementFinished = false; // Indicate if the player has been through basement already.
 
@@ -47,5 +48,16 @@ public class GameManager : MonoBehaviour
     public void ResumeGame()
     {
         ControlsEnabled = true;
+    }
+
+    public void SetCutscene(bool isScene){
+        if(isScene){
+            isCutscene = true;
+            ControlsEnabled = false;
+        }
+        else{
+            isCutscene = false;
+            ControlsEnabled = true;
+        }
     }
 }

@@ -100,7 +100,7 @@ public class HUDManager : MonoBehaviour
     }
 
     private void MenuToggle(){
-        if (Input.GetKeyDown(KeyCode.Escape) && !isPausedLetter && !isPausedInventory)
+        if (Input.GetKeyDown(KeyCode.Escape) && !isPausedLetter && !isPausedInventory && !GameManager.Instance.isCutscene)
         {
             isPausedMenu = !isPausedMenu;
             if (isPausedMenu)
@@ -122,7 +122,7 @@ public class HUDManager : MonoBehaviour
 
     private void HandleInventoryVisible()
     {
-        if (Input.GetKeyDown(KeyCode.T) && !isPausedLetter && !isPausedMenu)
+        if (Input.GetKeyDown(KeyCode.T) && !isPausedLetter && !isPausedMenu && !GameManager.Instance.isCutscene)
         {
             //  = falseToggle Inventory Visibility
             bool newState = !inventoryPanel.gameObject.activeSelf;
