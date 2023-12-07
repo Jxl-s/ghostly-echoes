@@ -16524,6 +16524,16 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0
+--- !u!195 &670214013 stripped
+NavMeshAgent:
+  m_CorrespondingSourceObject: {fileID: 8667309380608072282, guid: 2eb7307ba96474441b98b8771f213036, type: 3}
+  m_PrefabInstance: {fileID: 8667309380536464524}
+  m_PrefabAsset: {fileID: 0}
+--- !u!95 &670214014 stripped
+Animator:
+  m_CorrespondingSourceObject: {fileID: 8667309380608072276, guid: 2eb7307ba96474441b98b8771f213036, type: 3}
+  m_PrefabInstance: {fileID: 8667309380536464524}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &671227832 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 7546574485843345941, guid: a8c8809ca91ff9e40888a9fb4b2d2c83, type: 3}
@@ -44347,7 +44357,7 @@ Mesh:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: pb_Mesh61808
+  m_Name: pb_Mesh81310
   serializedVersion: 10
   m_SubMeshes:
   - serializedVersion: 2
@@ -49776,7 +49786,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2063469185}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -27.43, y: 0, z: 43.51}
+  m_LocalPosition: {x: -27.43, y: 0, z: 19.97}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -51629,6 +51639,22 @@ PrefabInstance:
       propertyPath: m_Name
       value: Monster
       objectReference: {fileID: 0}
+    - target: {fileID: 8667309380608072283, guid: 2eb7307ba96474441b98b8771f213036, type: 3}
+      propertyPath: animator
+      value: 
+      objectReference: {fileID: 670214014}
+    - target: {fileID: 8667309380608072283, guid: 2eb7307ba96474441b98b8771f213036, type: 3}
+      propertyPath: viewAngle
+      value: 130
+      objectReference: {fileID: 0}
+    - target: {fileID: 8667309380608072283, guid: 2eb7307ba96474441b98b8771f213036, type: 3}
+      propertyPath: viewRadius
+      value: 20
+      objectReference: {fileID: 0}
+    - target: {fileID: 8667309380608072283, guid: 2eb7307ba96474441b98b8771f213036, type: 3}
+      propertyPath: navMeshAgent
+      value: 
+      objectReference: {fileID: 670214013}
     - target: {fileID: 9206147675287554374, guid: 2eb7307ba96474441b98b8771f213036, type: 3}
       propertyPath: m_RootOrder
       value: 2

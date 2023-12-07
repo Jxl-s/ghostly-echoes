@@ -8,7 +8,7 @@ public class MonsterNavMeshScript : MonoBehaviour
 {
     public NavMeshAgent navMeshAgent;               //  Nav mesh agent component
     public Animator animator;                       //  Animator component
-    public float startWaitTime = 1;                 //  Wait time of every action
+    public float startWaitTime = 0.5f;                 //  Wait time of every action
     public float startTeleportTime = 2;             //  Wait time of every teleport
     public float startAttackTime = 3;             //  Wait time of every teleport
     public float timeToRotate = 2;                  //  Wait time when the enemy detect near the player without seeing
@@ -110,7 +110,7 @@ public class MonsterNavMeshScript : MonoBehaviour
             }
             else
             {
-                if (Vector3.Distance(transform.position, GameObject.FindGameObjectWithTag("Player").transform.position) >= 2.5f)
+                if (Vector3.Distance(transform.position, GameObject.FindGameObjectWithTag("Player").transform.position) >= 1.5f)
                     //  Wait if the current position is not the player position
                     Stop();
                 m_WaitTime -= Time.deltaTime;
