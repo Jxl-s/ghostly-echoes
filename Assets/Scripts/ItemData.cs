@@ -8,6 +8,7 @@ public enum ItemType
     Consumable,
     Equipment,
     Key,
+    Axe,
     Memory
 }
 

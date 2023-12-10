@@ -42,7 +42,7 @@ public class CameraRotation : MonoBehaviour
 
             Vector3 rot = transform.localRotation.eulerAngles;
             Quaternion rotQuat = Quaternion.Euler(rot.x + 90, rot.y, rot.z);
+            InHandObject.transform.localRotation = rotQuat;
         }
-        // InHandObject.transform.localRotation = rotQuat;
     }
 }
