@@ -145,11 +145,13 @@ public class MonsterNavMeshScript : MonoBehaviour
                 if (m_WaitTime <= 0)
                 {
                     NextPoint();
+                    Debug.Log(navMeshAgent.destination);
                     Move(speed);
                     m_WaitTime = startWaitTime;
                 }
                 else
                 {
+                    Debug.Log("stopped patrolling");
                     Stop();
                     m_WaitTime -= Time.deltaTime;
                 }
