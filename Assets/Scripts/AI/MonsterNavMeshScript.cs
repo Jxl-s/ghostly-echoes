@@ -34,6 +34,7 @@ public class MonsterNavMeshScript : MonoBehaviour
     bool m_CaughtPlayer;                            //  if the enemy has caught the player
     float m_TeleportTime;                           //  Variable of the wait time between teleports
     float m_AttackTime;                             //  Variable of the wait time between attacks
+    public string tag;
 
     bool monsterStarted = false;
     void StartMonster()
@@ -54,7 +55,7 @@ public class MonsterNavMeshScript : MonoBehaviour
 
         m_CurrentWaypointIndex = 0;                 //  Set the initial waypoint
         navMeshAgent = GetComponent<NavMeshAgent>();
-        GameObject[] objects = GameObject.FindGameObjectsWithTag("waypoint");
+        GameObject[] objects = GameObject.FindGameObjectsWithTag(tag);
         waypoints = new List<Transform>();
         foreach (GameObject obj in objects)
         {
