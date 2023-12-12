@@ -5,12 +5,19 @@ using UnityEngine.SceneManagement;
 
 public class NextLvlTransition : MonoBehaviour
 {
+    public bool monsterRequired = false;
     void OnTriggerEnter(Collider other)
     {
         if (!other.CompareTag("Player"))
         {
             return;
         }
+
+        if (monsterRequired && !GameManager.Instance.MonsterActive)
+        {
+            return;
+        }
+
         Debug.Log("works");
         // Load the next level
         StartCoroutine(HUDManager.Instance.UpdateMask(1f, 3f));
@@ -20,7 +27,6 @@ public class NextLvlTransition : MonoBehaviour
     void NextScene()
     {
         // if (SceneManager.GetActiveScene().buildIndex == 3)
-        GameManager.Instance.MonsterActive = true;
         SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
     }
 }
