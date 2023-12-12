@@ -10,18 +10,8 @@ public class FloorOneDialogue : MonoBehaviour
 
     void Start()
     {
-        if (!GameManager.Instance.BasementFinished)
-        {
-            doingFirstMonologue = true;
-            FirstTimeCutscene();
-        }
-        else
-        {
-            doingSecondMonologue = true;
-            SecondTimeCutscene();
-        }
-        // HUDManager.Instance.DisableElement("stamina");
-        // HUDManager.Instance.DisableElement("battery");
+        doingFirstMonologue = true;
+        FirstTimeCutscene();
     }
 
     void FirstTimeCutscene()

@@ -34,8 +34,9 @@ public class MonsterNavMeshScript : MonoBehaviour
     bool m_CaughtPlayer;                            //  if the enemy has caught the player
     float m_TeleportTime;                           //  Variable of the wait time between teleports
     float m_AttackTime;                             //  Variable of the wait time between attacks
-    
-    void Start()
+
+    bool monsterStarted = false;
+    void StartMonster()
     {
         m_PlayerPosition = Vector3.zero;
         m_IsPatrol = true;
@@ -49,13 +50,14 @@ public class MonsterNavMeshScript : MonoBehaviour
         animator = GetComponent<Animator>();
 
         playerMask = LayerMask.GetMask("Player");
-        obstacleMask = LayerMask.GetMask("Obstacle"); 
+        obstacleMask = LayerMask.GetMask("Obstacle");
 
         m_CurrentWaypointIndex = 0;                 //  Set the initial waypoint
         navMeshAgent = GetComponent<NavMeshAgent>();
         GameObject[] objects = GameObject.FindGameObjectsWithTag("waypoint");
-        waypoints = new List<Transform>(); 
-        foreach(GameObject obj in objects) {
+        waypoints = new List<Transform>();
+        foreach (GameObject obj in objects)
+        {
             waypoints.Add(obj.transform);
         }
 
@@ -66,12 +68,25 @@ public class MonsterNavMeshScript : MonoBehaviour
 
     private void Update()
     {
+        // Only chase if the monster is active
+        if (!GameManager.Instance.MonsterActive)
+        {
+            return;
+        }
+
+        if (!monsterStarted)
+        {
+            monsterStarted = true;
+            StartMonster();
+        }
+
         EnviromentView();                       //  Check whether or not the player is in the enemy's field of vision
 
         if (!m_IsPatrol)
         {
             Chasing();
-            if(m_AttackTime > 0) {
+            if (m_AttackTime > 0)
+            {
                 m_AttackTime -= Time.deltaTime;
             }
         }
@@ -89,16 +104,17 @@ public class MonsterNavMeshScript : MonoBehaviour
 
         if (!m_CaughtPlayer)
         {
-            if(m_TeleportTime <= 0) {
+            if (m_TeleportTime <= 0)
+            {
                 Teleport();
             }
             Move(speed);
-            navMeshAgent.SetDestination(m_PlayerPosition);  
+            navMeshAgent.SetDestination(m_PlayerPosition);
             m_TeleportTime -= Time.deltaTime;
         }
         if (navMeshAgent.remainingDistance <= navMeshAgent.stoppingDistance)    //  Control if the enemy arrive to the player location
         {
-                if (m_WaitTime <= 0 && !m_CaughtPlayer && Vector3.Distance(transform.position, GameObject.FindGameObjectWithTag("Player").transform.position) >= 6f)
+            if (m_WaitTime <= 0 && !m_CaughtPlayer && Vector3.Distance(transform.position, GameObject.FindGameObjectWithTag("Player").transform.position) >= 6f)
             {
                 //  Check if the enemy is not near to the player, returns to patrol after the wait time delay
                 m_IsPatrol = true;
@@ -239,10 +255,11 @@ public class MonsterNavMeshScript : MonoBehaviour
                 m_PlayerPosition = player.transform.position;       //  Save the player's current position if the player is in range of vision
             }
         }
-    } 
+    }
     private void OnTriggerEnter(Collider other)
     {
-        if(other.tag == "Player" && m_AttackTime <= 0) {
+        if (other.tag == "Player" && m_AttackTime <= 0)
+        {
             animator.SetTrigger("Attack");
             GameManager.Instance.ReduceHealth(20);
             Teleport();
@@ -253,12 +270,13 @@ public class MonsterNavMeshScript : MonoBehaviour
     /*
     * Teleport the monster within a circle radius   
     */
-    private void Teleport() {
+    private void Teleport()
+    {
         float x = this.transform.position.x;
         float y = this.transform.position.y;
         float z = this.transform.position.z;
         Vector2 point = Random.insideUnitCircle * radius;      //  set the destination of the enemy to the player location
-        this.transform.position = new Vector3(x*(point.x + 1), y, z * (point.y + 1));
+        this.transform.position = new Vector3(x * (point.x + 1), y, z * (point.y + 1));
         m_TeleportTime = startTeleportTime;
     }
 }

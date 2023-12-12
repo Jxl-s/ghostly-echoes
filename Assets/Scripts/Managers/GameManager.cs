@@ -18,7 +18,7 @@ public class GameManager : MonoBehaviour
     public bool SFXEnabled = true;
     public bool isCutscene = false;
 
-    public bool BasementFinished = false; // Indicate if the player has been through basement already.
+    public bool MonsterActive = false;
 
     void Awake()
     {
