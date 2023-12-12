@@ -6080,7 +6080,7 @@ Mesh:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: pb_Mesh74630
+  m_Name: pb_Mesh156804
   serializedVersion: 10
   m_SubMeshes:
   - serializedVersion: 2
@@ -8335,7 +8335,7 @@ Mesh:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: pb_Mesh76840
+  m_Name: pb_Mesh159056
   serializedVersion: 10
   m_SubMeshes:
   - serializedVersion: 2
@@ -10593,6 +10593,24 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 3.0125122, y: 0.05717621, z: 0.97729987}
   m_Center: {x: 0.0000032186508, y: -0.0000038910657, z: -0.0000038146973}
+--- !u!1 &353353475 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 9009993248045115073, guid: 2e7863efccadbfa408c26702f0931e40, type: 3}
+  m_PrefabInstance: {fileID: 1893399995}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &353353476
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 353353475}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5ca1d3f3fc4120b488ca331454074071, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  basementDialogue: {fileID: 1049478783}
 --- !u!1 &353969038
 GameObject:
   m_ObjectHideFlags: 0
@@ -12883,7 +12901,7 @@ Mesh:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: pb_Mesh77054
+  m_Name: pb_Mesh159270
   serializedVersion: 10
   m_SubMeshes:
   - serializedVersion: 2
@@ -39980,7 +39998,7 @@ GameObject:
   - component: {fileID: 1674945391}
   - component: {fileID: 1674945390}
   - component: {fileID: 1674945389}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Basemen Shell
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -53210,11 +53228,11 @@ PrefabInstance:
       objectReference: {fileID: 670214014}
     - target: {fileID: 8667309380608072283, guid: 2eb7307ba96474441b98b8771f213036, type: 3}
       propertyPath: viewAngle
-      value: 130
+      value: 180
       objectReference: {fileID: 0}
     - target: {fileID: 8667309380608072283, guid: 2eb7307ba96474441b98b8771f213036, type: 3}
       propertyPath: viewRadius
-      value: 20
+      value: 30
       objectReference: {fileID: 0}
     - target: {fileID: 8667309380608072283, guid: 2eb7307ba96474441b98b8771f213036, type: 3}
       propertyPath: navMeshAgent
