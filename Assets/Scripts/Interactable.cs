@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.AI;
 
 public class Interactable : MonoBehaviour
 {
@@ -26,6 +27,7 @@ public class Interactable : MonoBehaviour
         String interact_text = "";
         switch(type){
             case "door":
+                NavMeshObstacle carve = gameObject.transform.GetChild(0).GetComponent<NavMeshObstacle>();
                 List<GameObject> doors = new List<GameObject>();
                 foreach(Transform door in this.gameObject.transform.GetChild(0).transform) {
                     doors.Add(door.gameObject);
@@ -39,6 +41,7 @@ public class Interactable : MonoBehaviour
                     foreach(GameObject door in doors){
                         door.GetComponent<Collider>().isTrigger = true;
                     }
+                    carve.enabled = false;
                     sound.Play();
                     break;
                 }
@@ -49,6 +52,7 @@ public class Interactable : MonoBehaviour
                     foreach(GameObject door in doors){
                         door.GetComponent<Collider>().isTrigger = true;
                     }
+                    carve.enabled = false;
                     sound.Play();
                     break;
                 } else if(openState && !animator.GetBool("Closed")) {
@@ -58,6 +62,7 @@ public class Interactable : MonoBehaviour
                     foreach(GameObject door in doors){
                         door.GetComponent<Collider>().isTrigger = false;
                     }
+                    carve.enabled = true;
                     break;
                 } else {
                     Debug.Log("case4");
