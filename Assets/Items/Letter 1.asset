@@ -12,10 +12,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: feb726ce56ae34042a6a95fc055c9d0f, type: 3}
   m_Name: Letter 1
   m_EditorClassIdentifier: 
-  itemName: Outdoor Letter
+  itemName: Letter 2
   value: 1
   description: You picked this up inside the school
   icon: {fileID: 0}
-  type: 3
+  type: 4
   memoryText: I found it.. The source of the sound at night recently..  Run! Don't
     let it find you

@@ -16,4 +16,5 @@ MonoBehaviour:
   value: 1
   description: Envelope
   icon: {fileID: 0}
-  type: 3
+  type: 4
+  memoryText: 

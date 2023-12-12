@@ -19,6 +19,8 @@ public class NextLvlTransition : MonoBehaviour
 
     void NextScene()
     {
+        // if (SceneManager.GetActiveScene().buildIndex == 3)
+        GameManager.Instance.MonsterActive = true;
         SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
     }
 }

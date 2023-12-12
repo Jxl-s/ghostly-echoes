@@ -12,9 +12,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: feb726ce56ae34042a6a95fc055c9d0f, type: 3}
   m_Name: OutsideLetter
   m_EditorClassIdentifier: 
-  itemName: Letter
+  itemName: Letter 1
   value: 1
   description: You picked this up outside the school
   icon: {fileID: 0}
-  type: 3
+  type: 4
   memoryText: Don't enter! This place is cursed. Leave and never return!

@@ -12,11 +12,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: feb726ce56ae34042a6a95fc055c9d0f, type: 3}
   m_Name: Letter 2
   m_EditorClassIdentifier: 
-  itemName: Bloody Letter
+  itemName: Letter 3
   value: 1
   description: You picked this up inside the school
   icon: {fileID: 0}
-  type: 3
+  type: 4
   memoryText: It got my one of my hand.. not much else I could do.. There are 2 of
     them, one is very fast, the other I don't really know, but not as fast as the
     first. That's all I tell about them..
