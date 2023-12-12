@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.PlayerLoop;
+using UnityEngine.SceneManagement;
 
 public class GameManager : MonoBehaviour
 {
@@ -17,6 +18,7 @@ public class GameManager : MonoBehaviour
     public bool SprintEnabled = true;
     public bool SFXEnabled = true;
     public bool isCutscene = false;
+    public bool Dead = false;
 
     public bool MonsterActive = false;
 
@@ -34,10 +36,24 @@ public class GameManager : MonoBehaviour
         SprintEnabled = true;
     }
 
+    public void LeaveGame()
+    {
+        Application.Quit();
+    }
+
     public void ReduceHealth(int damage)
     {
+        if (Dead) return;
+
         HealthPercentage -= damage;
         StartCoroutine(HUDManager.Instance.ShowDamageMask());
+
+        if (HealthPercentage <= 0)
+        {
+            HealthPercentage = 0;
+            Dead = true;
+            StartCoroutine(HUDManager.Instance.ShowDeath());
+        }
     }
 
     public void PauseGame()

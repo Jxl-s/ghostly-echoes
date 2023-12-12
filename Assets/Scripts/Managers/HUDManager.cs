@@ -1,4 +1,3 @@
-using System;
 using System.Collections;
 using System.Collections.Generic;
 using TMPro;
@@ -55,6 +54,20 @@ public class HUDManager : MonoBehaviour
     private bool isPausedLetter = false;
     private bool isPausedInventory = false;
 
+    [SerializeField] private RectTransform deathPanel;
+    [SerializeField] private TextMeshProUGUI deathLabel;
+
+    private string[] deathMessages = new string[] {
+        "You have failed the mission",
+        "You have died",
+        "You have been caught",
+        "You should have ran faster",
+        "You should have been more sneaky",
+        "You are trapped in here forever...",
+        "Your soul has been taken...",
+        "get good lol",
+    };
+
     void Awake()
     {
         if (Instance == null)
@@ -66,6 +79,26 @@ public class HUDManager : MonoBehaviour
             Destroy(gameObject);
             return;
         }
+    }
+
+    public IEnumerator ShowDeath()
+    {
+        Cursor.lockState = CursorLockMode.None;
+        Cursor.visible = true;
+
+        deathPanel.gameObject.SetActive(true);
+
+        // Set the random text
+        deathLabel.text = deathMessages[Random.Range(0, deathMessages.Length)];
+
+        // Lerp the background in
+        Image deathImage = deathPanel.GetComponent<Image>();
+        yield return UpdateImageAlpha(deathImage, 1f, 1f);
+    }
+
+    public void LeaveGame()
+    {
+        GameManager.Instance.LeaveGame();
     }
 
     void Start()
