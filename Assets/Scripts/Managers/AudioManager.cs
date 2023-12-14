@@ -32,5 +32,16 @@ public class AudioManager : MonoBehaviour
         soundEffect.clip = clip;
         soundEffect.Play();
     }
+
+    public void ToggleMusic(bool toggle) {
+        if (!toggle)
+        {
+            audioSource.Pause();
+        }
+        else
+        {
+            audioSource.Play();
+        }
+    }
     
 }

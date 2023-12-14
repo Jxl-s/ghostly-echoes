@@ -53,6 +53,7 @@ public class GameManager : MonoBehaviour
             HealthPercentage = 0;
             Dead = true;
             StartCoroutine(HUDManager.Instance.ShowDeath());
+            RestartLvl();
         }
     }
 
@@ -75,5 +76,10 @@ public class GameManager : MonoBehaviour
             isCutscene = false;
             ControlsEnabled = true;
         }
+    }
+
+    public void RestartLvl()
+    {
+        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
     }
 }

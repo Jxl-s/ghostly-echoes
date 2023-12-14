@@ -25,6 +25,7 @@ public class BasementDialogue : MonoBehaviour
 
     public IEnumerator DoMonsterCutscene()
     {
+        AudioManager.Instance.ToggleMusic(false);
         Quaternion startRotation = Camera.main.transform.rotation;
 
         GameManager.Instance.SetCutscene(true);
@@ -52,6 +53,7 @@ public class BasementDialogue : MonoBehaviour
 
         GameManager.Instance.ControlsEnabled = true;
         GameManager.Instance.SetCutscene(false);
+        AudioManager.Instance.ToggleMusic(true);
 
         yield return new WaitForSeconds(2f);
         GameManager.Instance.MonsterActive = true;

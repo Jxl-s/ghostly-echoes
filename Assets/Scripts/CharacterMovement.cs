@@ -13,8 +13,10 @@ public class CharacterMovement : MonoBehaviour
     private CharacterController controller;
     private float walkSpeed = 6;
     private float runSpeed = 9;
+    private float sprintRechargeDelay = 3f;
     private bool isSprint = false;
     private bool canSprint = true;
+    private bool isRecharging = false;
     private bool toggleSprint = false;
     private Animator animator;
 
@@ -23,7 +25,7 @@ public class CharacterMovement : MonoBehaviour
         Cursor.visible = false;
         Cursor.lockState = CursorLockMode.Locked;
         InvokeRepeating("Sprint", 1.0f, drainStamina);
-        InvokeRepeating("SprintRecharge", 1.0f, drainStamina);
+        InvokeRepeating("IncrementStamina", 1.0f, drainStamina);
         controller = GetComponent<CharacterController>();
         animator = GetComponent<Animator>();
     }
@@ -31,6 +33,8 @@ public class CharacterMovement : MonoBehaviour
     public void Update()
     {
         ProcessMovement();
+        // Debug.Log("Stamina: " + GameManager.Instance.StaminaPercentage + " isRecharging: " + isRecharging + " canSprint: " + canSprint + " isSprint: " + isSprint);
+
     }
 
     public void LateUpdate()
@@ -61,12 +65,10 @@ public class CharacterMovement : MonoBehaviour
                 canSprint = false;
             }
 
-            if (Input.GetButton("Fire3") )
+            if (Input.GetButton("Fire3") && canSprint)
             {
-                if (canSprint)
-                {
-                    isSprint = true;
-                }
+                isRecharging = false;
+                isSprint = true;
             }
             else
             {
@@ -123,25 +125,32 @@ public class CharacterMovement : MonoBehaviour
         {
             GameManager.Instance.StaminaPercentage -= 1;
         }
+        if (!canSprint)
+        {
+            HUDManager.Instance.SetSprintColor(new Color32(255, 0, 0, 255));
+
+        }
+        if (GameManager.Instance.StaminaPercentage == 100)
+        {
+            HUDManager.Instance.SetSprintColor(new Color32(124, 180, 255, 255));
+            isRecharging = false;
+            canSprint = true;
+        }
+        if (!isSprint && GameManager.Instance.StaminaPercentage < 100)
+        {
+            StartCoroutine(SprintRecharge());
+        }
     }
 
-    public void SprintRecharge()
+    public IEnumerator SprintRecharge()
     {
-        if (!isSprint || !canSprint)
-        {
-            if (!canSprint)
-            {
-                HUDManager.Instance.SetSprintColor(new Color32(255, 0, 0, 255));
-            }
-            if (GameManager.Instance.StaminaPercentage == 100)
-            {
-                HUDManager.Instance.SetSprintColor(new Color32(124, 180, 255, 255));
-                canSprint = true;
-            }
-            else
-            {
-                GameManager.Instance.StaminaPercentage += 1;
-            }
+        yield return new WaitForSeconds(sprintRechargeDelay);
+        isRecharging = true;
+    }
+
+    public void IncrementStamina(){
+        if(isRecharging){
+            GameManager.Instance.StaminaPercentage += 1;
         }
     }
 

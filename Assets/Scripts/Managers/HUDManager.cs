@@ -477,7 +477,7 @@ public class HUDManager : MonoBehaviour
         Invoke(nameof(HideDialogue), 3.0f);
     }
 
-    private void HideDialogue()
+    public void HideDialogue()
     {
         dialogueLabel.CrossFadeAlpha(0, 0.5f, false);
     }
