@@ -16,6 +16,8 @@ public class EndingUIBehaviour : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        Cursor.visible = true;
+        Cursor.lockState = CursorLockMode.None;
         button.gameObject.SetActive(false);
         fullText = displayText.text;
         displayText.text = "";
