@@ -53,6 +53,8 @@ MonoBehaviour:
   - {fileID: 8300000, guid: 4ac2016465d5c08419f5f39d7a226756, type: 3}
   effectsClips:
   - {fileID: 8300000, guid: bf904e5df4e44674181e7f415a495e1a, type: 3}
+  - {fileID: 8300000, guid: 5e2e4630c5803814183af74d501c2ae5, type: 3}
+  - {fileID: 8300000, guid: 389cf88dee74ec34bb5376339568ca17, type: 3}
 --- !u!82 &8154506961598465962
 AudioSource:
   m_ObjectHideFlags: 0
@@ -67,7 +69,7 @@ AudioSource:
   m_PlayOnAwake: 1
   m_Volume: 0.204
   m_Pitch: 1
-  Loop: 0
+  Loop: 1
   Mute: 0
   Spatialize: 0
   SpatializePostEffects: 0

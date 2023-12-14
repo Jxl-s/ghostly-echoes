@@ -17,4 +17,5 @@ MonoBehaviour:
   description: You picked this up inside the school
   icon: {fileID: 0}
   type: 4
-  memoryText: The key is in the unlocked central room.
+  memoryText: The key is somewhere nearby, maybe on the otherside of this door. Maybe
+    beyond that.

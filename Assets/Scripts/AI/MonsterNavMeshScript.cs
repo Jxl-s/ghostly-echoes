@@ -34,7 +34,7 @@ public class MonsterNavMeshScript : MonoBehaviour
     bool m_CaughtPlayer;                            //  if the enemy has caught the player
     float m_TeleportTime;                           //  Variable of the wait time between teleports
     float m_AttackTime;                             //  Variable of the wait time between attacks
-    public string tag;
+    public string monsterTag;
 
     bool monsterStarted = false;
     void StartMonster()
@@ -55,11 +55,12 @@ public class MonsterNavMeshScript : MonoBehaviour
 
         m_CurrentWaypointIndex = 0;                 //  Set the initial waypoint
         navMeshAgent = GetComponent<NavMeshAgent>();
-        GameObject[] objects = GameObject.FindGameObjectsWithTag(tag);
+        GameObject[] objects = GameObject.FindGameObjectsWithTag("waypoint");
         waypoints = new List<Transform>();
         foreach (GameObject obj in objects)
         {
-            waypoints.Add(obj.transform);
+            if(obj.name.Contains(monsterTag) || string.IsNullOrEmpty(monsterTag))
+                waypoints.Add(obj.transform);
         }
 
         navMeshAgent.isStopped = false;
@@ -262,6 +263,17 @@ public class MonsterNavMeshScript : MonoBehaviour
         if (other.tag == "Player" && m_AttackTime <= 0)
         {
             animator.SetTrigger("Attack");
+            switch(monsterTag){
+                case "monster_1":
+                    AudioManager.Instance.PlayEffect(1);
+                    break;
+                case "monster_2":
+                    AudioManager.Instance.PlayEffect(2);
+                    break;
+                default:
+                    AudioManager.Instance.PlayEffect(1);
+                    break;        
+            }
             GameManager.Instance.ReduceHealth(20);
             Teleport();
             m_AttackTime = startAttackTime;

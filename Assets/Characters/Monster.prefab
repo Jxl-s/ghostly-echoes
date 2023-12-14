@@ -208,7 +208,7 @@ MonoBehaviour:
   edgeIterations: 4
   edgeDistance: 0.5
   waypoints: []
-  tag: waypoint
+  tag: monster_1
 --- !u!54 &1146407385978201496
 Rigidbody:
   m_ObjectHideFlags: 0

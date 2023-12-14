@@ -53453,5 +53453,9 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0.51
       objectReference: {fileID: 0}
+    - target: {fileID: 1146407386532588596, guid: cca4af51f237ecf4f82cbf30a66cc4c4, type: 3}
+      propertyPath: monsterTag
+      value: 
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: cca4af51f237ecf4f82cbf30a66cc4c4, type: 3}

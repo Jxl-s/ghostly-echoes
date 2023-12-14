@@ -23,11 +23,13 @@ public class AudioManager : MonoBehaviour
         }
     }
     public void ChangeSound(int index) {
-        audioSource.clip = musicClips[index];
+        AudioClip clip = musicClips[index];
+        audioSource.clip = clip;
         audioSource.Play();
     }
-    public void PlayEffect(int index = 0) {
-        soundEffect.clip = effectsClips[index];
+    public void PlayEffect(int index = 0) {    
+        AudioClip clip = effectsClips[index];
+        soundEffect.clip = clip;
         soundEffect.Play();
     }
     
