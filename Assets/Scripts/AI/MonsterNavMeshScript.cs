@@ -59,6 +59,7 @@ public class MonsterNavMeshScript : MonoBehaviour
         waypoints = new List<Transform>();
         foreach (GameObject obj in objects)
         {
+            Debug.Log(obj.name);
             if(obj.name.Contains(monsterTag) || string.IsNullOrEmpty(monsterTag))
                 waypoints.Add(obj.transform);
         }
