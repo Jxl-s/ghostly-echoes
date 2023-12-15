@@ -7,7 +7,7 @@ using UnityEngine.SceneManagement;
 
 public class GameManager : MonoBehaviour
 {
-    public static string GAME_VERSION = "0.0.1";
+    public static string GAME_VERSION = "0.1.1";
     public static GameManager Instance;
 
     public float BatteryPercentage = 100;
