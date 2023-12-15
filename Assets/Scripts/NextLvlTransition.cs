@@ -18,7 +18,7 @@ public class NextLvlTransition : MonoBehaviour
             StartCoroutine(NotYet());
             return;
         }
-        GameManager.Instance.MonsterActive = true;
+
         Debug.Log("works");
         // Load the next level
         StartCoroutine(HUDManager.Instance.UpdateMask(1f, 3f));

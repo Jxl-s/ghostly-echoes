@@ -53,7 +53,6 @@ public class GameManager : MonoBehaviour
             HealthPercentage = 0;
             Dead = true;
             StartCoroutine(HUDManager.Instance.ShowDeath());
-            RestartLvl();
         }
     }
 

@@ -121,7 +121,7 @@ public class HUDManager : MonoBehaviour
         HandleDialogueFloat();
         MenuToggle();
     }
-    
+
     void HandleDialogueFloat()
     {
         // Make the title bounce up and down, rotate a bit too, and fade in and out
@@ -132,7 +132,8 @@ public class HUDManager : MonoBehaviour
         dialogueLabel.rectTransform.rotation = Quaternion.Euler(0, 0, newRot);
     }
 
-    private void MenuToggle(){
+    private void MenuToggle()
+    {
         if (Input.GetKeyDown(KeyCode.Escape) && !isPausedLetter && !isPausedInventory && !GameManager.Instance.isCutscene)
         {
             isPausedMenu = !isPausedMenu;
@@ -265,10 +266,13 @@ public class HUDManager : MonoBehaviour
 
     public IEnumerator ShowDamageMask()
     {
-        damagePanel.SetActive(true);
-        yield return UpdateImageAlpha(damagePanel.GetComponent<Image>(), 0f, 2f);
-        damagePanel.SetActive(false);
-        damagePanel.GetComponent<Image>().color = new Color(1f, 0f, 0f, 0.2f);
+        if (damagePanel != null && damagePanel.activeSelf)
+        {
+            damagePanel.SetActive(true);
+            yield return UpdateImageAlpha(damagePanel.GetComponent<Image>(), 0f, 2f);
+            damagePanel.SetActive(false);
+            damagePanel.GetComponent<Image>().color = new Color(1f, 0f, 0f, 0.2f);
+        }
     }
 
     public void UpdateInventory(List<ItemData> list)
@@ -512,6 +516,8 @@ public class HUDManager : MonoBehaviour
         float startValue = image.color.a;
         while (elapsedTime < duration)
         {
+            if (image == null) yield break;
+
             elapsedTime += Time.deltaTime;
             float newAlpha = Mathf.Lerp(startValue, endValue, elapsedTime / duration);
             image.color = new Color(image.color.r, image.color.g, image.color.b, newAlpha);
@@ -554,7 +560,7 @@ public class HUDManager : MonoBehaviour
 
         yield return UpdateImageAlpha(memoryPanel.GetComponent<Image>(), 0.0f, 0.5f);
         memoryPanel.gameObject.SetActive(false);
-        
+
         if (!inventoryPanel.gameObject.activeSelf)
         {
             Cursor.lockState = CursorLockMode.Locked;
