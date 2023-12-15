@@ -4167,6 +4167,18 @@ PrefabInstance:
       propertyPath: m_TagString
       value: flashlight
       objectReference: {fileID: 0}
+    - target: {fileID: 4744945594539613838, guid: 3119fd4473b319b4286a68862a7c9ee7, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: -1.02
+      objectReference: {fileID: 0}
+    - target: {fileID: 4744945594539613838, guid: 3119fd4473b319b4286a68862a7c9ee7, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 2.09
+      objectReference: {fileID: 0}
+    - target: {fileID: 4744945594539613838, guid: 3119fd4473b319b4286a68862a7c9ee7, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: -3.99
+      objectReference: {fileID: 0}
     - target: {fileID: 6254087350989134602, guid: 3119fd4473b319b4286a68862a7c9ee7, type: 3}
       propertyPath: m_IsActive
       value: 1
